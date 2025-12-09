@@ -1,0 +1,1719 @@
+2025-12-07 10:04:08,195 - __main__ - INFO - Using device: cpu
+2025-12-07 10:04:08,197 - __main__ - INFO - ================================================================================
+2025-12-07 10:04:08,198 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:04:08,198 - __main__ - INFO - ================================================================================
+2025-12-07 10:04:08,198 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:04:08,198 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:04:08,198 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:04:08,198 - __main__ - INFO - ================================================================================
+2025-12-07 10:04:08,198 - __main__ - INFO - Fetching 45 symbols from 2023-12-08 to 2025-12-07...
+2025-12-07 10:04:09,156 - __main__ - ERROR - Failed to fetch AAPL.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:09,157 - __main__ - WARNING -   [1/45] ✗ AAPL: Insufficient data
+2025-12-07 10:04:09,389 - __main__ - ERROR - Failed to fetch MSFT.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:09,389 - __main__ - WARNING -   [2/45] ✗ MSFT: Insufficient data
+2025-12-07 10:04:09,612 - __main__ - ERROR - Failed to fetch GOOGL.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:09,613 - __main__ - WARNING -   [3/45] ✗ GOOGL: Insufficient data
+2025-12-07 10:04:09,860 - __main__ - ERROR - Failed to fetch AMZN.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:09,861 - __main__ - WARNING -   [4/45] ✗ AMZN: Insufficient data
+2025-12-07 10:04:10,100 - __main__ - ERROR - Failed to fetch META.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:10,101 - __main__ - WARNING -   [5/45] ✗ META: Insufficient data
+2025-12-07 10:04:10,378 - __main__ - ERROR - Failed to fetch NVDA.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:10,379 - __main__ - WARNING -   [6/45] ✗ NVDA: Insufficient data
+2025-12-07 10:04:10,666 - __main__ - ERROR - Failed to fetch TSLA.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:10,666 - __main__ - WARNING -   [7/45] ✗ TSLA: Insufficient data
+2025-12-07 10:04:10,890 - __main__ - ERROR - Failed to fetch JPM.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:10,891 - __main__ - WARNING -   [8/45] ✗ JPM: Insufficient data
+2025-12-07 10:04:11,130 - __main__ - ERROR - Failed to fetch BAC.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:11,131 - __main__ - WARNING -   [9/45] ✗ BAC: Insufficient data
+2025-12-07 10:04:11,376 - __main__ - ERROR - Failed to fetch GS.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:11,377 - __main__ - WARNING -   [10/45] ✗ GS: Insufficient data
+2025-12-07 10:04:11,596 - __main__ - ERROR - Failed to fetch MS.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:11,596 - __main__ - WARNING -   [11/45] ✗ MS: Insufficient data
+2025-12-07 10:04:11,827 - __main__ - ERROR - Failed to fetch C.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:11,828 - __main__ - WARNING -   [12/45] ✗ C: Insufficient data
+2025-12-07 10:04:12,058 - __main__ - ERROR - Failed to fetch WFC.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:12,059 - __main__ - WARNING -   [13/45] ✗ WFC: Insufficient data
+2025-12-07 10:04:12,297 - __main__ - ERROR - Failed to fetch WMT.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:12,298 - __main__ - WARNING -   [14/45] ✗ WMT: Insufficient data
+2025-12-07 10:04:12,525 - __main__ - ERROR - Failed to fetch HD.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:12,526 - __main__ - WARNING -   [15/45] ✗ HD: Insufficient data
+2025-12-07 10:04:12,771 - __main__ - ERROR - Failed to fetch MCD.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:12,771 - __main__ - WARNING -   [16/45] ✗ MCD: Insufficient data
+2025-12-07 10:04:12,998 - __main__ - ERROR - Failed to fetch NKE.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:12,999 - __main__ - WARNING -   [17/45] ✗ NKE: Insufficient data
+2025-12-07 10:04:13,266 - __main__ - ERROR - Failed to fetch SBUX.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:13,266 - __main__ - WARNING -   [18/45] ✗ SBUX: Insufficient data
+2025-12-07 10:04:13,492 - __main__ - ERROR - Failed to fetch JNJ.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:13,493 - __main__ - WARNING -   [19/45] ✗ JNJ: Insufficient data
+2025-12-07 10:04:13,758 - __main__ - ERROR - Failed to fetch UNH.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:13,759 - __main__ - WARNING -   [20/45] ✗ UNH: Insufficient data
+2025-12-07 10:04:14,025 - __main__ - ERROR - Failed to fetch PFE.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:14,026 - __main__ - WARNING -   [21/45] ✗ PFE: Insufficient data
+2025-12-07 10:04:14,289 - __main__ - ERROR - Failed to fetch ABBV.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:14,290 - __main__ - WARNING -   [22/45] ✗ ABBV: Insufficient data
+2025-12-07 10:04:14,525 - __main__ - ERROR - Failed to fetch XOM.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:14,526 - __main__ - WARNING -   [23/45] ✗ XOM: Insufficient data
+2025-12-07 10:04:14,753 - __main__ - ERROR - Failed to fetch CVX.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:14,754 - __main__ - WARNING -   [24/45] ✗ CVX: Insufficient data
+2025-12-07 10:04:14,983 - __main__ - ERROR - Failed to fetch COP.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:14,984 - __main__ - WARNING -   [25/45] ✗ COP: Insufficient data
+2025-12-07 10:04:15,233 - __main__ - ERROR - Failed to fetch EWJ.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:15,233 - __main__ - WARNING -   [26/45] ✗ EWJ: Insufficient data
+2025-12-07 10:04:15,519 - __main__ - ERROR - Failed to fetch EWG.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:15,520 - __main__ - WARNING -   [27/45] ✗ EWG: Insufficient data
+2025-12-07 10:04:15,798 - __main__ - ERROR - Failed to fetch EWU.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:15,799 - __main__ - WARNING -   [28/45] ✗ EWU: Insufficient data
+2025-12-07 10:04:16,026 - __main__ - ERROR - Failed to fetch FXI.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:16,026 - __main__ - WARNING -   [29/45] ✗ FXI: Insufficient data
+2025-12-07 10:04:16,252 - __main__ - ERROR - Failed to fetch EWZ.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:16,253 - __main__ - WARNING -   [30/45] ✗ EWZ: Insufficient data
+2025-12-07 10:04:16,489 - __main__ - ERROR - Failed to fetch EWC.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:16,489 - __main__ - WARNING -   [31/45] ✗ EWC: Insufficient data
+2025-12-07 10:04:16,725 - __main__ - ERROR - Failed to fetch EWA.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:16,726 - __main__ - WARNING -   [32/45] ✗ EWA: Insufficient data
+2025-12-07 10:04:16,958 - __main__ - ERROR - Failed to fetch EWH.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:16,959 - __main__ - WARNING -   [33/45] ✗ EWH: Insufficient data
+2025-12-07 10:04:17,232 - __main__ - ERROR - Failed to fetch EWY.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:17,233 - __main__ - WARNING -   [34/45] ✗ EWY: Insufficient data
+2025-12-07 10:04:17,461 - __main__ - ERROR - Failed to fetch EWW.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:17,461 - __main__ - WARNING -   [35/45] ✗ EWW: Insufficient data
+2025-12-07 10:04:17,695 - __main__ - ERROR - Failed to fetch EWI.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:17,695 - __main__ - WARNING -   [36/45] ✗ EWI: Insufficient data
+2025-12-07 10:04:17,944 - __main__ - ERROR - Failed to fetch EWQ.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:17,945 - __main__ - WARNING -   [37/45] ✗ EWQ: Insufficient data
+2025-12-07 10:04:18,181 - __main__ - ERROR - Failed to fetch XLF.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:18,182 - __main__ - WARNING -   [38/45] ✗ XLF: Insufficient data
+2025-12-07 10:04:18,404 - __main__ - ERROR - Failed to fetch XLK.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:18,405 - __main__ - WARNING -   [39/45] ✗ XLK: Insufficient data
+2025-12-07 10:04:18,667 - __main__ - ERROR - Failed to fetch XLE.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:18,669 - __main__ - WARNING -   [40/45] ✗ XLE: Insufficient data
+2025-12-07 10:04:18,895 - __main__ - ERROR - Failed to fetch XLV.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:18,896 - __main__ - WARNING -   [41/45] ✗ XLV: Insufficient data
+2025-12-07 10:04:19,149 - __main__ - ERROR - Failed to fetch XLI.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:19,151 - __main__ - WARNING -   [42/45] ✗ XLI: Insufficient data
+2025-12-07 10:04:19,376 - __main__ - ERROR - Failed to fetch XLY.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:19,376 - __main__ - WARNING -   [43/45] ✗ XLY: Insufficient data
+2025-12-07 10:04:19,623 - __main__ - ERROR - Failed to fetch XLP.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:19,624 - __main__ - WARNING -   [44/45] ✗ XLP: Insufficient data
+2025-12-07 10:04:19,872 - __main__ - ERROR - Failed to fetch VXX.US: Unable to find a usable engine; tried using: 'pyarrow', 'fastparquet'.
+A suitable version of pyarrow or fastparquet is required for parquet support.
+Trying to import the above resulted in these errors:
+ - Missing optional dependency 'pyarrow'. pyarrow is required for parquet support. Use pip or conda to install pyarrow.
+ - Missing optional dependency 'fastparquet'. fastparquet is required for parquet support. Use pip or conda to install fastparquet.
+2025-12-07 10:04:19,873 - __main__ - WARNING -   [45/45] ✗ VXX: Insufficient data
+2025-12-07 10:04:19,873 - __main__ - ERROR - Insufficient assets: 0 < 15
+2025-12-07 10:08:05,233 - __main__ - INFO - Using device: cpu
+2025-12-07 10:08:05,234 - __main__ - INFO - ================================================================================
+2025-12-07 10:08:05,234 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:08:05,234 - __main__ - INFO - ================================================================================
+2025-12-07 10:08:05,234 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:08:05,235 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:08:05,235 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:08:05,235 - __main__ - INFO - ================================================================================
+2025-12-07 10:08:05,235 - __main__ - INFO - Fetching 19 symbols from 2023-12-08 to 2025-12-07...
+2025-12-07 10:08:06,213 - __main__ - INFO -   [1/19] ✓ AAPL: 500 records
+2025-12-07 10:08:06,465 - __main__ - INFO -   [2/19] ✓ MSFT: 500 records
+2025-12-07 10:08:06,714 - __main__ - INFO -   [3/19] ✓ GOOGL: 500 records
+2025-12-07 10:08:06,943 - __main__ - INFO -   [4/19] ✓ AMZN: 500 records
+2025-12-07 10:08:07,170 - __main__ - INFO -   [5/19] ✓ META: 500 records
+2025-12-07 10:08:07,411 - __main__ - INFO -   [6/19] ✓ NVDA: 500 records
+2025-12-07 10:08:07,648 - __main__ - INFO -   [7/19] ✓ JPM: 500 records
+2025-12-07 10:08:07,874 - __main__ - INFO -   [8/19] ✓ BAC: 500 records
+2025-12-07 10:08:08,105 - __main__ - INFO -   [9/19] ✓ GS: 500 records
+2025-12-07 10:08:08,351 - __main__ - INFO -   [10/19] ✓ EWJ: 500 records
+2025-12-07 10:08:08,573 - __main__ - INFO -   [11/19] ✓ EWG: 500 records
+2025-12-07 10:08:08,822 - __main__ - INFO -   [12/19] ✓ EWU: 500 records
+2025-12-07 10:08:09,054 - __main__ - INFO -   [13/19] ✓ FXI: 500 records
+2025-12-07 10:08:09,294 - __main__ - INFO -   [14/19] ✓ EWZ: 500 records
+2025-12-07 10:08:09,546 - __main__ - INFO -   [15/19] ✓ XLF: 500 records
+2025-12-07 10:08:09,792 - __main__ - INFO -   [16/19] ✓ XLK: 500 records
+2025-12-07 10:08:10,030 - __main__ - INFO -   [17/19] ✓ XLE: 500 records
+2025-12-07 10:08:10,275 - __main__ - INFO -   [18/19] ✓ XLV: 500 records
+2025-12-07 10:08:10,508 - __main__ - INFO -   [19/19] ✓ XLI: 500 records
+2025-12-07 10:08:10,509 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:08:10,516 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:08:10,516 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:08:10,516 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:08:10,516 - __main__ - INFO - ================================================================================
+2025-12-07 10:08:10,518 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:08:10,590 - __main__ - INFO - Detected 100 significant relationships
+2025-12-07 10:08:10,593 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:08:10,596 - __main__ - INFO -    XLV.US: influences 8 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    EWJ.US: influences 8 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    BAC.US: influences 8 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    EWZ.US: influences 7 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    XLE.US: influences 7 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    XLK.US: influences 7 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    AAPL.US: influences 7 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    JPM.US: influences 6 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    EWU.US: influences 6 assets
+2025-12-07 10:08:10,596 - __main__ - INFO -    XLF.US: influences 5 assets
+2025-12-07 10:08:10,596 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:08:10,597 - __main__ - INFO -     1. JPM.US          → AAPL.US         | Lag: 2d | Corr: +0.185
+2025-12-07 10:08:10,597 - __main__ - INFO -     2. BAC.US          → AAPL.US         | Lag: 2d | Corr: +0.171
+2025-12-07 10:08:10,597 - __main__ - INFO -     3. BAC.US          → EWU.US          | Lag: 2d | Corr: +0.170
+2025-12-07 10:08:10,597 - __main__ - INFO -     4. META.US         → AMZN.US         | Lag: 1d | Corr: -0.160
+2025-12-07 10:08:10,597 - __main__ - INFO -     5. JPM.US          → EWU.US          | Lag: 2d | Corr: +0.157
+2025-12-07 10:08:10,597 - __main__ - INFO -     6. GS.US           → XLI.US          | Lag: 4d | Corr: -0.150
+2025-12-07 10:08:10,597 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 2d | Corr: +0.150
+2025-12-07 10:08:10,597 - __main__ - INFO -     8. META.US         → EWU.US          | Lag: 2d | Corr: +0.148
+2025-12-07 10:08:10,597 - __main__ - INFO -     9. EWJ.US          → AAPL.US         | Lag: 2d | Corr: +0.143
+2025-12-07 10:08:10,597 - __main__ - INFO -    10. META.US         → FXI.US          | Lag: 2d | Corr: +0.141
+2025-12-07 10:08:10,597 - __main__ - INFO -    11. GS.US           → EWG.US          | Lag: 4d | Corr: -0.137
+2025-12-07 10:08:10,597 - __main__ - INFO -    12. EWG.US          → FXI.US          | Lag: 2d | Corr: +0.136
+2025-12-07 10:08:10,597 - __main__ - INFO -    13. JPM.US          → FXI.US          | Lag: 1d | Corr: +0.135
+2025-12-07 10:08:10,597 - __main__ - INFO -    14. AAPL.US         → XLF.US          | Lag: 3d | Corr: -0.135
+2025-12-07 10:08:10,598 - __main__ - INFO -    15. EWG.US          → META.US         | Lag: 3d | Corr: -0.134
+2025-12-07 10:08:11,248 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:08:11,248 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:08:11,248 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:08:11,248 - __main__ - INFO - ================================================================================
+2025-12-07 10:11:09,323 - __main__ - INFO - Using device: cpu
+2025-12-07 10:11:09,324 - __main__ - INFO - ================================================================================
+2025-12-07 10:11:09,324 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:11:09,324 - __main__ - INFO - ================================================================================
+2025-12-07 10:11:09,325 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:11:09,325 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:11:09,325 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:11:09,325 - __main__ - INFO - ================================================================================
+2025-12-07 10:11:09,325 - __main__ - INFO - Fetching 19 symbols from 2023-12-08 to 2025-12-07...
+2025-12-07 10:11:09,330 - __main__ - INFO -   [1/19] ✓ AAPL: 500 records
+2025-12-07 10:11:09,331 - __main__ - INFO -   [2/19] ✓ MSFT: 500 records
+2025-12-07 10:11:09,331 - __main__ - INFO -   [3/19] ✓ GOOGL: 500 records
+2025-12-07 10:11:09,332 - __main__ - INFO -   [4/19] ✓ AMZN: 500 records
+2025-12-07 10:11:09,333 - __main__ - INFO -   [5/19] ✓ META: 500 records
+2025-12-07 10:11:09,333 - __main__ - INFO -   [6/19] ✓ NVDA: 500 records
+2025-12-07 10:11:09,333 - __main__ - INFO -   [7/19] ✓ JPM: 500 records
+2025-12-07 10:11:09,334 - __main__ - INFO -   [8/19] ✓ BAC: 500 records
+2025-12-07 10:11:09,335 - __main__ - INFO -   [9/19] ✓ GS: 500 records
+2025-12-07 10:11:09,335 - __main__ - INFO -   [10/19] ✓ EWJ: 500 records
+2025-12-07 10:11:09,335 - __main__ - INFO -   [11/19] ✓ EWG: 500 records
+2025-12-07 10:11:09,336 - __main__ - INFO -   [12/19] ✓ EWU: 500 records
+2025-12-07 10:11:09,336 - __main__ - INFO -   [13/19] ✓ FXI: 500 records
+2025-12-07 10:11:09,336 - __main__ - INFO -   [14/19] ✓ EWZ: 500 records
+2025-12-07 10:11:09,337 - __main__ - INFO -   [15/19] ✓ XLF: 500 records
+2025-12-07 10:11:09,337 - __main__ - INFO -   [16/19] ✓ XLK: 500 records
+2025-12-07 10:11:09,337 - __main__ - INFO -   [17/19] ✓ XLE: 500 records
+2025-12-07 10:11:09,338 - __main__ - INFO -   [18/19] ✓ XLV: 500 records
+2025-12-07 10:11:09,338 - __main__ - INFO -   [19/19] ✓ XLI: 500 records
+2025-12-07 10:11:09,338 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:11:09,343 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:11:09,343 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:11:09,343 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:11:09,343 - __main__ - INFO - ================================================================================
+2025-12-07 10:11:09,346 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:11:09,409 - __main__ - INFO - Detected 100 significant relationships
+2025-12-07 10:11:09,411 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:11:09,413 - __main__ - INFO -    XLV.US: influences 8 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    EWJ.US: influences 8 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    BAC.US: influences 8 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    EWZ.US: influences 7 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    XLE.US: influences 7 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    XLK.US: influences 7 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    AAPL.US: influences 7 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    JPM.US: influences 6 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    EWU.US: influences 6 assets
+2025-12-07 10:11:09,413 - __main__ - INFO -    XLF.US: influences 5 assets
+2025-12-07 10:11:09,413 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:11:09,414 - __main__ - INFO -     1. JPM.US          → AAPL.US         | Lag: 2d | Corr: +0.185
+2025-12-07 10:11:09,414 - __main__ - INFO -     2. BAC.US          → AAPL.US         | Lag: 2d | Corr: +0.171
+2025-12-07 10:11:09,414 - __main__ - INFO -     3. BAC.US          → EWU.US          | Lag: 2d | Corr: +0.170
+2025-12-07 10:11:09,414 - __main__ - INFO -     4. META.US         → AMZN.US         | Lag: 1d | Corr: -0.160
+2025-12-07 10:11:09,414 - __main__ - INFO -     5. JPM.US          → EWU.US          | Lag: 2d | Corr: +0.157
+2025-12-07 10:11:09,414 - __main__ - INFO -     6. GS.US           → XLI.US          | Lag: 4d | Corr: -0.150
+2025-12-07 10:11:09,414 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 2d | Corr: +0.150
+2025-12-07 10:11:09,414 - __main__ - INFO -     8. META.US         → EWU.US          | Lag: 2d | Corr: +0.148
+2025-12-07 10:11:09,414 - __main__ - INFO -     9. EWJ.US          → AAPL.US         | Lag: 2d | Corr: +0.143
+2025-12-07 10:11:09,414 - __main__ - INFO -    10. META.US         → FXI.US          | Lag: 2d | Corr: +0.141
+2025-12-07 10:11:09,414 - __main__ - INFO -    11. GS.US           → EWG.US          | Lag: 4d | Corr: -0.137
+2025-12-07 10:11:09,414 - __main__ - INFO -    12. EWG.US          → FXI.US          | Lag: 2d | Corr: +0.136
+2025-12-07 10:11:09,414 - __main__ - INFO -    13. JPM.US          → FXI.US          | Lag: 1d | Corr: +0.135
+2025-12-07 10:11:09,414 - __main__ - INFO -    14. AAPL.US         → XLF.US          | Lag: 3d | Corr: -0.135
+2025-12-07 10:11:09,414 - __main__ - INFO -    15. EWG.US          → META.US         | Lag: 3d | Corr: -0.134
+2025-12-07 10:11:10,102 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:11:10,103 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:11:10,103 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:11:10,103 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:12,505 - __main__ - INFO - Using device: cpu
+2025-12-07 10:15:12,506 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:12,506 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:15:12,506 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:12,507 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:15:12,507 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:15:12,507 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:15:12,507 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:12,507 - __main__ - INFO - Fetching 19 symbols from 2023-12-08 to 2025-12-07...
+2025-12-07 10:15:12,511 - __main__ - INFO -   [1/19] ✓ AAPL: 500 records
+2025-12-07 10:15:12,512 - __main__ - INFO -   [2/19] ✓ MSFT: 500 records
+2025-12-07 10:15:12,512 - __main__ - INFO -   [3/19] ✓ GOOGL: 500 records
+2025-12-07 10:15:12,513 - __main__ - INFO -   [4/19] ✓ AMZN: 500 records
+2025-12-07 10:15:12,513 - __main__ - INFO -   [5/19] ✓ META: 500 records
+2025-12-07 10:15:12,513 - __main__ - INFO -   [6/19] ✓ NVDA: 500 records
+2025-12-07 10:15:12,514 - __main__ - INFO -   [7/19] ✓ JPM: 500 records
+2025-12-07 10:15:12,514 - __main__ - INFO -   [8/19] ✓ BAC: 500 records
+2025-12-07 10:15:12,515 - __main__ - INFO -   [9/19] ✓ GS: 500 records
+2025-12-07 10:15:12,515 - __main__ - INFO -   [10/19] ✓ EWJ: 500 records
+2025-12-07 10:15:12,516 - __main__ - INFO -   [11/19] ✓ EWG: 500 records
+2025-12-07 10:15:12,516 - __main__ - INFO -   [12/19] ✓ EWU: 500 records
+2025-12-07 10:15:12,516 - __main__ - INFO -   [13/19] ✓ FXI: 500 records
+2025-12-07 10:15:12,517 - __main__ - INFO -   [14/19] ✓ EWZ: 500 records
+2025-12-07 10:15:12,517 - __main__ - INFO -   [15/19] ✓ XLF: 500 records
+2025-12-07 10:15:12,518 - __main__ - INFO -   [16/19] ✓ XLK: 500 records
+2025-12-07 10:15:12,518 - __main__ - INFO -   [17/19] ✓ XLE: 500 records
+2025-12-07 10:15:12,518 - __main__ - INFO -   [18/19] ✓ XLV: 500 records
+2025-12-07 10:15:12,518 - __main__ - INFO -   [19/19] ✓ XLI: 500 records
+2025-12-07 10:15:12,519 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:15:12,523 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:15:12,523 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:15:12,523 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:15:12,523 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:12,525 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:15:12,587 - __main__ - INFO - Detected 100 significant relationships
+2025-12-07 10:15:12,590 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:15:12,592 - __main__ - INFO -    XLV.US: influences 8 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    EWJ.US: influences 8 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    BAC.US: influences 8 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    EWZ.US: influences 7 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    XLE.US: influences 7 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    XLK.US: influences 7 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    AAPL.US: influences 7 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    JPM.US: influences 6 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    EWU.US: influences 6 assets
+2025-12-07 10:15:12,592 - __main__ - INFO -    XLF.US: influences 5 assets
+2025-12-07 10:15:12,592 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:15:12,593 - __main__ - INFO -     1. JPM.US          → AAPL.US         | Lag: 2d | Corr: +0.185
+2025-12-07 10:15:12,593 - __main__ - INFO -     2. BAC.US          → AAPL.US         | Lag: 2d | Corr: +0.171
+2025-12-07 10:15:12,593 - __main__ - INFO -     3. BAC.US          → EWU.US          | Lag: 2d | Corr: +0.170
+2025-12-07 10:15:12,593 - __main__ - INFO -     4. META.US         → AMZN.US         | Lag: 1d | Corr: -0.160
+2025-12-07 10:15:12,593 - __main__ - INFO -     5. JPM.US          → EWU.US          | Lag: 2d | Corr: +0.157
+2025-12-07 10:15:12,593 - __main__ - INFO -     6. GS.US           → XLI.US          | Lag: 4d | Corr: -0.150
+2025-12-07 10:15:12,593 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 2d | Corr: +0.150
+2025-12-07 10:15:12,593 - __main__ - INFO -     8. META.US         → EWU.US          | Lag: 2d | Corr: +0.148
+2025-12-07 10:15:12,593 - __main__ - INFO -     9. EWJ.US          → AAPL.US         | Lag: 2d | Corr: +0.143
+2025-12-07 10:15:12,593 - __main__ - INFO -    10. META.US         → FXI.US          | Lag: 2d | Corr: +0.141
+2025-12-07 10:15:12,593 - __main__ - INFO -    11. GS.US           → EWG.US          | Lag: 4d | Corr: -0.137
+2025-12-07 10:15:12,594 - __main__ - INFO -    12. EWG.US          → FXI.US          | Lag: 2d | Corr: +0.136
+2025-12-07 10:15:12,594 - __main__ - INFO -    13. JPM.US          → FXI.US          | Lag: 1d | Corr: +0.135
+2025-12-07 10:15:12,594 - __main__ - INFO -    14. AAPL.US         → XLF.US          | Lag: 3d | Corr: -0.135
+2025-12-07 10:15:12,594 - __main__ - INFO -    15. EWG.US          → META.US         | Lag: 3d | Corr: -0.134
+2025-12-07 10:15:13,243 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:15:13,243 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:15:13,243 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:15:13,243 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:13,930 - __main__ - INFO - Clustering silhouette score: 0.981
+2025-12-07 10:15:13,934 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 10:15:13,936 - __main__ - INFO -    Bull/Low Vol: 99.6% (467 days)
+2025-12-07 10:15:13,936 - __main__ - INFO -    Bear/High Vol: 0.2% (1 days)
+2025-12-07 10:15:13,936 - __main__ - INFO -    Crisis/Contagion: 0.2% (1 days)
+2025-12-07 10:15:14,627 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 10:15:14,628 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:15:14,628 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 10:15:14,628 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:16,199 - __main__ - INFO - Built 88 temporal graphs
+2025-12-07 10:15:16,214 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 10:15:16,215 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 10:15:16,215 - __main__ - INFO -    Average edges: 250.9
+2025-12-07 10:15:16,215 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:15:16,215 - __main__ - INFO - STEP 5: Temporal GNN Training
+2025-12-07 10:15:16,215 - __main__ - INFO - ================================================================================
+2025-12-07 10:15:16,309 - __main__ - INFO - Created 78 training sequences
+2025-12-07 10:15:16,309 - __main__ - INFO - 
+============================================================
+2025-12-07 10:15:16,309 - __main__ - INFO - Fold 1/5
+2025-12-07 10:15:16,309 - __main__ - INFO - ============================================================
+2025-12-07 10:15:21,052 - __main__ - INFO - Fold 1, Epoch 10/50 - Train Loss: 0.0061, Train Acc: 100.00%, Val Loss: 0.0016, Val Acc: 100.00%
+2025-12-07 10:15:25,646 - __main__ - INFO - Fold 1, Epoch 20/50 - Train Loss: 0.0010, Train Acc: 100.00%, Val Loss: 0.0007, Val Acc: 100.00%
+2025-12-07 10:15:30,221 - __main__ - INFO - Fold 1, Epoch 30/50 - Train Loss: 0.0003, Train Acc: 100.00%, Val Loss: 0.0002, Val Acc: 100.00%
+2025-12-07 10:15:34,787 - __main__ - INFO - Fold 1, Epoch 40/50 - Train Loss: 0.0001, Train Acc: 100.00%, Val Loss: 0.0003, Val Acc: 100.00%
+2025-12-07 10:15:38,875 - __main__ - INFO - Early stopping at epoch 49
+2025-12-07 10:15:38,875 - __main__ - INFO - 
+============================================================
+2025-12-07 10:15:38,875 - __main__ - INFO - Fold 2/5
+2025-12-07 10:15:38,875 - __main__ - INFO - ============================================================
+2025-12-07 10:15:46,781 - __main__ - INFO - Fold 2, Epoch 10/50 - Train Loss: 0.0002, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:15:54,991 - __main__ - INFO - Fold 2, Epoch 20/50 - Train Loss: 0.0002, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:16:03,099 - __main__ - INFO - Fold 2, Epoch 30/50 - Train Loss: 0.0001, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:16:05,564 - __main__ - INFO - Early stopping at epoch 33
+2025-12-07 10:16:05,565 - __main__ - INFO - 
+============================================================
+2025-12-07 10:16:05,565 - __main__ - INFO - Fold 3/5
+2025-12-07 10:16:05,565 - __main__ - INFO - ============================================================
+2025-12-07 10:16:17,307 - __main__ - INFO - Fold 3, Epoch 10/50 - Train Loss: 0.0004, Train Acc: 100.00%, Val Loss: 0.0008, Val Acc: 100.00%
+2025-12-07 10:16:19,679 - __main__ - INFO - Early stopping at epoch 12
+2025-12-07 10:16:19,679 - __main__ - INFO - 
+============================================================
+2025-12-07 10:16:19,679 - __main__ - INFO - Fold 4/5
+2025-12-07 10:16:19,679 - __main__ - INFO - ============================================================
+2025-12-07 10:16:34,864 - __main__ - INFO - Fold 4, Epoch 10/50 - Train Loss: 0.0002, Train Acc: 100.00%, Val Loss: 0.0017, Val Acc: 100.00%
+2025-12-07 10:16:45,471 - __main__ - INFO - Early stopping at epoch 17
+2025-12-07 10:16:45,471 - __main__ - INFO - 
+============================================================
+2025-12-07 10:16:45,471 - __main__ - INFO - Fold 5/5
+2025-12-07 10:16:45,471 - __main__ - INFO - ============================================================
+2025-12-07 10:17:04,259 - __main__ - INFO - Fold 5, Epoch 10/50 - Train Loss: 0.0002, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:17:23,109 - __main__ - INFO - Fold 5, Epoch 20/50 - Train Loss: 0.0003, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:17:42,016 - __main__ - INFO - Fold 5, Epoch 30/50 - Train Loss: 0.0001, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:17:56,687 - __main__ - INFO - Early stopping at epoch 38
+2025-12-07 10:17:56,688 - __main__ - INFO - 
+============================================================
+2025-12-07 10:17:56,688 - __main__ - INFO - Cross-Validation Results
+2025-12-07 10:17:56,688 - __main__ - INFO - ============================================================
+2025-12-07 10:17:56,688 - __main__ - INFO - Average Validation Accuracy: 100.00% ± 0.00%
+2025-12-07 10:17:56,688 - __main__ - INFO - Average Validation Loss: 0.0002
+2025-12-07 10:17:56,689 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:17:56,689 - __main__ - INFO - STEP 6: Current Market State
+2025-12-07 10:17:56,689 - __main__ - INFO - ================================================================================
+2025-12-07 10:17:56,689 - __main__ - WARNING - Could not load saved model, using current state
+2025-12-07 10:17:56,699 - __main__ - INFO - 
+🎯 PREDICTED REGIME: Bull/Low Vol
+2025-12-07 10:17:56,699 - __main__ - INFO - 
+Probabilities:
+2025-12-07 10:17:56,699 - __main__ - INFO -    Bull/Low Vol        : 100.0% ███████████████████████████████████████
+2025-12-07 10:17:56,699 - __main__ - INFO -    Bear/High Vol       :   0.0% 
+2025-12-07 10:17:56,700 - __main__ - INFO -    Crisis/Contagion    :   0.0% 
+2025-12-07 10:17:56,700 - __main__ - INFO - 
+⚠️  Contagion Risk: 66.5%
+2025-12-07 10:17:56,700 - __main__ - INFO - 📊 Volatility Forecast: 0.22
+2025-12-07 10:17:56,700 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:17:56,700 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-07 10:17:56,700 - __main__ - INFO - ================================================================================
+2025-12-07 10:17:56,700 - __main__ - INFO - 
+Outputs in output/ directory
+2025-12-07 10:22:20,703 - __main__ - INFO - Using device: cpu
+2025-12-07 10:22:20,704 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:20,704 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:22:20,704 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:20,704 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:22:20,704 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:22:20,704 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:22:20,704 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:20,704 - __main__ - INFO - Fetching 19 symbols from 2015-12-10 to 2025-12-07...
+2025-12-07 10:22:21,886 - __main__ - INFO -   [1/19] ✓ AAPL: 2512 records
+2025-12-07 10:22:22,333 - __main__ - INFO -   [2/19] ✓ MSFT: 2512 records
+2025-12-07 10:22:22,737 - __main__ - INFO -   [3/19] ✓ GOOGL: 2512 records
+2025-12-07 10:22:23,035 - __main__ - INFO -   [4/19] ✓ AMZN: 2512 records
+2025-12-07 10:22:23,312 - __main__ - INFO -   [5/19] ✓ META: 2512 records
+2025-12-07 10:22:23,584 - __main__ - INFO -   [6/19] ✓ NVDA: 2512 records
+2025-12-07 10:22:23,868 - __main__ - INFO -   [7/19] ✓ JPM: 2512 records
+2025-12-07 10:22:24,148 - __main__ - INFO -   [8/19] ✓ BAC: 2512 records
+2025-12-07 10:22:24,434 - __main__ - INFO -   [9/19] ✓ GS: 2512 records
+2025-12-07 10:22:24,694 - __main__ - INFO -   [10/19] ✓ EWJ: 2512 records
+2025-12-07 10:22:24,975 - __main__ - INFO -   [11/19] ✓ EWG: 2512 records
+2025-12-07 10:22:25,273 - __main__ - INFO -   [12/19] ✓ EWU: 2512 records
+2025-12-07 10:22:25,542 - __main__ - INFO -   [13/19] ✓ FXI: 2512 records
+2025-12-07 10:22:25,794 - __main__ - INFO -   [14/19] ✓ EWZ: 2512 records
+2025-12-07 10:22:26,049 - __main__ - INFO -   [15/19] ✓ XLF: 2512 records
+2025-12-07 10:22:26,334 - __main__ - INFO -   [16/19] ✓ XLK: 2512 records
+2025-12-07 10:22:26,597 - __main__ - INFO -   [17/19] ✓ XLE: 2512 records
+2025-12-07 10:22:26,862 - __main__ - INFO -   [18/19] ✓ XLV: 2512 records
+2025-12-07 10:22:27,175 - __main__ - INFO -   [19/19] ✓ XLI: 2512 records
+2025-12-07 10:22:27,175 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:22:27,180 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:22:27,180 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:22:27,180 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:22:27,180 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:27,182 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:22:27,261 - __main__ - INFO - Detected 76 significant relationships
+2025-12-07 10:22:27,264 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:22:27,266 - __main__ - INFO -    XLV.US: influences 14 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    XLF.US: influences 9 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    EWG.US: influences 8 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    JPM.US: influences 7 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    AAPL.US: influences 6 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    BAC.US: influences 5 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    XLI.US: influences 5 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    XLE.US: influences 4 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    EWZ.US: influences 3 assets
+2025-12-07 10:22:27,266 - __main__ - INFO -    EWJ.US: influences 3 assets
+2025-12-07 10:22:27,266 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:22:27,267 - __main__ - INFO -     1. XLF.US          → MSFT.US         | Lag: 1d | Corr: -0.174
+2025-12-07 10:22:27,267 - __main__ - INFO -     2. XLV.US          → MSFT.US         | Lag: 1d | Corr: -0.170
+2025-12-07 10:22:27,267 - __main__ - INFO -     3. XLV.US          → XLK.US          | Lag: 1d | Corr: -0.159
+2025-12-07 10:22:27,267 - __main__ - INFO -     4. BAC.US          → MSFT.US         | Lag: 1d | Corr: -0.153
+2025-12-07 10:22:27,267 - __main__ - INFO -     5. XLI.US          → MSFT.US         | Lag: 1d | Corr: -0.152
+2025-12-07 10:22:27,267 - __main__ - INFO -     6. XLF.US          → XLK.US          | Lag: 1d | Corr: -0.152
+2025-12-07 10:22:27,267 - __main__ - INFO -     7. JPM.US          → MSFT.US         | Lag: 1d | Corr: -0.146
+2025-12-07 10:22:27,267 - __main__ - INFO -     8. XLK.US          → MSFT.US         | Lag: 1d | Corr: -0.145
+2025-12-07 10:22:27,267 - __main__ - INFO -     9. EWG.US          → EWU.US          | Lag: 2d | Corr: +0.145
+2025-12-07 10:22:27,267 - __main__ - INFO -    10. XLE.US          → MSFT.US         | Lag: 1d | Corr: -0.145
+2025-12-07 10:22:27,267 - __main__ - INFO -    11. XLV.US          → EWZ.US          | Lag: 1d | Corr: -0.140
+2025-12-07 10:22:27,267 - __main__ - INFO -    12. MSFT.US         → EWZ.US          | Lag: 1d | Corr: -0.140
+2025-12-07 10:22:27,267 - __main__ - INFO -    13. XLF.US          → EWU.US          | Lag: 2d | Corr: +0.136
+2025-12-07 10:22:27,267 - __main__ - INFO -    14. AAPL.US         → MSFT.US         | Lag: 1d | Corr: -0.134
+2025-12-07 10:22:27,268 - __main__ - INFO -    15. JPM.US          → EWU.US          | Lag: 2d | Corr: +0.131
+2025-12-07 10:22:27,964 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:22:27,964 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:22:27,964 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:22:27,964 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:30,906 - __main__ - INFO - Clustering silhouette score: 0.954
+2025-12-07 10:22:30,915 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 10:22:30,917 - __main__ - INFO -    Bull/Low Vol: 99.0% (2456 days)
+2025-12-07 10:22:30,918 - __main__ - INFO -    Bear/High Vol: 0.5% (12 days)
+2025-12-07 10:22:30,918 - __main__ - INFO -    Crisis/Contagion: 0.5% (13 days)
+2025-12-07 10:22:31,722 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 10:22:31,722 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:22:31,722 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 10:22:31,722 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:40,831 - __main__ - INFO - Built 491 temporal graphs
+2025-12-07 10:22:40,871 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 10:22:40,871 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 10:22:40,871 - __main__ - INFO -    Average edges: 291.2
+2025-12-07 10:22:40,871 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:22:40,871 - __main__ - INFO - STEP 5: Temporal GNN Training
+2025-12-07 10:22:40,871 - __main__ - INFO - ================================================================================
+2025-12-07 10:22:41,067 - __main__ - INFO - Created 481 training sequences
+2025-12-07 10:22:41,067 - __main__ - INFO - 
+============================================================
+2025-12-07 10:22:41,067 - __main__ - INFO - Fold 1/5
+2025-12-07 10:22:41,067 - __main__ - INFO - ============================================================
+2025-12-07 10:23:22,405 - __main__ - INFO - Using device: cpu
+2025-12-07 10:23:22,406 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:22,406 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:23:22,406 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:22,406 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:23:22,406 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:23:22,406 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:23:22,407 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:22,407 - __main__ - INFO - Fetching 19 symbols from 2005-12-12 to 2025-12-07...
+2025-12-07 10:23:23,734 - __main__ - INFO -   [1/19] ✓ AAPL: 5028 records
+2025-12-07 10:23:24,010 - __main__ - INFO -   [2/19] ✓ MSFT: 5028 records
+2025-12-07 10:23:24,322 - __main__ - INFO -   [3/19] ✓ GOOGL: 5028 records
+2025-12-07 10:23:24,679 - __main__ - INFO -   [4/19] ✓ AMZN: 5028 records
+2025-12-07 10:23:24,971 - __main__ - INFO -   [5/19] ✓ META: 3408 records
+2025-12-07 10:23:25,309 - __main__ - INFO -   [6/19] ✓ NVDA: 5028 records
+2025-12-07 10:23:25,800 - __main__ - INFO -   [7/19] ✓ JPM: 5028 records
+2025-12-07 10:23:26,312 - __main__ - INFO -   [8/19] ✓ BAC: 5028 records
+2025-12-07 10:23:26,590 - __main__ - INFO -   [9/19] ✓ GS: 5028 records
+2025-12-07 10:23:26,904 - __main__ - INFO -   [10/19] ✓ EWJ: 5028 records
+2025-12-07 10:23:27,218 - __main__ - INFO -   [11/19] ✓ EWG: 5028 records
+2025-12-07 10:23:27,525 - __main__ - INFO -   [12/19] ✓ EWU: 5028 records
+2025-12-07 10:23:27,829 - __main__ - INFO -   [13/19] ✓ FXI: 5028 records
+2025-12-07 10:23:28,129 - __main__ - INFO -   [14/19] ✓ EWZ: 5028 records
+2025-12-07 10:23:28,405 - __main__ - INFO -   [15/19] ✓ XLF: 5028 records
+2025-12-07 10:23:28,679 - __main__ - INFO -   [16/19] ✓ XLK: 5028 records
+2025-12-07 10:23:29,019 - __main__ - INFO -   [17/19] ✓ XLE: 5028 records
+2025-12-07 10:23:29,331 - __main__ - INFO -   [18/19] ✓ XLV: 5028 records
+2025-12-07 10:23:29,642 - __main__ - INFO -   [19/19] ✓ XLI: 5028 records
+2025-12-07 10:23:29,642 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:23:29,646 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:23:29,646 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:23:29,646 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:23:29,646 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:29,652 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:23:29,729 - __main__ - INFO - Detected 21 significant relationships
+2025-12-07 10:23:29,731 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:23:29,731 - __main__ - INFO -    XLV.US: influences 4 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    XLF.US: influences 3 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    JPM.US: influences 3 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    EWG.US: influences 2 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    BAC.US: influences 2 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    XLE.US: influences 2 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    MSFT.US: influences 2 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    XLI.US: influences 2 assets
+2025-12-07 10:23:29,731 - __main__ - INFO -    XLK.US: influences 1 assets
+2025-12-07 10:23:29,731 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:23:29,732 - __main__ - INFO -     1. XLF.US          → MSFT.US         | Lag: 1d | Corr: -0.135
+2025-12-07 10:23:29,732 - __main__ - INFO -     2. XLF.US          → XLK.US          | Lag: 1d | Corr: -0.131
+2025-12-07 10:23:29,732 - __main__ - INFO -     3. EWG.US          → EWU.US          | Lag: 2d | Corr: +0.127
+2025-12-07 10:23:29,732 - __main__ - INFO -     4. XLV.US          → XLK.US          | Lag: 1d | Corr: -0.125
+2025-12-07 10:23:29,732 - __main__ - INFO -     5. XLV.US          → MSFT.US         | Lag: 1d | Corr: -0.120
+2025-12-07 10:23:29,732 - __main__ - INFO -     6. JPM.US          → MSFT.US         | Lag: 1d | Corr: -0.117
+2025-12-07 10:23:29,732 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 1d | Corr: -0.116
+2025-12-07 10:23:29,732 - __main__ - INFO -     8. XLF.US          → EWU.US          | Lag: 2d | Corr: +0.115
+2025-12-07 10:23:29,732 - __main__ - INFO -     9. XLK.US          → NVDA.US         | Lag: 1d | Corr: -0.114
+2025-12-07 10:23:29,732 - __main__ - INFO -    10. XLE.US          → MSFT.US         | Lag: 1d | Corr: -0.112
+2025-12-07 10:23:29,732 - __main__ - INFO -    11. MSFT.US         → EWZ.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:23:29,732 - __main__ - INFO -    12. JPM.US          → XLK.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:23:29,732 - __main__ - INFO -    13. MSFT.US         → XLK.US          | Lag: 1d | Corr: -0.111
+2025-12-07 10:23:29,732 - __main__ - INFO -    14. XLI.US          → MSFT.US         | Lag: 1d | Corr: -0.110
+2025-12-07 10:23:29,732 - __main__ - INFO -    15. BAC.US          → XLK.US          | Lag: 1d | Corr: -0.109
+2025-12-07 10:23:30,262 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:23:30,262 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:23:30,263 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:23:30,263 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:34,212 - __main__ - INFO - Clustering silhouette score: 0.973
+2025-12-07 10:23:34,219 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 10:23:34,220 - __main__ - INFO -    Bull/Low Vol: 0.6% (21 days)
+2025-12-07 10:23:34,220 - __main__ - INFO -    Bear/High Vol: 99.1% (3348 days)
+2025-12-07 10:23:34,220 - __main__ - INFO -    Crisis/Contagion: 0.2% (8 days)
+2025-12-07 10:23:34,981 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 10:23:34,981 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:23:34,982 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 10:23:34,982 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:46,846 - __main__ - INFO - Built 670 temporal graphs
+2025-12-07 10:23:46,887 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 10:23:46,888 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 10:23:46,888 - __main__ - INFO -    Average edges: 296.1
+2025-12-07 10:23:46,888 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:23:46,888 - __main__ - INFO - STEP 5: Temporal GNN Training
+2025-12-07 10:23:46,888 - __main__ - INFO - ================================================================================
+2025-12-07 10:23:47,113 - __main__ - INFO - Created 660 training sequences
+2025-12-07 10:23:47,113 - __main__ - INFO - 
+============================================================
+2025-12-07 10:23:47,113 - __main__ - INFO - Fold 1/5
+2025-12-07 10:23:47,113 - __main__ - INFO - ============================================================
+2025-12-07 10:24:27,336 - __main__ - INFO - Fold 1, Epoch 10/50 - Train Loss: 0.0005, Train Acc: 100.00%, Val Loss: 0.0002, Val Acc: 100.00%
+2025-12-07 10:25:08,281 - __main__ - INFO - Fold 1, Epoch 20/50 - Train Loss: 0.0001, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:25:24,413 - __main__ - INFO - Early stopping at epoch 24
+2025-12-07 10:25:24,416 - __main__ - INFO - 
+============================================================
+2025-12-07 10:25:24,416 - __main__ - INFO - Fold 2/5
+2025-12-07 10:25:24,416 - __main__ - INFO - ============================================================
+2025-12-07 10:26:34,915 - __main__ - INFO - Fold 2, Epoch 10/50 - Train Loss: 0.0001, Train Acc: 100.00%, Val Loss: 0.0001, Val Acc: 100.00%
+2025-12-07 10:27:46,212 - __main__ - INFO - Fold 2, Epoch 20/50 - Train Loss: 0.0000, Train Acc: 100.00%, Val Loss: 0.0000, Val Acc: 100.00%
+2025-12-07 10:28:58,080 - __main__ - INFO - Fold 2, Epoch 30/50 - Train Loss: 0.0000, Train Acc: 100.00%, Val Loss: 0.0000, Val Acc: 100.00%
+2025-12-07 10:29:47,920 - __main__ - INFO - Early stopping at epoch 37
+2025-12-07 10:29:47,922 - __main__ - INFO - 
+============================================================
+2025-12-07 10:29:47,922 - __main__ - INFO - Fold 3/5
+2025-12-07 10:29:47,922 - __main__ - INFO - ============================================================
+2025-12-07 10:31:13,925 - __main__ - INFO - Using device: cpu
+2025-12-07 10:31:13,926 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:13,926 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:31:13,926 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:13,926 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:31:13,926 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 10:31:13,927 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:31:13,927 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:31:13,927 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:13,927 - __main__ - INFO - Fetching 19 symbols from 2012-03-30 to 2025-12-07...
+2025-12-07 10:31:15,079 - __main__ - INFO -   [1/19] ✓ AAPL: 3442 records
+2025-12-07 10:31:15,628 - __main__ - INFO -   [2/19] ✓ MSFT: 3442 records
+2025-12-07 10:31:15,943 - __main__ - INFO -   [3/19] ✓ GOOGL: 3442 records
+2025-12-07 10:31:16,228 - __main__ - INFO -   [4/19] ✓ AMZN: 3442 records
+2025-12-07 10:31:16,513 - __main__ - INFO -   [5/19] ✓ META: 3408 records
+2025-12-07 10:31:16,957 - __main__ - INFO -   [6/19] ✓ NVDA: 3442 records
+2025-12-07 10:31:17,256 - __main__ - INFO -   [7/19] ✓ JPM: 3442 records
+2025-12-07 10:31:17,545 - __main__ - INFO -   [8/19] ✓ BAC: 3442 records
+2025-12-07 10:31:17,856 - __main__ - INFO -   [9/19] ✓ GS: 3442 records
+2025-12-07 10:31:18,156 - __main__ - INFO -   [10/19] ✓ EWJ: 3442 records
+2025-12-07 10:31:18,432 - __main__ - INFO -   [11/19] ✓ EWG: 3442 records
+2025-12-07 10:31:18,737 - __main__ - INFO -   [12/19] ✓ EWU: 3442 records
+2025-12-07 10:31:19,355 - __main__ - INFO -   [13/19] ✓ FXI: 3442 records
+2025-12-07 10:31:19,643 - __main__ - INFO -   [14/19] ✓ EWZ: 3442 records
+2025-12-07 10:31:19,946 - __main__ - INFO -   [15/19] ✓ XLF: 3442 records
+2025-12-07 10:31:20,254 - __main__ - INFO -   [16/19] ✓ XLK: 3442 records
+2025-12-07 10:31:20,809 - __main__ - INFO -   [17/19] ✓ XLE: 3442 records
+2025-12-07 10:31:21,142 - __main__ - INFO -   [18/19] ✓ XLV: 3442 records
+2025-12-07 10:31:21,617 - __main__ - INFO -   [19/19] ✓ XLI: 3442 records
+2025-12-07 10:31:21,617 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:31:21,625 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:31:21,625 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:31:21,625 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:31:21,625 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:21,628 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:31:21,710 - __main__ - INFO - Detected 21 significant relationships
+2025-12-07 10:31:21,713 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:31:21,714 - __main__ - INFO -    XLV.US: influences 4 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    XLF.US: influences 3 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    JPM.US: influences 3 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    EWG.US: influences 2 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    BAC.US: influences 2 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    XLE.US: influences 2 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    MSFT.US: influences 2 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    XLI.US: influences 2 assets
+2025-12-07 10:31:21,714 - __main__ - INFO -    XLK.US: influences 1 assets
+2025-12-07 10:31:21,714 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:31:21,714 - __main__ - INFO -     1. XLF.US          → MSFT.US         | Lag: 1d | Corr: -0.135
+2025-12-07 10:31:21,715 - __main__ - INFO -     2. XLF.US          → XLK.US          | Lag: 1d | Corr: -0.131
+2025-12-07 10:31:21,715 - __main__ - INFO -     3. EWG.US          → EWU.US          | Lag: 2d | Corr: +0.127
+2025-12-07 10:31:21,715 - __main__ - INFO -     4. XLV.US          → XLK.US          | Lag: 1d | Corr: -0.125
+2025-12-07 10:31:21,715 - __main__ - INFO -     5. XLV.US          → MSFT.US         | Lag: 1d | Corr: -0.120
+2025-12-07 10:31:21,715 - __main__ - INFO -     6. JPM.US          → MSFT.US         | Lag: 1d | Corr: -0.117
+2025-12-07 10:31:21,715 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 1d | Corr: -0.116
+2025-12-07 10:31:21,715 - __main__ - INFO -     8. XLF.US          → EWU.US          | Lag: 2d | Corr: +0.115
+2025-12-07 10:31:21,715 - __main__ - INFO -     9. XLK.US          → NVDA.US         | Lag: 1d | Corr: -0.114
+2025-12-07 10:31:21,715 - __main__ - INFO -    10. XLE.US          → MSFT.US         | Lag: 1d | Corr: -0.112
+2025-12-07 10:31:21,715 - __main__ - INFO -    11. MSFT.US         → EWZ.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:31:21,715 - __main__ - INFO -    12. JPM.US          → XLK.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:31:21,715 - __main__ - INFO -    13. MSFT.US         → XLK.US          | Lag: 1d | Corr: -0.111
+2025-12-07 10:31:21,715 - __main__ - INFO -    14. XLI.US          → MSFT.US         | Lag: 1d | Corr: -0.110
+2025-12-07 10:31:21,715 - __main__ - INFO -    15. BAC.US          → XLK.US          | Lag: 1d | Corr: -0.109
+2025-12-07 10:31:22,239 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:31:22,241 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:31:22,241 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:31:22,241 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:25,916 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 10:31:25,916 - __main__ - INFO -    Regime 0: 1351 days (40.0%)
+2025-12-07 10:31:25,916 - __main__ - INFO -    Regime 1: 1350 days (40.0%)
+2025-12-07 10:31:25,916 - __main__ - INFO -    Regime 2: 676 days (20.0%)
+2025-12-07 10:31:25,922 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 10:31:25,922 - __main__ - INFO -    Bull/Low Vol: 40.0% (1351 days)
+2025-12-07 10:31:25,922 - __main__ - INFO -    Normal/Bear: 40.0% (1350 days)
+2025-12-07 10:31:25,923 - __main__ - INFO -    Crisis/Contagion: 20.0% (676 days)
+2025-12-07 10:31:26,678 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 10:31:26,679 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:31:26,679 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 10:31:26,679 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:38,729 - __main__ - INFO - Built 670 temporal graphs
+2025-12-07 10:31:38,769 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 10:31:38,769 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 10:31:38,769 - __main__ - INFO -    Average edges: 296.1
+2025-12-07 10:31:38,769 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:31:38,769 - __main__ - INFO - STEP 5: Temporal GNN Training
+2025-12-07 10:31:38,769 - __main__ - INFO - ================================================================================
+2025-12-07 10:31:38,999 - __main__ - INFO - Created 660 training sequences
+2025-12-07 10:31:38,999 - __main__ - INFO - Label distribution in sequences:
+2025-12-07 10:31:38,999 - __main__ - INFO -    Regime 0: 271 (41.1%)
+2025-12-07 10:31:38,999 - __main__ - INFO -    Regime 1: 256 (38.8%)
+2025-12-07 10:31:38,999 - __main__ - INFO -    Regime 2: 133 (20.2%)
+2025-12-07 10:31:38,999 - __main__ - INFO - 
+============================================================
+2025-12-07 10:31:38,999 - __main__ - INFO - Fold 1/5
+2025-12-07 10:31:38,999 - __main__ - INFO - Train: 110, Val: 110
+2025-12-07 10:31:38,999 - __main__ - INFO - ============================================================
+2025-12-07 10:32:20,361 - __main__ - INFO - Fold 1, Epoch 10/50 - Train Loss: 0.6208, Train Acc: 87.27%, Val Loss: 3.0233, Val Acc: 60.00%
+2025-12-07 10:32:24,452 - __main__ - INFO - Early stopping at epoch 11
+2025-12-07 10:32:24,452 - __main__ - INFO - 
+============================================================
+2025-12-07 10:32:24,452 - __main__ - INFO - Fold 2/5
+2025-12-07 10:32:24,452 - __main__ - INFO - Train: 220, Val: 110
+2025-12-07 10:32:24,452 - __main__ - INFO - ============================================================
+2025-12-07 10:33:36,522 - __main__ - INFO - Fold 2, Epoch 10/50 - Train Loss: 0.3283, Train Acc: 92.27%, Val Loss: 1.5163, Val Acc: 72.73%
+2025-12-07 10:33:50,975 - __main__ - INFO - Early stopping at epoch 12
+2025-12-07 10:33:50,976 - __main__ - INFO - 
+============================================================
+2025-12-07 10:33:50,976 - __main__ - INFO - Fold 3/5
+2025-12-07 10:33:50,976 - __main__ - INFO - Train: 330, Val: 110
+2025-12-07 10:33:50,976 - __main__ - INFO - ============================================================
+2025-12-07 10:35:32,020 - __main__ - INFO - Fold 3, Epoch 10/50 - Train Loss: 0.4292, Train Acc: 90.30%, Val Loss: 2.2800, Val Acc: 64.55%
+2025-12-07 10:35:42,080 - __main__ - INFO - Early stopping at epoch 11
+2025-12-07 10:35:42,080 - __main__ - INFO - 
+============================================================
+2025-12-07 10:35:42,080 - __main__ - INFO - Fold 4/5
+2025-12-07 10:35:42,080 - __main__ - INFO - Train: 440, Val: 110
+2025-12-07 10:35:42,080 - __main__ - INFO - ============================================================
+2025-12-07 10:37:52,792 - __main__ - INFO - Fold 4, Epoch 10/50 - Train Loss: 0.3888, Train Acc: 90.68%, Val Loss: 1.0858, Val Acc: 80.00%
+2025-12-07 10:38:32,430 - __main__ - INFO - Early stopping at epoch 13
+2025-12-07 10:38:32,431 - __main__ - INFO - 
+============================================================
+2025-12-07 10:38:32,431 - __main__ - INFO - Fold 5/5
+2025-12-07 10:38:32,431 - __main__ - INFO - Train: 550, Val: 110
+2025-12-07 10:38:32,431 - __main__ - INFO - ============================================================
+2025-12-07 10:41:14,968 - __main__ - INFO - Fold 5, Epoch 10/50 - Train Loss: 0.5578, Train Acc: 87.27%, Val Loss: 1.4675, Val Acc: 67.27%
+2025-12-07 10:42:20,749 - __main__ - INFO - Early stopping at epoch 14
+2025-12-07 10:42:20,751 - __main__ - INFO - 
+============================================================
+2025-12-07 10:42:20,751 - __main__ - INFO - Cross-Validation Results
+2025-12-07 10:42:20,751 - __main__ - INFO - ============================================================
+2025-12-07 10:42:20,751 - __main__ - INFO - Average Validation Accuracy: 71.09% ± 11.32%
+2025-12-07 10:42:20,751 - __main__ - INFO - Average Validation Loss: 1.1474
+2025-12-07 10:42:20,752 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:42:20,752 - __main__ - INFO - STEP 6: Current Market State
+2025-12-07 10:42:20,752 - __main__ - INFO - ================================================================================
+2025-12-07 10:42:20,759 - __main__ - INFO - Loaded best model from fold 5
+2025-12-07 10:42:20,770 - __main__ - INFO - 
+🎯 PREDICTED REGIME: Normal/Bear
+2025-12-07 10:42:20,770 - __main__ - INFO - 
+Probabilities:
+2025-12-07 10:42:20,770 - __main__ - INFO -    Bull/Low Vol        :   0.2% 
+2025-12-07 10:42:20,770 - __main__ - INFO -    Normal/Bear         :  99.8% ███████████████████████████████████████
+2025-12-07 10:42:20,770 - __main__ - INFO -    Crisis/Contagion    :   0.0% 
+2025-12-07 10:42:20,771 - __main__ - INFO - 
+⚠️  Contagion Risk: 68.8%
+2025-12-07 10:42:20,771 - __main__ - INFO - 📊 Volatility Forecast: 0.17
+2025-12-07 10:42:20,772 - __main__ - INFO - 
+📈 Current Market Statistics (last window):
+2025-12-07 10:42:20,773 - __main__ - INFO -    Realized Volatility: 0.22
+2025-12-07 10:42:20,773 - __main__ - INFO -    Avg Correlation: 0.350
+2025-12-07 10:42:20,773 - __main__ - INFO -    % Negative Days: 30.0%
+2025-12-07 10:42:20,773 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:42:20,773 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-07 10:42:20,773 - __main__ - INFO - ================================================================================
+2025-12-07 10:42:20,773 - __main__ - INFO - 
+Outputs in output/ directory:
+2025-12-07 10:42:20,773 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2025-12-07 10:42:20,773 - __main__ - INFO -    - output/graphs/regime_analysis.png
+2025-12-07 10:42:20,773 - __main__ - INFO -    - output/lead_lag_relationships.csv
+2025-12-07 10:42:20,773 - __main__ - INFO -    - output/metrics/cv_results.json
+2025-12-07 10:42:20,773 - __main__ - INFO -    - output/models/best_model_fold*.pt
+2025-12-07 10:52:52,588 - __main__ - INFO - Using device: cpu
+2025-12-07 10:52:52,589 - __main__ - INFO - ================================================================================
+2025-12-07 10:52:52,589 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 10:52:52,589 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-07 10:52:52,589 - __main__ - INFO - ================================================================================
+2025-12-07 10:52:52,589 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 10:52:52,590 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 10:52:52,590 - __main__ - INFO - Using learned edges: True
+2025-12-07 10:52:52,590 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:52:52,590 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 10:52:52,590 - __main__ - INFO - ================================================================================
+2025-12-07 10:52:52,590 - __main__ - INFO - Fetching 19 symbols from 2012-03-30 to 2025-12-07...
+2025-12-07 10:52:52,593 - __main__ - INFO -   [1/19] ✓ AAPL: 3442 records
+2025-12-07 10:52:52,594 - __main__ - INFO -   [2/19] ✓ MSFT: 3442 records
+2025-12-07 10:52:52,595 - __main__ - INFO -   [3/19] ✓ GOOGL: 3442 records
+2025-12-07 10:52:52,596 - __main__ - INFO -   [4/19] ✓ AMZN: 3442 records
+2025-12-07 10:52:52,596 - __main__ - INFO -   [5/19] ✓ META: 3408 records
+2025-12-07 10:52:52,597 - __main__ - INFO -   [6/19] ✓ NVDA: 3442 records
+2025-12-07 10:52:52,598 - __main__ - INFO -   [7/19] ✓ JPM: 3442 records
+2025-12-07 10:52:52,599 - __main__ - INFO -   [8/19] ✓ BAC: 3442 records
+2025-12-07 10:52:52,600 - __main__ - INFO -   [9/19] ✓ GS: 3442 records
+2025-12-07 10:52:52,600 - __main__ - INFO -   [10/19] ✓ EWJ: 3442 records
+2025-12-07 10:52:52,601 - __main__ - INFO -   [11/19] ✓ EWG: 3442 records
+2025-12-07 10:52:52,601 - __main__ - INFO -   [12/19] ✓ EWU: 3442 records
+2025-12-07 10:52:52,602 - __main__ - INFO -   [13/19] ✓ FXI: 3442 records
+2025-12-07 10:52:52,603 - __main__ - INFO -   [14/19] ✓ EWZ: 3442 records
+2025-12-07 10:52:52,603 - __main__ - INFO -   [15/19] ✓ XLF: 3442 records
+2025-12-07 10:52:52,604 - __main__ - INFO -   [16/19] ✓ XLK: 3442 records
+2025-12-07 10:52:52,605 - __main__ - INFO -   [17/19] ✓ XLE: 3442 records
+2025-12-07 10:52:52,606 - __main__ - INFO -   [18/19] ✓ XLV: 3442 records
+2025-12-07 10:52:52,607 - __main__ - INFO -   [19/19] ✓ XLI: 3442 records
+2025-12-07 10:52:52,607 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 10:52:52,612 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 10:52:52,612 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:52:52,612 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 10:52:52,612 - __main__ - INFO - ================================================================================
+2025-12-07 10:52:52,624 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 10:52:52,699 - __main__ - INFO - Detected 21 significant relationships
+2025-12-07 10:52:52,701 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 10:52:52,702 - __main__ - INFO -    XLV.US: influences 4 assets
+2025-12-07 10:52:52,702 - __main__ - INFO -    XLF.US: influences 3 assets
+2025-12-07 10:52:52,702 - __main__ - INFO -    JPM.US: influences 3 assets
+2025-12-07 10:52:52,702 - __main__ - INFO -    EWG.US: influences 2 assets
+2025-12-07 10:52:52,702 - __main__ - INFO -    BAC.US: influences 2 assets
+2025-12-07 10:52:52,703 - __main__ - INFO -    XLE.US: influences 2 assets
+2025-12-07 10:52:52,703 - __main__ - INFO -    MSFT.US: influences 2 assets
+2025-12-07 10:52:52,703 - __main__ - INFO -    XLI.US: influences 2 assets
+2025-12-07 10:52:52,703 - __main__ - INFO -    XLK.US: influences 1 assets
+2025-12-07 10:52:52,703 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 10:52:52,703 - __main__ - INFO -     1. XLF.US          → MSFT.US         | Lag: 1d | Corr: -0.135
+2025-12-07 10:52:52,703 - __main__ - INFO -     2. XLF.US          → XLK.US          | Lag: 1d | Corr: -0.131
+2025-12-07 10:52:52,703 - __main__ - INFO -     3. EWG.US          → EWU.US          | Lag: 2d | Corr: +0.127
+2025-12-07 10:52:52,703 - __main__ - INFO -     4. XLV.US          → XLK.US          | Lag: 1d | Corr: -0.125
+2025-12-07 10:52:52,703 - __main__ - INFO -     5. XLV.US          → MSFT.US         | Lag: 1d | Corr: -0.120
+2025-12-07 10:52:52,704 - __main__ - INFO -     6. JPM.US          → MSFT.US         | Lag: 1d | Corr: -0.117
+2025-12-07 10:52:52,704 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 1d | Corr: -0.116
+2025-12-07 10:52:52,704 - __main__ - INFO -     8. XLF.US          → EWU.US          | Lag: 2d | Corr: +0.115
+2025-12-07 10:52:52,704 - __main__ - INFO -     9. XLK.US          → NVDA.US         | Lag: 1d | Corr: -0.114
+2025-12-07 10:52:52,704 - __main__ - INFO -    10. XLE.US          → MSFT.US         | Lag: 1d | Corr: -0.112
+2025-12-07 10:52:52,704 - __main__ - INFO -    11. MSFT.US         → EWZ.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:52:52,704 - __main__ - INFO -    12. JPM.US          → XLK.US          | Lag: 1d | Corr: -0.112
+2025-12-07 10:52:52,704 - __main__ - INFO -    13. MSFT.US         → XLK.US          | Lag: 1d | Corr: -0.111
+2025-12-07 10:52:52,704 - __main__ - INFO -    14. XLI.US          → MSFT.US         | Lag: 1d | Corr: -0.110
+2025-12-07 10:52:52,704 - __main__ - INFO -    15. BAC.US          → XLK.US          | Lag: 1d | Corr: -0.109
+2025-12-07 10:52:53,253 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 10:52:53,253 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:52:53,253 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 10:52:53,254 - __main__ - INFO - ================================================================================
+2025-12-07 10:52:56,946 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 10:52:56,946 - __main__ - INFO -    Regime 0: 1351 days (40.0%)
+2025-12-07 10:52:56,946 - __main__ - INFO -    Regime 1: 1350 days (40.0%)
+2025-12-07 10:52:56,946 - __main__ - INFO -    Regime 2: 676 days (20.0%)
+2025-12-07 10:52:56,953 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 10:52:56,955 - __main__ - INFO -    Bull/Low Vol: 40.0% (1351 days)
+2025-12-07 10:52:56,955 - __main__ - INFO -    Normal/Bear: 40.0% (1350 days)
+2025-12-07 10:52:56,955 - __main__ - INFO -    Crisis/Contagion: 20.0% (676 days)
+2025-12-07 10:52:57,703 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 10:52:57,703 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:52:57,703 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 10:52:57,703 - __main__ - INFO - ================================================================================
+2025-12-07 10:53:09,678 - __main__ - INFO - Built 670 temporal graphs
+2025-12-07 10:53:09,727 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 10:53:09,728 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 10:53:09,728 - __main__ - INFO -    Average edges: 361.0
+2025-12-07 10:53:09,728 - __main__ - INFO -    Mode: Full graph (edges will be learned)
+2025-12-07 10:53:09,728 - __main__ - INFO - 
+================================================================================
+2025-12-07 10:53:09,728 - __main__ - INFO - STEP 5: Temporal GNN Training (with NOVEL Learned Edges)
+2025-12-07 10:53:09,728 - __main__ - INFO - ================================================================================
+2025-12-07 10:53:09,804 - __main__ - INFO - Model parameters: 292,213
+2025-12-07 10:53:09,968 - __main__ - INFO - Created 660 training sequences
+2025-12-07 10:53:09,968 - __main__ - INFO - Label distribution in sequences:
+2025-12-07 10:53:09,968 - __main__ - INFO -    Regime 0: 271 (41.1%)
+2025-12-07 10:53:09,968 - __main__ - INFO -    Regime 1: 256 (38.8%)
+2025-12-07 10:53:09,968 - __main__ - INFO -    Regime 2: 133 (20.2%)
+2025-12-07 10:53:09,968 - __main__ - INFO - 
+============================================================
+2025-12-07 10:53:09,968 - __main__ - INFO - Fold 1/5
+2025-12-07 10:53:09,968 - __main__ - INFO - Train: 110, Val: 110
+2025-12-07 10:53:09,968 - __main__ - INFO - ============================================================
+2025-12-07 12:45:01,034 - __main__ - INFO - Using device: cpu
+2025-12-07 12:45:01,035 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:01,035 - __main__ - INFO - Cross-Market Contagion Networks - Research-Grade Implementation
+2025-12-07 12:45:01,035 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-07 12:45:01,035 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:01,036 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 12:45:01,036 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 12:45:01,036 - __main__ - INFO - Using learned edges: True
+2025-12-07 12:45:01,036 - __main__ - INFO - 
+================================================================================
+2025-12-07 12:45:01,036 - __main__ - INFO - STEP 1: Data Collection
+2025-12-07 12:45:01,036 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:01,036 - __main__ - INFO - Fetching 19 symbols from 2012-03-30 to 2025-12-07...
+2025-12-07 12:45:01,040 - __main__ - INFO -   [1/19] ✓ AAPL: 3442 records
+2025-12-07 12:45:01,042 - __main__ - INFO -   [2/19] ✓ MSFT: 3442 records
+2025-12-07 12:45:01,042 - __main__ - INFO -   [3/19] ✓ GOOGL: 3442 records
+2025-12-07 12:45:01,043 - __main__ - INFO -   [4/19] ✓ AMZN: 3442 records
+2025-12-07 12:45:01,044 - __main__ - INFO -   [5/19] ✓ META: 3408 records
+2025-12-07 12:45:01,045 - __main__ - INFO -   [6/19] ✓ NVDA: 3442 records
+2025-12-07 12:45:01,046 - __main__ - INFO -   [7/19] ✓ JPM: 3442 records
+2025-12-07 12:45:01,047 - __main__ - INFO -   [8/19] ✓ BAC: 3442 records
+2025-12-07 12:45:01,048 - __main__ - INFO -   [9/19] ✓ GS: 3442 records
+2025-12-07 12:45:01,048 - __main__ - INFO -   [10/19] ✓ EWJ: 3442 records
+2025-12-07 12:45:01,049 - __main__ - INFO -   [11/19] ✓ EWG: 3442 records
+2025-12-07 12:45:01,050 - __main__ - INFO -   [12/19] ✓ EWU: 3442 records
+2025-12-07 12:45:01,050 - __main__ - INFO -   [13/19] ✓ FXI: 3442 records
+2025-12-07 12:45:01,051 - __main__ - INFO -   [14/19] ✓ EWZ: 3442 records
+2025-12-07 12:45:01,051 - __main__ - INFO -   [15/19] ✓ XLF: 3442 records
+2025-12-07 12:45:01,052 - __main__ - INFO -   [16/19] ✓ XLK: 3442 records
+2025-12-07 12:45:01,053 - __main__ - INFO -   [17/19] ✓ XLE: 3442 records
+2025-12-07 12:45:01,054 - __main__ - INFO -   [18/19] ✓ XLV: 3442 records
+2025-12-07 12:45:01,054 - __main__ - INFO -   [19/19] ✓ XLI: 3442 records
+2025-12-07 12:45:01,054 - __main__ - INFO - 
+Successfully loaded 19 assets
+2025-12-07 12:45:01,060 - __main__ - INFO - Working with 19 assets for analysis
+2025-12-07 12:45:01,060 - __main__ - INFO - 
+================================================================================
+2025-12-07 12:45:01,060 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 12:45:01,060 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:01,072 - __main__ - INFO - Testing 171 pairs for lead-lag relationships...
+2025-12-07 12:45:01,147 - __main__ - INFO - Detected 21 significant relationships
+2025-12-07 12:45:01,149 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 12:45:01,151 - __main__ - INFO -    XLV.US: influences 4 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    XLF.US: influences 3 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    JPM.US: influences 3 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    EWG.US: influences 2 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    BAC.US: influences 2 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    XLE.US: influences 2 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    MSFT.US: influences 2 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    XLI.US: influences 2 assets
+2025-12-07 12:45:01,151 - __main__ - INFO -    XLK.US: influences 1 assets
+2025-12-07 12:45:01,151 - __main__ - INFO - 
+🔗 STRONGEST RELATIONSHIPS:
+2025-12-07 12:45:01,151 - __main__ - INFO -     1. XLF.US          → MSFT.US         | Lag: 1d | Corr: -0.135
+2025-12-07 12:45:01,152 - __main__ - INFO -     2. XLF.US          → XLK.US          | Lag: 1d | Corr: -0.131
+2025-12-07 12:45:01,152 - __main__ - INFO -     3. EWG.US          → EWU.US          | Lag: 2d | Corr: +0.127
+2025-12-07 12:45:01,152 - __main__ - INFO -     4. XLV.US          → XLK.US          | Lag: 1d | Corr: -0.125
+2025-12-07 12:45:01,152 - __main__ - INFO -     5. XLV.US          → MSFT.US         | Lag: 1d | Corr: -0.120
+2025-12-07 12:45:01,152 - __main__ - INFO -     6. JPM.US          → MSFT.US         | Lag: 1d | Corr: -0.117
+2025-12-07 12:45:01,152 - __main__ - INFO -     7. BAC.US          → MSFT.US         | Lag: 1d | Corr: -0.116
+2025-12-07 12:45:01,152 - __main__ - INFO -     8. XLF.US          → EWU.US          | Lag: 2d | Corr: +0.115
+2025-12-07 12:45:01,152 - __main__ - INFO -     9. XLK.US          → NVDA.US         | Lag: 1d | Corr: -0.114
+2025-12-07 12:45:01,152 - __main__ - INFO -    10. XLE.US          → MSFT.US         | Lag: 1d | Corr: -0.112
+2025-12-07 12:45:01,152 - __main__ - INFO -    11. MSFT.US         → EWZ.US          | Lag: 1d | Corr: -0.112
+2025-12-07 12:45:01,152 - __main__ - INFO -    12. JPM.US          → XLK.US          | Lag: 1d | Corr: -0.112
+2025-12-07 12:45:01,152 - __main__ - INFO -    13. MSFT.US         → XLK.US          | Lag: 1d | Corr: -0.111
+2025-12-07 12:45:01,152 - __main__ - INFO -    14. XLI.US          → MSFT.US         | Lag: 1d | Corr: -0.110
+2025-12-07 12:45:01,152 - __main__ - INFO -    15. BAC.US          → XLK.US          | Lag: 1d | Corr: -0.109
+2025-12-07 12:45:01,695 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 12:45:01,696 - __main__ - INFO - 
+================================================================================
+2025-12-07 12:45:01,696 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 12:45:01,696 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:05,522 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 12:45:05,523 - __main__ - INFO -    Regime 0: 1351 days (40.0%)
+2025-12-07 12:45:05,523 - __main__ - INFO -    Regime 1: 1350 days (40.0%)
+2025-12-07 12:45:05,523 - __main__ - INFO -    Regime 2: 676 days (20.0%)
+2025-12-07 12:45:05,530 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 12:45:05,532 - __main__ - INFO -    Bull/Low Vol: 40.0% (1351 days)
+2025-12-07 12:45:05,532 - __main__ - INFO -    Normal/Bear: 40.0% (1350 days)
+2025-12-07 12:45:05,532 - __main__ - INFO -    Crisis/Contagion: 20.0% (676 days)
+2025-12-07 12:45:06,291 - __main__ - INFO - Saved regime analysis to output/graphs/regime_analysis.png
+2025-12-07 12:45:06,291 - __main__ - INFO - 
+================================================================================
+2025-12-07 12:45:06,291 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 12:45:06,291 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:18,222 - __main__ - INFO - Built 670 temporal graphs
+2025-12-07 12:45:18,277 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 12:45:18,278 - __main__ - INFO -    Average nodes: 19.0
+2025-12-07 12:45:18,278 - __main__ - INFO -    Average edges: 361.0
+2025-12-07 12:45:18,278 - __main__ - INFO -    Mode: Full graph (edges will be learned)
+2025-12-07 12:45:18,278 - __main__ - INFO - 
+================================================================================
+2025-12-07 12:45:18,278 - __main__ - INFO - STEP 5: Temporal GNN Training (with NOVEL Learned Edges)
+2025-12-07 12:45:18,278 - __main__ - INFO - ================================================================================
+2025-12-07 12:45:18,357 - __main__ - INFO - Model parameters: 291,891
+2025-12-07 12:45:18,517 - __main__ - INFO - Created 660 training sequences
+2025-12-07 12:45:18,517 - __main__ - INFO - Label distribution in sequences:
+2025-12-07 12:45:18,517 - __main__ - INFO -    Regime 0: 271 (41.1%)
+2025-12-07 12:45:18,517 - __main__ - INFO -    Regime 1: 256 (38.8%)
+2025-12-07 12:45:18,517 - __main__ - INFO -    Regime 2: 133 (20.2%)
+2025-12-07 12:45:18,517 - __main__ - INFO - 
+============================================================
+2025-12-07 12:45:18,517 - __main__ - INFO - Fold 1/5
+2025-12-07 12:45:18,517 - __main__ - INFO - Train: 110, Val: 110
+2025-12-07 12:45:18,517 - __main__ - INFO - ============================================================
+2025-12-07 12:47:41,803 - __main__ - INFO - Fold 1, Epoch 10/50 - Train Loss: 0.7586, Train Acc: 75.45%, Val Loss: 2.7495, Val Acc: 59.09%
+2025-12-07 12:47:56,147 - __main__ - INFO - Early stopping at epoch 11
+2025-12-07 12:47:56,148 - __main__ - INFO - 
+============================================================
+2025-12-07 12:47:56,148 - __main__ - INFO - Fold 2/5
+2025-12-07 12:47:56,148 - __main__ - INFO - Train: 220, Val: 110
+2025-12-07 12:47:56,148 - __main__ - INFO - ============================================================
+2025-12-07 12:51:57,199 - __main__ - INFO - Fold 2, Epoch 10/50 - Train Loss: 0.8719, Train Acc: 78.18%, Val Loss: 1.1918, Val Acc: 77.27%
+2025-12-07 12:55:56,498 - __main__ - INFO - Fold 2, Epoch 20/50 - Train Loss: 0.6316, Train Acc: 82.27%, Val Loss: 1.0128, Val Acc: 80.91%
+2025-12-07 12:57:56,081 - __main__ - INFO - Early stopping at epoch 25
+2025-12-07 12:57:56,083 - __main__ - INFO - 
+============================================================
+2025-12-07 12:57:56,083 - __main__ - INFO - Fold 3/5
+2025-12-07 12:57:56,083 - __main__ - INFO - Train: 330, Val: 110
+2025-12-07 12:57:56,083 - __main__ - INFO - ============================================================
+2025-12-07 13:03:32,441 - __main__ - INFO - Fold 3, Epoch 10/50 - Train Loss: 0.3710, Train Acc: 92.12%, Val Loss: 2.4398, Val Acc: 63.64%
+2025-12-07 13:04:40,379 - __main__ - INFO - Early stopping at epoch 12
+2025-12-07 13:04:40,380 - __main__ - INFO - 
+============================================================
+2025-12-07 13:04:40,381 - __main__ - INFO - Fold 4/5
+2025-12-07 13:04:40,381 - __main__ - INFO - Train: 440, Val: 110
+2025-12-07 13:04:40,381 - __main__ - INFO - ============================================================
+2025-12-07 13:11:52,503 - __main__ - INFO - Fold 4, Epoch 10/50 - Train Loss: 0.4389, Train Acc: 91.36%, Val Loss: 0.7074, Val Acc: 86.36%
+2025-12-07 13:19:07,879 - __main__ - INFO - Fold 4, Epoch 20/50 - Train Loss: 0.2070, Train Acc: 96.36%, Val Loss: 1.0783, Val Acc: 82.73%
+2025-12-07 13:19:07,880 - __main__ - INFO - Early stopping at epoch 20
+2025-12-07 13:19:07,880 - __main__ - INFO - 
+============================================================
+2025-12-07 13:19:07,880 - __main__ - INFO - Fold 5/5
+2025-12-07 13:19:07,880 - __main__ - INFO - Train: 550, Val: 110
+2025-12-07 13:19:07,880 - __main__ - INFO - ============================================================
+2025-12-07 13:28:00,230 - __main__ - INFO - Fold 5, Epoch 10/50 - Train Loss: 0.5860, Train Acc: 88.73%, Val Loss: 0.8253, Val Acc: 78.18%
+2025-12-07 13:31:31,508 - __main__ - INFO - Early stopping at epoch 14
+2025-12-07 13:31:31,509 - __main__ - INFO - 
+============================================================
+2025-12-07 13:31:31,509 - __main__ - INFO - Cross-Validation Results
+2025-12-07 13:31:31,509 - __main__ - INFO - ============================================================
+2025-12-07 13:31:31,509 - __main__ - INFO - Average Validation Accuracy: 70.91% ± 19.23%
+2025-12-07 13:31:31,509 - __main__ - INFO - Average Validation Loss: 1.1158
+2025-12-07 13:31:31,510 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:31:31,510 - __main__ - INFO - STEP 6: Current Market State
+2025-12-07 13:31:31,510 - __main__ - INFO - ================================================================================
+2025-12-07 13:31:31,521 - __main__ - INFO - Loaded best model from fold 5
+2025-12-07 13:31:31,563 - __main__ - INFO - 
+🎯 PREDICTED REGIME: Normal/Bear
+2025-12-07 13:31:31,563 - __main__ - INFO - 
+Probabilities:
+2025-12-07 13:31:31,563 - __main__ - INFO -    Bull/Low Vol        :  15.9% ██████
+2025-12-07 13:31:31,563 - __main__ - INFO -    Normal/Bear         :  84.1% █████████████████████████████████
+2025-12-07 13:31:31,563 - __main__ - INFO -    Crisis/Contagion    :   0.0% 
+2025-12-07 13:31:31,563 - __main__ - INFO - 
+⚠️  Contagion Risk: 39.4%
+2025-12-07 13:31:31,563 - __main__ - INFO - 📊 Volatility Forecast: 0.25
+2025-12-07 13:31:31,563 - __main__ - INFO - 
+🔬 LEARNED EDGE ANALYSIS (Latest Timestep):
+2025-12-07 13:31:31,563 - __main__ - INFO -    Edges discovered: 190
+2025-12-07 13:31:31,563 - __main__ - INFO -    Avg edge weight: 0.073
+2025-12-07 13:31:31,563 - __main__ - INFO -    Detected contagion level: 52.4%
+2025-12-07 13:31:31,564 - __main__ - INFO - 
+📈 Current Market Statistics (last window):
+2025-12-07 13:31:31,564 - __main__ - INFO -    Realized Volatility: 0.22
+2025-12-07 13:31:31,564 - __main__ - INFO -    Avg Correlation: 0.350
+2025-12-07 13:31:31,564 - __main__ - INFO -    % Negative Days: 30.0%
+2025-12-07 13:31:32,107 - __main__ - INFO - Saved learned edge analysis to output/graphs/learned_edges.png
+2025-12-07 13:31:32,107 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:31:32,107 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-07 13:31:32,107 - __main__ - INFO - ================================================================================
+2025-12-07 13:31:32,107 - __main__ - INFO - 
+Outputs in output/ directory:
+2025-12-07 13:31:32,107 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2025-12-07 13:31:32,107 - __main__ - INFO -    - output/graphs/regime_analysis.png
+2025-12-07 13:31:32,107 - __main__ - INFO -    - output/graphs/learned_edges.png  [NOVEL]
+2025-12-07 13:31:32,108 - __main__ - INFO -    - output/lead_lag_relationships.csv
+2025-12-07 13:31:32,108 - __main__ - INFO -    - output/metrics/cv_results.json
+2025-12-07 13:31:32,108 - __main__ - INFO -    - output/models/best_model_fold*.pt
+2025-12-07 13:31:32,108 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:31:32,108 - __main__ - INFO - NOVEL CONTRIBUTIONS SUMMARY
+2025-12-07 13:31:32,108 - __main__ - INFO - ================================================================================
+2025-12-07 13:31:32,108 - __main__ - INFO - 
+    1. REGIME-ADAPTIVE LEARNED EDGE CONSTRUCTION (RALEC)
+       - Differentiable attention over all asset pairs
+       - Edges learned end-to-end, not hand-crafted
+       - Adapts edge importance based on detected regime
+       
+    2. CONTAGION AMPLIFICATION MECHANISM
+       - Detects stress conditions from node features
+       - Amplifies cross-asset edges during high-stress periods
+       - Models how correlations increase during crises
+       
+    3. REGIME-SPECIFIC MESSAGE PASSING
+       - Different transformation for each regime
+       - Weighted by learned regime probabilities
+       - Captures regime-dependent dynamics
+       
+    4. EDGE SPARSITY REGULARIZATION
+       - Encourages interpretable, sparse edge structure
+       - Prevents overfitting to noisy correlations
+       - Top-k selection for computational efficiency
+    
+2025-12-07 13:54:13,043 - __main__ - INFO - Using device: cpu
+2025-12-07 13:54:13,045 - __main__ - INFO - ================================================================================
+2025-12-07 13:54:13,045 - __main__ - INFO - Cross-Market Contagion Networks - Extended Research Implementation
+2025-12-07 13:54:13,045 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-07 13:54:13,045 - __main__ - INFO - ================================================================================
+2025-12-07 13:54:13,045 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-07 13:54:13,046 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 13:54:13,046 - __main__ - INFO - Using learned edges: True
+2025-12-07 13:54:13,046 - __main__ - INFO - Run baselines: True
+2025-12-07 13:54:13,046 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:54:13,046 - __main__ - INFO - STEP 1: Data Collection (77 symbols)
+2025-12-07 13:54:13,046 - __main__ - INFO - ================================================================================
+2025-12-07 13:54:13,046 - __main__ - INFO - Fetching data from 2005-05-26 to 2025-12-07...
+2025-12-07 13:54:17,451 - __main__ - INFO -   Progress: 10/77 - Loaded 10 symbols
+2025-12-07 13:54:20,831 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2025-12-07 13:54:24,009 - __main__ - INFO -   Progress: 30/77 - Loaded 30 symbols
+2025-12-07 13:54:27,100 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2025-12-07 13:54:30,129 - __main__ - INFO -   Progress: 50/77 - Loaded 50 symbols
+2025-12-07 13:54:33,148 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2025-12-07 13:54:36,176 - __main__ - INFO -   Progress: 70/77 - Loaded 70 symbols
+2025-12-07 13:54:38,301 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2025-12-07 13:54:38,301 - __main__ - INFO - 
+Successfully loaded 77 assets
+2025-12-07 13:54:38,317 - __main__ - INFO - Working with 77 assets for analysis
+2025-12-07 13:54:38,317 - __main__ - INFO - 
+Asset category distribution:
+2025-12-07 13:54:38,317 - __main__ - INFO -    sector_etfs: 10
+2025-12-07 13:54:38,317 - __main__ - INFO -    intl_emerging: 8
+2025-12-07 13:54:38,317 - __main__ - INFO -    tech_mega: 7
+2025-12-07 13:54:38,317 - __main__ - INFO -    finance: 7
+2025-12-07 13:54:38,317 - __main__ - INFO -    intl_developed: 7
+2025-12-07 13:54:38,317 - __main__ - INFO -    fixed_income: 7
+2025-12-07 13:54:38,317 - __main__ - INFO -    consumer: 6
+2025-12-07 13:54:38,317 - __main__ - INFO -    healthcare: 5
+2025-12-07 13:54:38,317 - __main__ - INFO -    industrials: 5
+2025-12-07 13:54:38,317 - __main__ - INFO -    commodities: 5
+2025-12-07 13:54:38,317 - __main__ - INFO -    broad_market: 5
+2025-12-07 13:54:38,317 - __main__ - INFO -    energy: 4
+2025-12-07 13:54:38,317 - __main__ - INFO -    volatility: 1
+2025-12-07 13:54:38,317 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:54:38,317 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-07 13:54:38,317 - __main__ - INFO - ================================================================================
+2025-12-07 13:54:38,339 - __main__ - INFO - Testing 2926 pairs for lead-lag relationships...
+2025-12-07 13:54:39,439 - __main__ - INFO - Detected 1238 significant relationships
+2025-12-07 13:54:39,446 - __main__ - INFO - 
+📈 TOP MARKET LEADERS:
+2025-12-07 13:54:39,447 - __main__ - INFO -    MRK.US: influences 45 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    EWG.US: influences 45 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    EWC.US: influences 43 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    MS.US: influences 43 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    EWQ.US: influences 40 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    C.US: influences 40 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    XLF.US: influences 39 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    JPM.US: influences 38 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    BAC.US: influences 37 assets
+2025-12-07 13:54:39,447 - __main__ - INFO -    WFC.US: influences 37 assets
+2025-12-07 13:54:40,363 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-07 13:54:40,363 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:54:40,363 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-07 13:54:40,363 - __main__ - INFO - ================================================================================
+2025-12-07 13:54:42,901 - __main__ - INFO - Regime labeling method: quantile
+2025-12-07 13:54:42,902 - __main__ - INFO -    Regime 0: 779 days (40.0%)
+2025-12-07 13:54:42,902 - __main__ - INFO -    Regime 1: 778 days (40.0%)
+2025-12-07 13:54:42,902 - __main__ - INFO -    Regime 2: 390 days (20.0%)
+2025-12-07 13:54:42,908 - __main__ - INFO - 
+Regime distribution:
+2025-12-07 13:54:42,910 - __main__ - INFO -    Bull/Low Vol: 40.0% (779 days)
+2025-12-07 13:54:42,911 - __main__ - INFO -    Normal/Bear: 40.0% (778 days)
+2025-12-07 13:54:42,911 - __main__ - INFO -    Crisis/Contagion: 20.0% (390 days)
+2025-12-07 13:54:42,911 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:54:42,911 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-07 13:54:42,911 - __main__ - INFO - ================================================================================
+2025-12-07 13:55:20,812 - __main__ - INFO - Built 384 temporal graphs
+2025-12-07 13:55:20,859 - __main__ - INFO - 
+Graph statistics:
+2025-12-07 13:55:20,859 - __main__ - INFO -    Number of graphs: 384
+2025-12-07 13:55:20,859 - __main__ - INFO -    Average nodes: 77.0
+2025-12-07 13:55:20,859 - __main__ - INFO -    Average edges: 5929.0
+2025-12-07 13:55:20,859 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:55:20,859 - __main__ - INFO - STEP 5a: Training Baseline Models
+2025-12-07 13:55:20,859 - __main__ - INFO - ================================================================================
+2025-12-07 13:55:21,111 - __main__ - INFO - Training baseline: logistic_regression
+2025-12-07 13:55:21,614 - __main__ - INFO -   logistic_regression: Accuracy: 59.67% | Balanced: 59.18% | Macro-F1: 0.591 | Kappa: 0.373 | Crisis Recall: 53.62%
+2025-12-07 13:55:21,614 - __main__ - INFO - Training baseline: random_forest
+2025-12-07 13:55:22,271 - __main__ - INFO -   random_forest: Accuracy: 59.67% | Balanced: 60.29% | Macro-F1: 0.604 | Kappa: 0.375 | Crisis Recall: 62.32%
+2025-12-07 13:55:22,272 - __main__ - INFO - Training baseline: gradient_boosting
+2025-12-07 13:55:54,059 - __main__ - INFO -   gradient_boosting: Accuracy: 60.33% | Balanced: 60.44% | Macro-F1: 0.600 | Kappa: 0.389 | Crisis Recall: 59.42%
+2025-12-07 13:55:54,061 - __main__ - INFO - 
+================================================================================
+2025-12-07 13:55:54,061 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2025-12-07 13:55:54,061 - __main__ - INFO - ================================================================================
+2025-12-07 13:55:54,155 - __main__ - INFO - Model parameters: 1,255,637
+2025-12-07 13:55:54,247 - __main__ - INFO - Created 369 training sequences
+2025-12-07 13:55:54,247 - __main__ - INFO - Label distribution in sequences:
+2025-12-07 13:55:54,247 - __main__ - INFO -    Regime 0: 148 (40.1%)
+2025-12-07 13:55:54,247 - __main__ - INFO -    Regime 1: 143 (38.8%)
+2025-12-07 13:55:54,247 - __main__ - INFO -    Regime 2: 78 (21.1%)
+2025-12-07 13:55:54,247 - __main__ - INFO - 
+============================================================
+2025-12-07 13:55:54,247 - __main__ - INFO - Fold 1/5
+2025-12-07 13:55:54,247 - __main__ - INFO - Train: 64, Val: 61
+2025-12-07 13:55:54,247 - __main__ - INFO - ============================================================
+2025-12-07 14:15:50,462 - __main__ - INFO - Fold 1, Epoch 10/100 - Train Loss: 0.6884, Train Acc: 89.06%, Val Loss: 3.3954, Val Acc: 54.10%
+2025-12-07 14:27:48,002 - __main__ - INFO - Early stopping at epoch 16
+2025-12-07 14:27:48,004 - __main__ - INFO - 
+============================================================
+2025-12-07 14:27:48,004 - __main__ - INFO - Fold 2/5
+2025-12-07 14:27:48,004 - __main__ - INFO - Train: 125, Val: 61
+2025-12-07 14:27:48,004 - __main__ - INFO - ============================================================
+2025-12-07 14:58:25,853 - __main__ - INFO - Fold 2, Epoch 10/100 - Train Loss: 0.6372, Train Acc: 84.00%, Val Loss: 2.1774, Val Acc: 57.38%
+2025-12-07 15:28:48,049 - __main__ - INFO - Fold 2, Epoch 20/100 - Train Loss: 0.2615, Train Acc: 95.20%, Val Loss: 2.2407, Val Acc: 65.57%
+2025-12-07 15:28:48,051 - __main__ - INFO - Early stopping at epoch 20
+2025-12-07 15:28:48,051 - __main__ - INFO - 
+============================================================
+2025-12-07 15:28:48,051 - __main__ - INFO - Fold 3/5
+2025-12-07 15:28:48,051 - __main__ - INFO - Train: 186, Val: 61
+2025-12-07 15:28:48,051 - __main__ - INFO - ============================================================
+2025-12-07 16:08:55,642 - __main__ - INFO - Fold 3, Epoch 10/100 - Train Loss: 0.7104, Train Acc: 84.95%, Val Loss: 0.8716, Val Acc: 80.33%
+2025-12-07 16:36:33,747 - __main__ - INFO - Early stopping at epoch 17
+2025-12-07 16:36:33,749 - __main__ - INFO - 
+============================================================
+2025-12-07 16:36:33,749 - __main__ - INFO - Fold 4/5
+2025-12-07 16:36:33,749 - __main__ - INFO - Train: 247, Val: 61
+2025-12-07 16:36:33,749 - __main__ - INFO - ============================================================
+2025-12-07 17:27:09,684 - __main__ - INFO - Fold 4, Epoch 10/100 - Train Loss: 0.4982, Train Acc: 89.47%, Val Loss: 2.5987, Val Acc: 57.38%
+2025-12-07 17:57:16,126 - __main__ - INFO - Early stopping at epoch 16
+2025-12-07 17:57:16,127 - __main__ - INFO - 
+============================================================
+2025-12-07 17:57:16,127 - __main__ - INFO - Fold 5/5
+2025-12-07 17:57:16,127 - __main__ - INFO - Train: 308, Val: 61
+2025-12-07 17:57:16,127 - __main__ - INFO - ============================================================
+2025-12-07 18:59:42,751 - __main__ - INFO - Fold 5, Epoch 10/100 - Train Loss: 0.6788, Train Acc: 85.71%, Val Loss: 1.1986, Val Acc: 75.41%
+2025-12-07 19:51:35,550 - __main__ - INFO - Early stopping at epoch 18
+2025-12-07 19:51:35,574 - __main__ - INFO - 
+============================================================
+2025-12-07 19:51:35,574 - __main__ - INFO - Cross-Validation Results
+2025-12-07 19:51:35,574 - __main__ - INFO - ============================================================
+2025-12-07 19:51:35,574 - __main__ - INFO - Average Validation Accuracy: 63.93% ± 19.73%
+2025-12-07 19:51:35,574 - __main__ - INFO - Average Validation Loss: 1.1130
+2025-12-07 19:51:35,574 - __main__ - INFO - 
+Comprehensive Metrics:
+2025-12-07 19:51:35,574 - __main__ - INFO -   Accuracy: 63.93% | Balanced: 61.43% | Macro-F1: 0.627 | Kappa: 0.432 | Crisis Recall: 44.93%
+2025-12-07 19:51:35,574 - __main__ - INFO -   ROC-AUC (OvR): 0.836
+2025-12-07 19:51:35,574 - __main__ - INFO -   ECE: 0.2734
+2025-12-07 19:51:35,574 - __main__ - INFO -   Early Warning Score: 0.625
+2025-12-07 19:51:35,578 - __main__ - INFO - 
+================================================================================
+2025-12-07 19:51:35,578 - __main__ - INFO - STEP 6: Generating Visualizations
+2025-12-07 19:51:35,578 - __main__ - INFO - ================================================================================
+2025-12-07 19:51:36,980 - __main__ - INFO - Saved comprehensive results to output/graphs/comprehensive_results.png
+2025-12-07 19:51:37,490 - __main__ - INFO - Saved metrics dashboard to output/graphs/metrics_dashboard.png
+2025-12-07 19:51:37,491 - __main__ - INFO - 
+================================================================================
+2025-12-07 19:51:37,491 - __main__ - INFO - STEP 7: Current Market State Analysis
+2025-12-07 19:51:37,491 - __main__ - INFO - ================================================================================
+2025-12-07 19:51:37,508 - __main__ - INFO - Loaded best model from fold 5
+2025-12-07 19:51:38,040 - __main__ - INFO - 
+🎯 PREDICTED REGIME: Bull/Low Vol
+2025-12-07 19:51:38,040 - __main__ - INFO - 
+Probabilities:
+2025-12-07 19:51:38,041 - __main__ - INFO -    Bull/Low Vol        :  93.8% █████████████████████████████████████
+2025-12-07 19:51:38,041 - __main__ - INFO -    Normal/Bear         :   6.1% ██
+2025-12-07 19:51:38,041 - __main__ - INFO -    Crisis/Contagion    :   0.1% 
+2025-12-07 19:51:38,041 - __main__ - INFO - 
+⚠️  Contagion Risk: 81.0%
+2025-12-07 19:51:38,041 - __main__ - INFO - 📊 Volatility Forecast: 0.10
+2025-12-07 19:51:39,294 - __main__ - INFO - Saved learned edge analysis to output/graphs/learned_edges_analysis.png
+2025-12-07 19:51:39,295 - __main__ - INFO - 
+================================================================================
+2025-12-07 19:51:39,295 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-07 19:51:39,295 - __main__ - INFO - ================================================================================
+2025-12-07 19:51:39,295 - __main__ - INFO - 
+Outputs saved to output/ directory:
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/graphs/comprehensive_results.png
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/graphs/metrics_dashboard.png
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/graphs/learned_edges_analysis.png
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/metrics/cv_results.json
+2025-12-07 19:51:39,295 - __main__ - INFO -    - output/baselines/baseline_results.json
+2025-12-07 19:51:39,295 - __main__ - INFO - 
+================================================================================
+2025-12-07 19:51:39,295 - __main__ - INFO - FINAL PERFORMANCE SUMMARY
+2025-12-07 19:51:39,295 - __main__ - INFO - ================================================================================
+2025-12-07 19:51:39,295 - __main__ - INFO - 
+  RALEC-GNN Model:
+2025-12-07 19:51:39,295 - __main__ - INFO -     Accuracy:        63.93%
+2025-12-07 19:51:39,295 - __main__ - INFO -     Balanced Acc:    61.43%
+2025-12-07 19:51:39,295 - __main__ - INFO -     Macro F1:        0.627
+2025-12-07 19:51:39,295 - __main__ - INFO -     Cohen's Kappa:   0.432
+2025-12-07 19:51:39,295 - __main__ - INFO -     Crisis Recall:   44.93%
+2025-12-07 19:51:39,295 - __main__ - INFO -     ROC-AUC:         0.836
+2025-12-07 19:51:39,295 - __main__ - INFO - 
+  Baseline Comparison:
+2025-12-07 19:51:39,295 - __main__ - INFO -     logistic_regression: Acc=59.67%, F1=0.591
+2025-12-07 19:51:39,295 - __main__ - INFO -     random_forest: Acc=59.67%, F1=0.604
+2025-12-07 19:51:39,295 - __main__ - INFO -     gradient_boosting: Acc=60.33%, F1=0.600
+2025-12-08 01:41:00,623 - __main__ - INFO - Using device: cpu
+2025-12-08 01:41:00,625 - __main__ - INFO - ================================================================================
+2025-12-08 01:41:00,625 - __main__ - INFO - Cross-Market Contagion Networks - Extended Research Implementation
+2025-12-08 01:41:00,625 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-08 01:41:00,625 - __main__ - INFO - ================================================================================
+2025-12-08 01:41:00,626 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-08 01:41:00,626 - __main__ - INFO - Regime labeling method: quantile
+2025-12-08 01:41:00,626 - __main__ - INFO - Using learned edges: True
+2025-12-08 01:41:00,626 - __main__ - INFO - Model hidden_dim: 64, num_layers: 2
+2025-12-08 01:41:00,626 - __main__ - INFO - Dropout: 0.4, Crisis weight: 5.0x
+2025-12-08 01:41:00,626 - __main__ - INFO - Run baselines: True
+2025-12-08 01:41:00,626 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:41:00,626 - __main__ - INFO - STEP 1: Data Collection (77 symbols)
+2025-12-08 01:41:00,626 - __main__ - INFO - ================================================================================
+2025-12-08 01:41:00,626 - __main__ - INFO - Fetching data from 2005-05-27 to 2025-12-08...
+2025-12-08 01:41:04,823 - __main__ - INFO -   Progress: 10/77 - Loaded 10 symbols
+2025-12-08 01:41:07,871 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2025-12-08 01:41:10,849 - __main__ - INFO -   Progress: 30/77 - Loaded 30 symbols
+2025-12-08 01:41:14,093 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2025-12-08 01:41:17,546 - __main__ - INFO -   Progress: 50/77 - Loaded 50 symbols
+2025-12-08 01:41:20,357 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2025-12-08 01:41:23,331 - __main__ - INFO -   Progress: 70/77 - Loaded 70 symbols
+2025-12-08 01:41:25,339 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2025-12-08 01:41:25,340 - __main__ - INFO - 
+Successfully loaded 77 assets
+2025-12-08 01:41:25,362 - __main__ - INFO - Working with 77 assets for analysis
+2025-12-08 01:41:25,362 - __main__ - INFO - 
+Asset category distribution:
+2025-12-08 01:41:25,362 - __main__ - INFO -    sector_etfs: 10
+2025-12-08 01:41:25,362 - __main__ - INFO -    intl_emerging: 8
+2025-12-08 01:41:25,362 - __main__ - INFO -    tech_mega: 7
+2025-12-08 01:41:25,362 - __main__ - INFO -    finance: 7
+2025-12-08 01:41:25,363 - __main__ - INFO -    intl_developed: 7
+2025-12-08 01:41:25,363 - __main__ - INFO -    fixed_income: 7
+2025-12-08 01:41:25,363 - __main__ - INFO -    consumer: 6
+2025-12-08 01:41:25,363 - __main__ - INFO -    healthcare: 5
+2025-12-08 01:41:25,363 - __main__ - INFO -    industrials: 5
+2025-12-08 01:41:25,363 - __main__ - INFO -    commodities: 5
+2025-12-08 01:41:25,363 - __main__ - INFO -    broad_market: 5
+2025-12-08 01:41:25,363 - __main__ - INFO -    energy: 4
+2025-12-08 01:41:25,363 - __main__ - INFO -    volatility: 1
+2025-12-08 01:41:25,363 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:41:25,363 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection
+2025-12-08 01:41:25,363 - __main__ - INFO - ================================================================================
+2025-12-08 01:41:25,382 - __main__ - INFO - Testing 2926 pairs for lead-lag relationships...
+2025-12-08 01:41:26,473 - __main__ - INFO - Detected 1238 significant relationships
+2025-12-08 01:41:26,480 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2025-12-08 01:41:26,481 - __main__ - INFO -    MRK.US: influences 45 assets
+2025-12-08 01:41:26,481 - __main__ - INFO -    EWG.US: influences 45 assets
+2025-12-08 01:41:26,481 - __main__ - INFO -    EWC.US: influences 43 assets
+2025-12-08 01:41:26,481 - __main__ - INFO -    MS.US: influences 43 assets
+2025-12-08 01:41:26,481 - __main__ - INFO -    EWQ.US: influences 40 assets
+2025-12-08 01:41:26,482 - __main__ - INFO -    C.US: influences 40 assets
+2025-12-08 01:41:26,482 - __main__ - INFO -    XLF.US: influences 39 assets
+2025-12-08 01:41:26,482 - __main__ - INFO -    JPM.US: influences 38 assets
+2025-12-08 01:41:26,482 - __main__ - INFO -    BAC.US: influences 37 assets
+2025-12-08 01:41:26,482 - __main__ - INFO -    WFC.US: influences 37 assets
+2025-12-08 01:41:28,013 - __main__ - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-08 01:41:28,014 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:41:28,015 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-08 01:41:28,015 - __main__ - INFO - ================================================================================
+2025-12-08 01:41:30,452 - __main__ - INFO - Regime labeling method: quantile
+2025-12-08 01:41:30,452 - __main__ - INFO -    Regime 0: 779 days (40.0%)
+2025-12-08 01:41:30,452 - __main__ - INFO -    Regime 1: 778 days (40.0%)
+2025-12-08 01:41:30,452 - __main__ - INFO -    Regime 2: 390 days (20.0%)
+2025-12-08 01:41:30,461 - __main__ - INFO - 
+Regime distribution:
+2025-12-08 01:41:30,463 - __main__ - INFO -    Bull/Low Vol: 40.0% (779 days)
+2025-12-08 01:41:30,463 - __main__ - INFO -    Normal/Bear: 40.0% (778 days)
+2025-12-08 01:41:30,463 - __main__ - INFO -    Crisis/Contagion: 20.0% (390 days)
+2025-12-08 01:41:30,463 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:41:30,463 - __main__ - INFO - STEP 4: Temporal Graph Construction
+2025-12-08 01:41:30,463 - __main__ - INFO - ================================================================================
+2025-12-08 01:42:05,583 - __main__ - INFO - Built 384 temporal graphs
+2025-12-08 01:42:05,636 - __main__ - INFO - 
+Graph statistics:
+2025-12-08 01:42:05,636 - __main__ - INFO -    Number of graphs: 384
+2025-12-08 01:42:05,636 - __main__ - INFO -    Average nodes: 77.0
+2025-12-08 01:42:05,636 - __main__ - INFO -    Average edges: 5929.0
+2025-12-08 01:42:05,636 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:42:05,636 - __main__ - INFO - STEP 5a: Training Baseline Models
+2025-12-08 01:42:05,636 - __main__ - INFO - ================================================================================
+2025-12-08 01:42:05,868 - __main__ - INFO - Training baseline: logistic_regression
+2025-12-08 01:42:06,367 - __main__ - INFO -   logistic_regression: Acc=61.80%±6.27%, Crisis Recall=39.91%±37.45%, Macro-F1=0.522±0.105
+2025-12-08 01:42:06,367 - __main__ - INFO - Training baseline: random_forest
+2025-12-08 01:42:07,007 - __main__ - INFO -   random_forest: Acc=59.89%±6.05%, Crisis Recall=43.57%±36.73%, Macro-F1=0.480±0.107
+2025-12-08 01:42:07,007 - __main__ - INFO - Training baseline: gradient_boosting
+2025-12-08 01:42:36,139 - __main__ - INFO -   gradient_boosting: Acc=58.64%±18.50%, Crisis Recall=33.21%±41.00%, Macro-F1=0.480±0.182
+2025-12-08 01:42:36,141 - __main__ - INFO - 
+================================================================================
+2025-12-08 01:42:36,141 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2025-12-08 01:42:36,141 - __main__ - INFO - ================================================================================
+2025-12-08 01:42:36,224 - __main__ - INFO - Model parameters: 127,633
+2025-12-08 01:42:36,312 - __main__ - INFO - Created 369 training sequences
+2025-12-08 01:42:36,312 - __main__ - INFO - Label distribution in sequences:
+2025-12-08 01:42:36,313 - __main__ - INFO -    Regime 0: 148 (40.1%)
+2025-12-08 01:42:36,313 - __main__ - INFO -    Regime 1: 143 (38.8%)
+2025-12-08 01:42:36,313 - __main__ - INFO -    Regime 2: 78 (21.1%)
+2025-12-08 01:42:36,313 - __main__ - INFO - 
+============================================================
+2025-12-08 01:42:36,313 - __main__ - INFO - Fold 1/5
+2025-12-08 01:42:36,313 - __main__ - INFO - Train: 50, Val: 63
+2025-12-08 01:42:36,313 - __main__ - INFO - ============================================================
+2025-12-08 01:42:36,313 - __main__ - INFO - Train regimes: Bull=29, Normal=12, Crisis=9
+2025-12-08 01:42:36,313 - __main__ - INFO - Val regimes: Bull=20, Normal=15, Crisis=28
+2025-12-08 01:46:17,384 - __main__ - INFO - Fold 1, Epoch 10/100 - Train Loss: 1.4360, Train Acc: 62.00%, Val Loss: 2.4177, Val Acc: 55.56%, Crisis Recall: 60.71%
+2025-12-08 01:49:57,956 - __main__ - INFO - Fold 1, Epoch 20/100 - Train Loss: 0.8743, Train Acc: 82.00%, Val Loss: 2.6708, Val Acc: 53.97%, Crisis Recall: 46.43%
+2025-12-08 01:53:39,061 - __main__ - INFO - Fold 1, Epoch 30/100 - Train Loss: 0.5726, Train Acc: 86.00%, Val Loss: 2.5669, Val Acc: 53.97%, Crisis Recall: 42.86%
+2025-12-08 01:54:45,382 - __main__ - INFO - Early stopping at epoch 33
+2025-12-08 01:54:45,388 - __main__ - INFO - New best crisis recall: 53.57%
+2025-12-08 01:54:45,388 - __main__ - INFO - 
+============================================================
+2025-12-08 01:54:45,388 - __main__ - INFO - Fold 2/5
+2025-12-08 01:54:45,388 - __main__ - INFO - Train: 113, Val: 63
+2025-12-08 01:54:45,388 - __main__ - INFO - ============================================================
+2025-12-08 01:54:45,388 - __main__ - INFO - Train regimes: Bull=50, Normal=30, Crisis=33
+2025-12-08 01:54:45,388 - __main__ - INFO - Val regimes: Bull=23, Normal=38, Crisis=2
+2025-12-08 02:01:10,514 - __main__ - INFO - Fold 2, Epoch 10/100 - Train Loss: 0.9991, Train Acc: 79.65%, Val Loss: 1.2048, Val Acc: 61.90%, Crisis Recall: 0.00%
+2025-12-08 02:07:36,389 - __main__ - INFO - Fold 2, Epoch 20/100 - Train Loss: 0.7613, Train Acc: 88.50%, Val Loss: 1.2271, Val Acc: 69.84%, Crisis Recall: 0.00%
+2025-12-08 02:14:01,907 - __main__ - INFO - Fold 2, Epoch 30/100 - Train Loss: 0.6082, Train Acc: 94.69%, Val Loss: 1.4055, Val Acc: 55.56%, Crisis Recall: 0.00%
+2025-12-08 02:14:01,908 - __main__ - INFO - Early stopping at epoch 30
+2025-12-08 02:14:01,908 - __main__ - INFO - 
+============================================================
+2025-12-08 02:14:01,908 - __main__ - INFO - Fold 3/5
+2025-12-08 02:14:01,908 - __main__ - INFO - Train: 176, Val: 63
+2025-12-08 02:14:01,908 - __main__ - INFO - ============================================================
+2025-12-08 02:14:01,908 - __main__ - INFO - Train regimes: Bull=73, Normal=64, Crisis=39
+2025-12-08 02:14:01,908 - __main__ - INFO - Val regimes: Bull=6, Normal=25, Crisis=32
+2025-12-08 02:23:11,145 - __main__ - INFO - Fold 3, Epoch 10/100 - Train Loss: 1.0582, Train Acc: 77.84%, Val Loss: 1.6158, Val Acc: 66.67%, Crisis Recall: 75.00%
+2025-12-08 02:32:20,213 - __main__ - INFO - Fold 3, Epoch 20/100 - Train Loss: 0.7676, Train Acc: 88.64%, Val Loss: 1.5236, Val Acc: 66.67%, Crisis Recall: 90.62%
+2025-12-08 02:41:30,494 - __main__ - INFO - Fold 3, Epoch 30/100 - Train Loss: 0.5959, Train Acc: 92.61%, Val Loss: 1.7293, Val Acc: 68.25%, Crisis Recall: 93.75%
+2025-12-08 02:45:10,372 - __main__ - INFO - Early stopping at epoch 34
+2025-12-08 02:45:10,376 - __main__ - INFO - New best crisis recall: 87.50%
+2025-12-08 02:45:10,376 - __main__ - INFO - 
+============================================================
+2025-12-08 02:45:10,376 - __main__ - INFO - Fold 4/5
+2025-12-08 02:45:10,376 - __main__ - INFO - Train: 239, Val: 63
+2025-12-08 02:45:10,376 - __main__ - INFO - ============================================================
+2025-12-08 02:45:10,376 - __main__ - INFO - Train regimes: Bull=74, Normal=94, Crisis=71
+2025-12-08 02:45:10,376 - __main__ - INFO - Val regimes: Bull=31, Normal=32, Crisis=0
+2025-12-08 02:57:04,438 - __main__ - INFO - Fold 4, Epoch 10/100 - Train Loss: 0.9105, Train Acc: 78.24%, Val Loss: 1.0669, Val Acc: 71.43%, Crisis Recall: 0.00%
+2025-12-08 03:08:57,846 - __main__ - INFO - Fold 4, Epoch 20/100 - Train Loss: 0.7374, Train Acc: 91.21%, Val Loss: 1.3108, Val Acc: 66.67%, Crisis Recall: 0.00%
+2025-12-08 03:17:15,703 - __main__ - INFO - Early stopping at epoch 27
+2025-12-08 03:17:15,705 - __main__ - INFO - 
+============================================================
+2025-12-08 03:17:15,705 - __main__ - INFO - Fold 5/5
+2025-12-08 03:17:15,705 - __main__ - INFO - Train: 302, Val: 62
+2025-12-08 03:17:15,705 - __main__ - INFO - ============================================================
+2025-12-08 03:17:15,705 - __main__ - INFO - Train regimes: Bull=109, Normal=122, Crisis=71
+2025-12-08 03:17:15,705 - __main__ - INFO - Val regimes: Bull=38, Normal=17, Crisis=7
+2025-12-08 03:31:48,510 - __main__ - INFO - Fold 5, Epoch 10/100 - Train Loss: 1.0279, Train Acc: 79.80%, Val Loss: 0.6443, Val Acc: 82.26%, Crisis Recall: 100.00%
+2025-12-08 03:46:20,027 - __main__ - INFO - Fold 5, Epoch 20/100 - Train Loss: 0.6960, Train Acc: 91.06%, Val Loss: 0.7245, Val Acc: 85.48%, Crisis Recall: 100.00%
+2025-12-08 04:00:51,768 - __main__ - INFO - Fold 5, Epoch 30/100 - Train Loss: 0.5907, Train Acc: 94.37%, Val Loss: 0.6999, Val Acc: 85.48%, Crisis Recall: 100.00%
+2025-12-08 04:15:19,729 - __main__ - INFO - Fold 5, Epoch 40/100 - Train Loss: 0.5146, Train Acc: 95.36%, Val Loss: 0.6606, Val Acc: 87.10%, Crisis Recall: 100.00%
+2025-12-08 04:16:47,689 - __main__ - INFO - Early stopping at epoch 41
+2025-12-08 04:16:47,692 - __main__ - INFO - New best crisis recall: 100.00%
+2025-12-08 04:16:47,703 - __main__ - INFO - 
+============================================================
+2025-12-08 04:16:47,703 - __main__ - INFO - Cross-Validation Results
+2025-12-08 04:16:47,703 - __main__ - INFO - ============================================================
+2025-12-08 04:16:47,703 - __main__ - INFO - Average Validation Accuracy: 71.08% ± 11.67%
+2025-12-08 04:16:47,703 - __main__ - INFO - Average Crisis Recall: 48.21% ± 42.20%
+2025-12-08 04:16:47,703 - __main__ - INFO - Average Validation Loss: 1.1812
+2025-12-08 04:16:47,703 - __main__ - INFO - 
+Comprehensive Metrics:
+2025-12-08 04:16:47,703 - __main__ - INFO -   Accuracy: 71.02% | Balanced: 71.30% | Macro-F1: 0.715 | Kappa: 0.551 | Crisis Recall: 72.46%
+2025-12-08 04:16:47,703 - __main__ - INFO -   ROC-AUC (OvR): 0.858
+2025-12-08 04:16:47,703 - __main__ - INFO -   ECE: 0.0793
+2025-12-08 04:16:47,703 - __main__ - INFO -   Early Warning Score: 0.650
+2025-12-08 04:16:47,704 - __main__ - INFO - 
+================================================================================
+2025-12-08 04:16:47,704 - __main__ - INFO - STEP 6: Generating Visualizations
+2025-12-08 04:16:47,705 - __main__ - INFO - ================================================================================
+2025-12-08 04:16:49,000 - __main__ - INFO - Saved comprehensive results to output/graphs/comprehensive_results.png
+2025-12-08 04:16:49,522 - __main__ - INFO - Saved metrics dashboard to output/graphs/metrics_dashboard.png
+2025-12-08 04:16:49,522 - __main__ - INFO - 
+================================================================================
+2025-12-08 04:16:49,522 - __main__ - INFO - STEP 7: Current Market State Analysis
+2025-12-08 04:16:49,523 - __main__ - INFO - ================================================================================
+2025-12-08 04:16:49,528 - __main__ - INFO - Loaded best crisis detection model
+2025-12-08 04:16:49,684 - __main__ - INFO - 
+PREDICTED REGIME: Normal/Bear
+2025-12-08 04:16:49,684 - __main__ - INFO - 
+Probabilities:
+2025-12-08 04:16:49,684 - __main__ - INFO -    Bull/Low Vol        :   3.0% █
+2025-12-08 04:16:49,684 - __main__ - INFO -    Normal/Bear         :  80.8% ████████████████████████████████
+2025-12-08 04:16:49,684 - __main__ - INFO -    Crisis/Contagion    :  16.2% ██████
+2025-12-08 04:16:49,684 - __main__ - INFO - 
+Contagion Risk: 58.5%
+2025-12-08 04:16:49,684 - __main__ - INFO - Volatility Forecast: 0.19
+2025-12-08 04:16:50,573 - __main__ - INFO - Saved learned edge analysis to output/graphs/learned_edges_analysis.png
+2025-12-08 04:16:50,573 - __main__ - INFO - 
+================================================================================
+2025-12-08 04:16:50,573 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-08 04:16:50,573 - __main__ - INFO - ================================================================================
+2025-12-08 04:16:50,573 - __main__ - INFO - 
+Outputs saved to output/ directory:
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/graphs/comprehensive_results.png
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/graphs/metrics_dashboard.png
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/graphs/learned_edges_analysis.png
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/metrics/cv_results.json
+2025-12-08 04:16:50,573 - __main__ - INFO -    - output/baselines/baseline_results.json
+2025-12-08 04:16:50,573 - __main__ - INFO - 
+================================================================================
+2025-12-08 04:16:50,573 - __main__ - INFO - FINAL PERFORMANCE SUMMARY
+2025-12-08 04:16:50,573 - __main__ - INFO - ================================================================================
+2025-12-08 04:16:50,573 - __main__ - INFO - 
+  RALEC-GNN Model:
+2025-12-08 04:16:50,573 - __main__ - INFO -     Accuracy:        71.02% +/- 11.67%
+2025-12-08 04:16:50,573 - __main__ - INFO -     Balanced Acc:    71.30%
+2025-12-08 04:16:50,573 - __main__ - INFO -     Macro F1:        0.715
+2025-12-08 04:16:50,573 - __main__ - INFO -     Cohen's Kappa:   0.551
+2025-12-08 04:16:50,573 - __main__ - INFO -     Crisis Recall:   72.46% +/- 42.20%
+2025-12-08 04:16:50,574 - __main__ - INFO -     ROC-AUC:         0.858
+2025-12-08 04:16:50,574 - __main__ - INFO - 
+  Baseline Comparison (mean +/- std):
+2025-12-08 04:16:50,574 - __main__ - INFO -     logistic_regression: Acc=61.80%+/-6.27%, Crisis Recall=39.91%+/-37.45%, F1=0.522+/-0.105
+2025-12-08 04:16:50,574 - __main__ - INFO -     random_forest: Acc=59.89%+/-6.05%, Crisis Recall=43.57%+/-36.73%, F1=0.480+/-0.107
+2025-12-08 04:16:50,574 - __main__ - INFO -     gradient_boosting: Acc=58.64%+/-18.50%, Crisis Recall=33.21%+/-41.00%, F1=0.480+/-0.182
