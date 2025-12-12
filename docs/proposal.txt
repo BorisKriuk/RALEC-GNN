@@ -1,0 +1,26 @@
+RESEARCH PROPOSAL
+RALEC-GNN
+
+Overview
+We introduce RALEC-GNN (Regime-Adaptive Learned Edge Construction), a new graph neural
+network architecture for detecting market regimes and cross-asset contagion. Unlike prior
+GNN approaches that rely on static correlation-based graphs, RALEC dynamically learns edge
+structure conditioned on the prevailing market regime, capturing the empirically documented
+phenomenon that asset interconnections fundamentally restructure during market stress.
+Our architecture features:
+(1) a learned edge constructor with regime-specific gating that amplifies contagion pathways
+during crisis periods,
+(2) an explicit contagion detection module providing interpretable systemic risk signals, and
+(3) a crisis-aware training objective combining focal loss with auxiliary crisis prediction.
+On a 20-year dataset spanning 70+ global assets across equities, fixed income, commodities,
+and volatility instruments, RALEC-GNN achieves 72.5% balanced accuracy and 85.8% crisis
+recall, substantially outperforming gradient boosting (+39 percentage points crisis recall) and
+random forest (+29 percentage points) baselines. The learned edge dynamics reveal
+interpretable patterns: edge density increases 40% before major stress events, and the
+model identifies sector ETFs and volatility instruments as key contagion conduits.
+
+Boris Kriuk
+
+08.12.2025
+
+

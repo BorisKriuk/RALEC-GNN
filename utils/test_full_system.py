@@ -4,6 +4,10 @@ Comprehensive test and demonstration of the full RALEC-GNN system
 Shows results from all 6 phases without requiring actual data
 """
 
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import numpy as np
 from datetime import datetime, timedelta
 import json

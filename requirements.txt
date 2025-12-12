@@ -1,11 +1,43 @@
-numpy==1.24.3
-pandas==2.0.3
-scikit-learn==1.3.0
-matplotlib==3.7.2
-seaborn==0.12.2
-requests==2.31.0
-python-dotenv==1.0.0
-ta==0.11.0
-tqdm==4.65.0
-joblib==1.3.2
-torch==2.0.1
+# Core ML/DL dependencies
+torch>=2.0.0
+torch-geometric>=2.3.0
+numpy>=1.24.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+
+# Data processing and feature engineering
+ta>=0.10.2  # Technical analysis indicators
+yfinance>=0.2.18  # Financial data download
+statsmodels>=0.14.0  # Statistical models
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.14.0
+networkx>=3.1
+
+# Causal discovery
+tigramite>=5.1.0  # PCMCI and causal discovery
+causal-learn>=0.1.3  # Additional causal methods
+
+# Optimization and utilities
+tqdm>=4.65.0  # Progress bars
+joblib>=1.2.0  # Parallel processing
+scipy>=1.10.0  # Scientific computing
+tensorboard>=2.13.0  # Training visualization
+
+# Configuration and logging
+pyyaml>=6.0  # Config files
+python-dotenv>=1.0.0  # Environment variables
+colorama>=0.4.6  # Colored terminal output
+
+# Testing and development (optional)
+pytest>=7.3.0
+pytest-cov>=4.0.0
+black>=23.0.0  # Code formatting
+flake8>=6.0.0  # Linting
+
+# Additional dependencies for advanced features
+einops>=0.6.1  # Tensor operations
+wandb>=0.15.0  # Experiment tracking (optional)
+optuna>=3.2.0  # Hyperparameter optimization (optional)
