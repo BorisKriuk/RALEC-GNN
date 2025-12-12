@@ -16,8 +16,8 @@ from dataclasses import dataclass
 from torch_geometric.data import Data
 
 # Core components
-from core.ralec_gnn_enhanced import EnhancedRALECGNN
-from core.data_processor import FinancialDataProcessor
+from core.model import EnhancedRALECGNN
+from core.data import FinancialDataProcessor
 from utils.config import RALECConfig
 from utils.logger import setup_logger
 
