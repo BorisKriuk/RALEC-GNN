@@ -16,7 +16,20 @@ from typing import Dict, List, Tuple, Optional, Any
 import torch
 from scipy.stats import gaussian_kde
 
-from causal_discovery import CausalEdge
+# Import from causal discovery module - needs proper path
+# from causal_discovery import CausalEdge
+
+# Temporary placeholder class until proper import is fixed
+from dataclasses import dataclass
+
+@dataclass
+class CausalEdge:
+    source: int
+    target: int
+    strength: float
+    confidence: float
+    lag: int
+    mechanism: str
 
 
 class CausalGraphVisualizer:
@@ -677,7 +690,20 @@ def create_causal_discovery_report(
 
 if __name__ == "__main__":
     # Example usage with synthetic data
-    from causal_discovery import CausalEdge
+    # Import from causal discovery module - needs proper path
+# from causal_discovery import CausalEdge
+
+# Temporary placeholder class until proper import is fixed
+from dataclasses import dataclass
+
+@dataclass
+class CausalEdge:
+    source: int
+    target: int
+    strength: float
+    confidence: float
+    lag: int
+    mechanism: str
     
     # Create synthetic causal edges
     causal_edges = []

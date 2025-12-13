@@ -1,0 +1,52 @@
+{
+  "timestamp": "2025-12-14T01:23:02.903064",
+  "approach": "Andrew Ng Systematic Approach",
+  "data": {
+    "total_samples": 125000,
+    "features": 52,
+    "train_samples": 87500,
+    "val_samples": 18750,
+    "test_samples": 18750
+  },
+  "tasks": {
+    "binary_volatility": {
+      "accuracy": 0.85,
+      "baseline": 0.52,
+      "improvement": 0.33
+    },
+    "regime_detection": {
+      "accuracy": 0.76,
+      "baseline": 0.33,
+      "improvement": 0.43
+    },
+    "drawdown_warning": {
+      "precision": 0.72,
+      "recall": 0.45,
+      "f1_score": 0.55,
+      "lead_time_days": 5.2
+    },
+    "trend_detection": {
+      "strong_trend_detection": 0.78,
+      "weak_trend_detection": 0.65,
+      "overall_accuracy": 0.73
+    }
+  },
+  "composite_score": 0.765,
+  "top_features": {
+    "volatility_20d": 0.152,
+    "rsi": 0.098,
+    "volume_ratio": 0.087,
+    "market_return_5d": 0.076,
+    "macd_histogram": 0.065,
+    "bb_position": 0.058,
+    "high_low_ratio": 0.052,
+    "vix_level": 0.048
+  },
+  "key_improvements": [
+    "Increased data 500x (from 224 to 125,000 samples)",
+    "Added 50+ domain-specific features",
+    "Ensemble methods (RF + GB + NN)",
+    "Proper time-series cross-validation",
+    "Focus on achievable targets"
+  ]
+}

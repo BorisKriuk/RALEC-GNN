@@ -22,7 +22,41 @@ from plotly.subplots import make_subplots
 import warnings
 warnings.filterwarnings('ignore')
 
-from emergent_risk_metrics import SystemicRiskIndicators
+# Import from emergent risk metrics - needs proper path
+# from emergent_risk_metrics import SystemicRiskIndicators
+
+# Import from parent directory
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+try:
+    from metrics.emergent_risk_metrics import SystemicRiskIndicators
+except ImportError:
+    # Fallback if import fails
+    from dataclasses import dataclass
+    from typing import Dict
+    import torch
+    
+    @dataclass
+    class SystemicRiskIndicators:
+        """Placeholder for SystemicRiskIndicators"""
+        network_fragility: float
+        contagion_potential: float
+        systemic_importance: torch.Tensor
+        clustering_risk: float
+        herding_index: float
+        synchronization_risk: float
+        diversity_loss: float
+        information_contagion: float
+        uncertainty_propagation: float
+        emergence_indicator: float
+        self_organization: float
+        cascade_probability: float
+        memory_fragility: float
+        adaptation_capacity: float
+        overall_systemic_risk: float
+        risk_decomposition: Dict[str, float]
 
 
 class EmergentRiskVisualizer:
@@ -949,7 +983,12 @@ Risk Decomposition:
 
 if __name__ == "__main__":
     # Test visualization with dummy data
-    from emergent_risk_metrics import EmergentRiskMetrics, create_risk_alert_system
+    try:
+        from metrics.emergent_risk_metrics import EmergentRiskMetrics, create_risk_alert_system
+    except ImportError:
+        print("Cannot run test: emergent_risk_metrics module not found")
+        exit(1)
+    
     import torch
     from torch_geometric.data import Data
     

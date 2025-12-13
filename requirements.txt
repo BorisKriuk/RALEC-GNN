@@ -31,6 +31,9 @@ pyyaml>=6.0  # Config files
 python-dotenv>=1.0.0  # Environment variables
 colorama>=0.4.6  # Colored terminal output
 
+# API and networking
+requests>=2.31.0  # HTTP requests for EODHD API
+
 # Testing and development (optional)
 pytest>=7.3.0
 pytest-cov>=4.0.0

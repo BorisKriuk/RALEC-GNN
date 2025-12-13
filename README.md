@@ -55,7 +55,17 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Set up EODHD API key for real financial data
+echo "EODHD_API_KEY=your_api_key_here" > .env
 ```
+
+### 📊 Data Sources
+
+RALEC-GNN supports both real financial data from EODHD API and synthetic data:
+
+- **Real Data**: Set `EODHD_API_KEY` in `.env` file (get key from https://eodhd.com)
+- **Synthetic Data**: Used automatically if API key not available (for demos/testing)
 
 ## 🏃 Quick Start
 

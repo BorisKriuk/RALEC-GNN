@@ -64,17 +64,37 @@ def train_model(args):
     model = RALECGNN(config)
     
     # Load data
-    print(f"\nLoading data from: {args.data}")
-    # In practice, implement your data loading here
-    # train_data, val_data = load_financial_data(args.data)
-    
-    # For demo, use synthetic data
-    from utils.synthetic_data import generate_synthetic_data
-    train_data, val_data = generate_synthetic_data(
-        num_samples=1000,
-        num_assets=config.num_assets,
-        sequence_length=20
-    )
+    if args.use_real_data:
+        print("\nLoading real financial data from EODHD API...")
+        print("⚠️  This may take several minutes on first run")
+        
+        from core.eodhd_data import get_real_financial_data
+        try:
+            train_data, val_data, test_data = get_real_financial_data(
+                lookback_days=config.lookback_days if hasattr(config, 'lookback_days') else 1000,
+                sequence_length=20
+            )
+            print(f"✅ Loaded real data: {len(train_data)} train, {len(val_data)} val sequences")
+        except Exception as e:
+            print(f"❌ Failed to load real data: {e}")
+            print("Falling back to synthetic data...")
+            from utils.synthetic_data import generate_synthetic_data
+            train_data, val_data = generate_synthetic_data(
+                num_samples=1000,
+                num_assets=config.num_assets,
+                sequence_length=20
+            )
+    else:
+        print(f"\nLoading data from: {args.data if args.data else 'synthetic generator'}")
+        
+        # For demo, use synthetic data
+        from utils.synthetic_data import generate_synthetic_data
+        train_data, val_data = generate_synthetic_data(
+            num_samples=1000,
+            num_assets=config.num_assets,
+            sequence_length=20
+        )
+        print("ℹ️  Using synthetic data. For real data, use --use-real-data flag")
     
     # Train
     print("\nStarting training...")
@@ -268,6 +288,8 @@ def main():
     # Other arguments
     parser.add_argument('--gpu', action='store_true', help='Use GPU if available')
     parser.add_argument('--verbose', action='store_true', help='Verbose output')
+    parser.add_argument('--use-real-data', action='store_true', 
+                       help='Use real EODHD data instead of synthetic (requires API key)')
     
     args = parser.parse_args()
     

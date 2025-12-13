@@ -11,7 +11,19 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.preprocessing import StandardScaler
 import logging
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
+import os
+from dotenv import load_dotenv
+
+# Import real data fetcher
+try:
+    from .eodhd_data import get_real_financial_data, RealFinancialDataProcessor
+    EODHD_AVAILABLE = True
+except ImportError:
+    EODHD_AVAILABLE = False
+    logger.warning("EODHD data module not available, will fall back to synthetic data")
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -63,29 +75,93 @@ class FinancialDataProcessor:
         self.scaler = StandardScaler()
         self.fitted = False
         
-    def load_and_prepare_data(self, data_path: Optional[str] = None) -> Dict[str, Any]:
+    def load_and_prepare_data(self, data_path: Optional[str] = None, use_real_data: bool = True) -> Dict[str, Any]:
         """
         Load and prepare financial data.
         
         Args:
-            data_path: Path to data file or None for synthetic data
+            data_path: Path to data file or None for API/synthetic data
+            use_real_data: Whether to use real EODHD data (requires API key)
             
         Returns:
             Dictionary containing processed data
         """
-        if data_path:
-            # Load real data
+        if data_path and os.path.exists(data_path):
+            # Load from file if provided
             raw_data = pd.read_csv(data_path)
             logger.info(f"Loaded data from {data_path}")
+            # Process data
+            processed_data = self._process_raw_data(raw_data)
+        elif use_real_data and EODHD_AVAILABLE and os.getenv("EODHD_API_KEY"):
+            # Use real EODHD data
+            logger.info("Fetching real financial data from EODHD API...")
+            try:
+                # Get real financial data
+                train_sequences, val_sequences, test_sequences = get_real_financial_data(
+                    lookback_days=self.config.lookback_days,
+                    sequence_length=self.config.sequence_length
+                )
+                
+                # Convert to our expected format
+                processed_data = {
+                    'train_sequences': train_sequences,
+                    'val_sequences': val_sequences,
+                    'test_sequences': test_sequences,
+                    'symbols': self.config.symbols,
+                    'data_source': 'EODHD_API'
+                }
+                
+                logger.info(f"Successfully loaded real data: {len(train_sequences)} train sequences")
+                return processed_data
+                
+            except Exception as e:
+                logger.error(f"Failed to fetch real data: {e}")
+                logger.warning("Falling back to synthetic data")
+                raw_data = self._generate_synthetic_data()
+                processed_data = self._process_raw_data(raw_data)
         else:
             # Generate synthetic data for demo
+            if use_real_data:
+                logger.warning("Real data requested but EODHD_API_KEY not found in environment")
             raw_data = self._generate_synthetic_data()
             logger.info("Generated synthetic data for demo")
-            
-        # Process data
-        processed_data = self._process_raw_data(raw_data)
+            # Process data
+            processed_data = self._process_raw_data(raw_data)
         
         return processed_data
+    
+    def process(self, data: Any, use_real_data: bool = True) -> List[List[Data]]:
+        """
+        Process data into graph sequences for RALEC-GNN.
+        
+        Args:
+            data: Input data (can be path, DataFrame, or None for auto-fetch)
+            use_real_data: Whether to use real EODHD data
+            
+        Returns:
+            List of graph sequences
+        """
+        if isinstance(data, list) and len(data) > 0 and isinstance(data[0], list):
+            # Already processed sequences
+            return data
+        elif isinstance(data, str) or data is None:
+            # Load data
+            result = self.load_and_prepare_data(data, use_real_data=use_real_data)
+            
+            # Check if we got sequences directly (from EODHD)
+            if 'train_sequences' in result:
+                # Combine all sequences for processing
+                all_sequences = []
+                if 'train_sequences' in result:
+                    all_sequences.extend(result['train_sequences'])
+                if 'val_sequences' in result:
+                    all_sequences.extend(result['val_sequences'])
+                if 'test_sequences' in result:
+                    all_sequences.extend(result['test_sequences'])
+                return all_sequences
+            else:
+                # Process regular data
+                return result.get('sequences', [])
     
     def _generate_synthetic_data(self) -> pd.DataFrame:
         """Generate synthetic financial data for testing"""
