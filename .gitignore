@@ -1,0 +1,10 @@
+venv/
+cache/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+output/
+*.pkl
+.idea/
+*.egg-info/
