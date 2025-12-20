@@ -1,0 +1,70 @@
+{
+  "timestamp": "2025-12-14T13:24:45.800178",
+  "training_hours": 0.0015304864115185208,
+  "data_info": {
+    "total_points": 132516,
+    "features": 22,
+    "symbols": 77
+  },
+  "results": {
+    "volatility": {
+      "train": 0.8761225083817553,
+      "val": 0.7838204960507119,
+      "test": 0.7039943656303451
+    },
+    "regime": {
+      "train": 1.0,
+      "val": 1.0,
+      "test": 0.9998490793842438
+    },
+    "drawdown": {
+      "train": 0.7505740559071161,
+      "val": 0.8643658499773608,
+      "test": 0.7402656202837308,
+      "precision": 0.1994198694706309
+    }
+  },
+  "composite_score": 0.8519217225072945,
+  "top_features": [
+    {
+      "feature": "volatility_20d",
+      "avg_importance": 0.24087356698369636
+    },
+    {
+      "feature": "return_20d",
+      "avg_importance": 0.1833478372073359
+    },
+    {
+      "feature": "volatility_10d",
+      "avg_importance": 0.10498517362961135
+    },
+    {
+      "feature": "distance_sma_50",
+      "avg_importance": 0.06926719600560391
+    },
+    {
+      "feature": "distance_sma_20",
+      "avg_importance": 0.05897474269041472
+    },
+    {
+      "feature": "volatility_60d",
+      "avg_importance": 0.0541415628000812
+    },
+    {
+      "feature": "rsi",
+      "avg_importance": 0.04971248668877855
+    },
+    {
+      "feature": "volatility_5d",
+      "avg_importance": 0.04647021210332215
+    },
+    {
+      "feature": "distance_sma_200",
+      "avg_importance": 0.03485545438140911
+    },
+    {
+      "feature": "return_60d",
+      "avg_importance": 0.03454197095055657
+    }
+  ]
+}

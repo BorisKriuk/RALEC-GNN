@@ -1409,7 +1409,7 @@ class ResearchTrainer:
             
             fold_crisis_recall = 0
             crisis_mask = np.array(val_labels) == 2
-            if crisis_mask.sum() > 0:
+            if crisis_mask.sum() > 0 and len(fold_preds) > 0:
                 fold_crisis_recall = (np.array(fold_preds)[crisis_mask] == 2).mean()
             
             if fold_crisis_recall > best_overall_crisis_recall:
@@ -1490,7 +1490,7 @@ class ResearchTrainer:
         )
         
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-            optimizer, mode='min', factor=0.5, patience=7, verbose=False
+            optimizer, mode='min', factor=0.5, patience=7
         )
         
         class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)

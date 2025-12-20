@@ -1,0 +1,51 @@
+# Environment files
+.env
+.env.*
+
+# Cache
+cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.pid
+*_pid.txt
+
+# Output files (keep only essential ones)
+output/*_training*.log
+output/*_pid*.txt
+output/*.md
+output/enhanced_*
+output/improved_*
+output/optimized_*
+output/checkpoints/
+output/logs/
+
+# Python virtual environments
+ralec_env/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints
