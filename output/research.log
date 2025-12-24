@@ -367,3 +367,90 @@ Outputs saved to output/ directory:
 2025-12-14 12:57:25,336 - __main__ - INFO -     logistic_regression: Acc=58.37%+/-11.47%, Crisis Recall=41.67%+/-40.14%, F1=0.465+/-0.178
 2025-12-14 12:57:25,336 - __main__ - INFO -     random_forest: Acc=59.29%+/-4.44%, Crisis Recall=55.93%+/-32.37%, F1=0.504+/-0.120
 2025-12-14 12:57:25,337 - __main__ - INFO -     gradient_boosting: Acc=62.94%+/-5.68%, Crisis Recall=66.33%+/-36.54%, F1=0.532+/-0.154
+2025-12-23 16:10:15,049 - __main__ - INFO - Using device: cpu
+2025-12-23 16:10:15,049 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:15,049 - __main__ - INFO - Cross-Market Contagion Networks - OPTIMIZED Implementation
+2025-12-23 16:10:15,049 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-23 16:10:15,049 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:15,050 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-23 16:10:15,050 - __main__ - INFO - Config hash: 0b1c38de8f4c
+2025-12-23 16:10:15,050 - __main__ - INFO - Regime labeling method: quantile
+2025-12-23 16:10:15,050 - __main__ - INFO - Using learned edges: True
+2025-12-23 16:10:15,050 - __main__ - INFO - Step size: 2
+2025-12-23 16:10:15,050 - __main__ - INFO - Node features: 20
+2025-12-23 16:10:15,050 - __main__ - INFO - Crisis weight multiplier: 8.0
+2025-12-23 16:10:15,050 - __main__ - INFO - 
+================================================================================
+2025-12-23 16:10:15,050 - __main__ - INFO - STEP 1: Data Collection (77 symbols) [OPTIMIZED]
+2025-12-23 16:10:15,050 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:15,051 - __main__ - INFO - Fetching data from 2005-06-11 to 2025-12-23 (parallel)...
+2025-12-23 16:10:17,118 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2025-12-23 16:10:17,711 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2025-12-23 16:10:18,322 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2025-12-23 16:10:18,806 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2025-12-23 16:10:18,806 - __main__ - INFO - Saving to cache: cache/data_f1ef165f71debed6.pkl
+2025-12-23 16:10:18,818 - __main__ - INFO - 
+Successfully loaded 77 assets
+2025-12-23 16:10:18,834 - __main__ - INFO - Working with 77 assets for analysis
+2025-12-23 16:10:18,834 - __main__ - INFO - 
+Asset category distribution:
+2025-12-23 16:10:18,834 - __main__ - INFO -    sector_etfs: 10
+2025-12-23 16:10:18,834 - __main__ - INFO -    intl_emerging: 8
+2025-12-23 16:10:18,834 - __main__ - INFO -    tech_mega: 7
+2025-12-23 16:10:18,834 - __main__ - INFO -    finance: 7
+2025-12-23 16:10:18,834 - __main__ - INFO -    intl_developed: 7
+2025-12-23 16:10:18,834 - __main__ - INFO -    fixed_income: 7
+2025-12-23 16:10:18,834 - __main__ - INFO -    consumer: 6
+2025-12-23 16:10:18,834 - __main__ - INFO -    healthcare: 5
+2025-12-23 16:10:18,834 - __main__ - INFO -    industrials: 5
+2025-12-23 16:10:18,834 - __main__ - INFO -    commodities: 5
+2025-12-23 16:10:18,835 - __main__ - INFO -    broad_market: 5
+2025-12-23 16:10:18,835 - __main__ - INFO -    energy: 4
+2025-12-23 16:10:18,835 - __main__ - INFO -    volatility: 1
+2025-12-23 16:10:18,835 - __main__ - INFO - 
+================================================================================
+2025-12-23 16:10:18,835 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection [OPTIMIZED - FFT]
+2025-12-23 16:10:18,835 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:18,835 - __main__ - INFO - Loading from cache: cache/leadlag_e4bf483ed7e05ae0.pkl
+2025-12-23 16:10:18,836 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2025-12-23 16:10:18,839 - __main__ - INFO -    DIA.US: influences 11 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    VTI.US: influences 9 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    SPY.US: influences 9 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    IWM.US: influences 8 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    QQQ.US: influences 7 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    XLF.US: influences 6 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    C.US: influences 4 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    XLE.US: influences 4 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    IEF.US: influences 3 assets
+2025-12-23 16:10:18,839 - __main__ - INFO -    EWA.US: influences 3 assets
+2025-12-23 16:10:20,680 - visualizations - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-23 16:10:20,683 - __main__ - INFO - 
+================================================================================
+2025-12-23 16:10:20,683 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-23 16:10:20,683 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:23,217 - algorithm - INFO - Regime labeling method: quantile
+2025-12-23 16:10:23,217 - algorithm - INFO -    Regime 0: 783 days (40.0%)
+2025-12-23 16:10:23,217 - algorithm - INFO -    Regime 1: 782 days (40.0%)
+2025-12-23 16:10:23,217 - algorithm - INFO -    Regime 2: 392 days (20.0%)
+2025-12-23 16:10:23,222 - __main__ - INFO - 
+Regime distribution:
+2025-12-23 16:10:23,224 - __main__ - INFO -    Bull/Low Vol: 40.0% (783 days)
+2025-12-23 16:10:23,224 - __main__ - INFO -    Normal/Bear: 40.0% (782 days)
+2025-12-23 16:10:23,224 - __main__ - INFO -    Crisis/Contagion: 20.0% (392 days)
+2025-12-23 16:10:23,224 - __main__ - INFO - 
+================================================================================
+2025-12-23 16:10:23,224 - __main__ - INFO - STEP 4: Temporal Graph Construction [CACHED]
+2025-12-23 16:10:23,224 - __main__ - INFO - ================================================================================
+2025-12-23 16:10:23,225 - __main__ - INFO - Loading from cache: cache/graphs_e4bf483ed7e05ae0.pkl
+2025-12-23 16:10:23,478 - __main__ - INFO - Loaded 961 graphs from cache
+2025-12-23 16:10:23,480 - __main__ - INFO - 
+Graph statistics:
+2025-12-23 16:10:23,480 - __main__ - INFO -    Number of graphs: 961
+2025-12-23 16:10:23,480 - __main__ - INFO -    Average nodes: 77.0
+2025-12-23 16:10:23,480 - __main__ - INFO -    Average edges: 5929.0
+2025-12-23 16:10:23,480 - __main__ - INFO - 
+================================================================================
+2025-12-23 16:10:23,480 - __main__ - INFO - STEP 5a: Training Baseline Models
+2025-12-23 16:10:23,480 - __main__ - INFO - ================================================================================
