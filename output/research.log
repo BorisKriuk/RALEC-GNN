@@ -367,3 +367,400 @@ Outputs saved to output/ directory:
 2025-12-14 12:57:25,336 - __main__ - INFO -     logistic_regression: Acc=58.37%+/-11.47%, Crisis Recall=41.67%+/-40.14%, F1=0.465+/-0.178
 2025-12-14 12:57:25,336 - __main__ - INFO -     random_forest: Acc=59.29%+/-4.44%, Crisis Recall=55.93%+/-32.37%, F1=0.504+/-0.120
 2025-12-14 12:57:25,337 - __main__ - INFO -     gradient_boosting: Acc=62.94%+/-5.68%, Crisis Recall=66.33%+/-36.54%, F1=0.532+/-0.154
+2025-12-26 22:03:06,052 - __main__ - INFO - Using device: cpu
+2025-12-26 22:03:06,053 - __main__ - INFO - ================================================================================
+2025-12-26 22:03:06,053 - __main__ - INFO - Cross-Market Contagion Networks - OPTIMIZED Implementation
+2025-12-26 22:03:06,053 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-26 22:03:06,053 - __main__ - INFO - ================================================================================
+2025-12-26 22:03:06,053 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-26 22:03:06,053 - __main__ - INFO - Config hash: 0b1c38de8f4c
+2025-12-26 22:03:06,053 - __main__ - INFO - Regime labeling method: quantile
+2025-12-26 22:03:06,053 - __main__ - INFO - Using learned edges: True
+2025-12-26 22:03:06,053 - __main__ - INFO - Step size: 2
+2025-12-26 22:03:06,053 - __main__ - INFO - Node features: 20
+2025-12-26 22:03:06,053 - __main__ - INFO - Crisis weight multiplier: 8.0
+2025-12-26 22:03:06,053 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:03:06,053 - __main__ - INFO - STEP 1: Data Collection (77 symbols) [OPTIMIZED]
+2025-12-26 22:03:06,053 - __main__ - INFO - ================================================================================
+2025-12-26 22:03:06,054 - __main__ - INFO - Fetching data from 2005-06-14 to 2025-12-26 (parallel)...
+2025-12-26 22:03:06,060 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2025-12-26 22:03:06,062 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2025-12-26 22:03:06,070 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2025-12-26 22:03:06,073 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2025-12-26 22:03:06,073 - __main__ - INFO - Saving to cache: cache/data_27644e236d9cd0cd.pkl
+2025-12-26 22:03:06,085 - __main__ - INFO - 
+Successfully loaded 77 assets
+2025-12-26 22:03:06,099 - __main__ - INFO - Working with 77 assets for analysis
+2025-12-26 22:03:06,099 - __main__ - INFO - 
+Asset category distribution:
+2025-12-26 22:03:06,099 - __main__ - INFO -    sector_etfs: 10
+2025-12-26 22:03:06,099 - __main__ - INFO -    intl_emerging: 8
+2025-12-26 22:03:06,099 - __main__ - INFO -    tech_mega: 7
+2025-12-26 22:03:06,099 - __main__ - INFO -    finance: 7
+2025-12-26 22:03:06,099 - __main__ - INFO -    intl_developed: 7
+2025-12-26 22:03:06,099 - __main__ - INFO -    fixed_income: 7
+2025-12-26 22:03:06,099 - __main__ - INFO -    consumer: 6
+2025-12-26 22:03:06,099 - __main__ - INFO -    healthcare: 5
+2025-12-26 22:03:06,099 - __main__ - INFO -    industrials: 5
+2025-12-26 22:03:06,099 - __main__ - INFO -    commodities: 5
+2025-12-26 22:03:06,099 - __main__ - INFO -    broad_market: 5
+2025-12-26 22:03:06,099 - __main__ - INFO -    energy: 4
+2025-12-26 22:03:06,099 - __main__ - INFO -    volatility: 1
+2025-12-26 22:03:06,099 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:03:06,099 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection [OPTIMIZED - FFT]
+2025-12-26 22:03:06,099 - __main__ - INFO - ================================================================================
+2025-12-26 22:03:06,279 - __main__ - INFO - Saving to cache: cache/leadlag_e4bf483ed7e05ae0.pkl
+2025-12-26 22:03:06,280 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2025-12-26 22:03:06,281 - __main__ - INFO -    DIA.US: influences 13 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    VTI.US: influences 11 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    SPY.US: influences 9 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    XLF.US: influences 6 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    IWM.US: influences 6 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    QQQ.US: influences 5 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    C.US: influences 5 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    XLE.US: influences 4 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    EWC.US: influences 4 assets
+2025-12-26 22:03:06,281 - __main__ - INFO -    EWL.US: influences 3 assets
+2025-12-26 22:03:07,024 - visualizations - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-26 22:03:07,025 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:03:07,027 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-26 22:03:07,027 - __main__ - INFO - ================================================================================
+2025-12-26 22:03:08,525 - algorithm - INFO - Regime labeling method: quantile
+2025-12-26 22:03:08,525 - algorithm - INFO -    Regime 0: 784 days (40.0%)
+2025-12-26 22:03:08,525 - algorithm - INFO -    Regime 1: 783 days (40.0%)
+2025-12-26 22:03:08,525 - algorithm - INFO -    Regime 2: 392 days (20.0%)
+2025-12-26 22:03:08,527 - __main__ - INFO - 
+Regime distribution:
+2025-12-26 22:03:08,528 - __main__ - INFO -    Bull/Low Vol: 40.0% (784 days)
+2025-12-26 22:03:08,528 - __main__ - INFO -    Normal/Bear: 40.0% (783 days)
+2025-12-26 22:03:08,528 - __main__ - INFO -    Crisis/Contagion: 20.0% (392 days)
+2025-12-26 22:03:08,528 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:03:08,528 - __main__ - INFO - STEP 4: Temporal Graph Construction [CACHED]
+2025-12-26 22:03:08,528 - __main__ - INFO - ================================================================================
+2025-12-26 22:04:00,477 - algorithm - INFO - Built 965 temporal graphs
+2025-12-26 22:04:00,563 - __main__ - INFO - Saving to cache: cache/graphs_e4bf483ed7e05ae0.pkl
+2025-12-26 22:04:00,794 - __main__ - INFO - 
+Graph statistics:
+2025-12-26 22:04:00,794 - __main__ - INFO -    Number of graphs: 965
+2025-12-26 22:04:00,794 - __main__ - INFO -    Average nodes: 77.0
+2025-12-26 22:04:00,794 - __main__ - INFO -    Average edges: 5929.0
+2025-12-26 22:04:00,794 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:04:00,794 - __main__ - INFO - STEP 5a: Training Baseline Models
+2025-12-26 22:04:00,794 - __main__ - INFO - ================================================================================
+2025-12-26 22:04:02,538 - benchmarks - INFO - Training baseline: logistic_regression
+2025-12-26 22:04:02,538 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-26 22:04:02,589 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-26 22:04:02,652 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-26 22:04:02,733 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-26 22:04:02,838 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-26 22:04:02,995 - benchmarks - INFO -   logistic_regression: Acc=59.97%±8.89%, Crisis Recall=42.06%±35.21%, Macro-F1=0.451±0.140
+2025-12-26 22:04:02,995 - benchmarks - INFO - Training baseline: random_forest
+2025-12-26 22:04:02,995 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-26 22:04:03,188 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-26 22:04:03,357 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-26 22:04:03,525 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-26 22:04:03,750 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-26 22:04:03,985 - benchmarks - INFO -   random_forest: Acc=58.04%±8.00%, Crisis Recall=49.28%±27.86%, Macro-F1=0.495±0.141
+2025-12-26 22:04:03,985 - benchmarks - INFO - Training baseline: gradient_boosting
+2025-12-26 22:04:03,985 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-26 22:04:23,330 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-26 22:04:54,655 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-26 22:05:39,976 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-26 22:06:39,037 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-26 22:07:52,548 - benchmarks - INFO -   gradient_boosting: Acc=60.75%±7.75%, Crisis Recall=60.80%±33.50%, Macro-F1=0.504±0.153
+2025-12-26 22:07:52,550 - __main__ - INFO - 
+================================================================================
+2025-12-26 22:07:52,550 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2025-12-26 22:07:52,550 - __main__ - INFO - ================================================================================
+2025-12-26 22:07:52,611 - __main__ - INFO - Model parameters: 130,792
+2025-12-26 22:07:52,758 - algorithm - INFO - Created 950 training sequences
+2025-12-26 22:07:52,758 - algorithm - INFO - Label distribution in sequences:
+2025-12-26 22:07:52,758 - algorithm - INFO -    Regime 0: 387 (40.7%)
+2025-12-26 22:07:52,758 - algorithm - INFO -    Regime 1: 374 (39.4%)
+2025-12-26 22:07:52,758 - algorithm - INFO -    Regime 2: 189 (19.9%)
+2025-12-26 22:07:52,758 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-26 22:07:52,759 - algorithm - INFO - 
+============================================================
+2025-12-26 22:07:52,759 - algorithm - INFO - Fold 1/5
+2025-12-26 22:07:52,759 - algorithm - INFO - Train: 220, Val: 109
+2025-12-26 22:07:52,759 - algorithm - INFO - ============================================================
+2025-12-26 22:07:52,759 - algorithm - INFO - Train regimes (before augment): Bull=141, Normal=60, Crisis=19
+2025-12-26 22:07:52,759 - algorithm - INFO - Val regimes: Bull=13, Normal=27, Crisis=69
+2025-12-26 22:07:52,759 - algorithm - INFO - Train regimes (after augment): Bull=141, Normal=60, Crisis=57
+2025-12-26 22:07:53,343 - algorithm - INFO - Fold 0: Model compiled with torch.compile()
+2025-12-26 22:21:23,219 - algorithm - INFO - Fold 1, Epoch 10/150 - Train Loss: 1.1984, Train Acc: 66.67%, Val Loss: 3.1932, Val Acc: 54.13%, Crisis Recall: 66.67%, LR: 5.00e-04
+2025-12-26 22:35:01,626 - algorithm - INFO - Fold 1, Epoch 20/150 - Train Loss: 0.9124, Train Acc: 80.23%, Val Loss: 2.5524, Val Acc: 64.22%, Crisis Recall: 79.71%, LR: 2.51e-04
+2025-12-26 22:48:50,522 - algorithm - INFO - Fold 1, Epoch 30/150 - Train Loss: 0.8508, Train Acc: 86.43%, Val Loss: 3.4938, Val Acc: 51.38%, Crisis Recall: 53.62%, LR: 5.00e-04
+2025-12-26 23:02:29,881 - algorithm - INFO - Fold 1, Epoch 40/150 - Train Loss: 0.7864, Train Acc: 86.05%, Val Loss: 4.1062, Val Acc: 44.95%, Crisis Recall: 44.93%, LR: 4.27e-04
+2025-12-26 23:16:29,955 - algorithm - INFO - Fold 1, Epoch 50/150 - Train Loss: 0.7435, Train Acc: 89.15%, Val Loss: 3.8484, Val Acc: 46.79%, Crisis Recall: 46.38%, LR: 2.51e-04
+2025-12-26 23:16:29,956 - algorithm - INFO - Early stopping at epoch 50
+2025-12-26 23:16:29,960 - algorithm - INFO - New best crisis recall: 79.71%
+2025-12-26 23:16:29,960 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-26 23:16:29,960 - algorithm - INFO - 
+============================================================
+2025-12-26 23:16:29,960 - algorithm - INFO - Fold 2/5
+2025-12-26 23:16:29,960 - algorithm - INFO - Train: 344, Val: 134
+2025-12-26 23:16:29,960 - algorithm - INFO - ============================================================
+2025-12-26 23:16:29,960 - algorithm - INFO - Train regimes (before augment): Bull=155, Normal=96, Crisis=93
+2025-12-26 23:16:29,960 - algorithm - INFO - Val regimes: Bull=47, Normal=82, Crisis=5
+2025-12-26 23:16:29,960 - algorithm - INFO - Train regimes (after augment): Bull=155, Normal=96, Crisis=279
+2025-12-26 23:16:29,963 - algorithm - INFO - Fold 1: Model compiled with torch.compile()
+2025-12-27 01:26:41,554 - __main__ - INFO - Using device: cpu
+2025-12-27 01:26:41,554 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:41,554 - __main__ - INFO - Cross-Market Contagion Networks - OPTIMIZED Implementation
+2025-12-27 01:26:41,555 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2025-12-27 01:26:41,555 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:41,555 - __main__ - INFO - 
+Configuration saved to output/config.json
+2025-12-27 01:26:41,555 - __main__ - INFO - Config hash: 0b1c38de8f4c
+2025-12-27 01:26:41,555 - __main__ - INFO - Regime labeling method: quantile
+2025-12-27 01:26:41,555 - __main__ - INFO - Using learned edges: True
+2025-12-27 01:26:41,555 - __main__ - INFO - Step size: 2
+2025-12-27 01:26:41,555 - __main__ - INFO - Node features: 20
+2025-12-27 01:26:41,555 - __main__ - INFO - Crisis weight multiplier: 8.0
+2025-12-27 01:26:41,555 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:26:41,555 - __main__ - INFO - STEP 1: Data Collection (77 symbols) [OPTIMIZED]
+2025-12-27 01:26:41,555 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:41,555 - __main__ - INFO - Fetching data from 2005-06-15 to 2025-12-27 (parallel)...
+2025-12-27 01:26:43,487 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2025-12-27 01:26:44,107 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2025-12-27 01:26:44,602 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2025-12-27 01:26:45,509 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2025-12-27 01:26:45,510 - __main__ - INFO - Saving to cache: cache/data_86dea2643f9a93e3.pkl
+2025-12-27 01:26:45,520 - __main__ - INFO - 
+Successfully loaded 77 assets
+2025-12-27 01:26:45,533 - __main__ - INFO - Working with 77 assets for analysis
+2025-12-27 01:26:45,533 - __main__ - INFO - 
+Asset category distribution:
+2025-12-27 01:26:45,533 - __main__ - INFO -    sector_etfs: 10
+2025-12-27 01:26:45,533 - __main__ - INFO -    intl_emerging: 8
+2025-12-27 01:26:45,533 - __main__ - INFO -    tech_mega: 7
+2025-12-27 01:26:45,533 - __main__ - INFO -    finance: 7
+2025-12-27 01:26:45,533 - __main__ - INFO -    intl_developed: 7
+2025-12-27 01:26:45,533 - __main__ - INFO -    fixed_income: 7
+2025-12-27 01:26:45,533 - __main__ - INFO -    consumer: 6
+2025-12-27 01:26:45,533 - __main__ - INFO -    healthcare: 5
+2025-12-27 01:26:45,533 - __main__ - INFO -    industrials: 5
+2025-12-27 01:26:45,533 - __main__ - INFO -    commodities: 5
+2025-12-27 01:26:45,533 - __main__ - INFO -    broad_market: 5
+2025-12-27 01:26:45,533 - __main__ - INFO -    energy: 4
+2025-12-27 01:26:45,533 - __main__ - INFO -    volatility: 1
+2025-12-27 01:26:45,533 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:26:45,533 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection [OPTIMIZED - FFT]
+2025-12-27 01:26:45,533 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:45,533 - __main__ - INFO - Loading from cache: cache/leadlag_e4bf483ed7e05ae0.pkl
+2025-12-27 01:26:45,534 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2025-12-27 01:26:45,536 - __main__ - INFO -    DIA.US: influences 13 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    VTI.US: influences 11 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    SPY.US: influences 9 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    XLF.US: influences 6 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    IWM.US: influences 6 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    QQQ.US: influences 5 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    C.US: influences 5 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    XLE.US: influences 4 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    EWC.US: influences 4 assets
+2025-12-27 01:26:45,536 - __main__ - INFO -    EWL.US: influences 3 assets
+2025-12-27 01:26:46,145 - visualizations - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2025-12-27 01:26:46,146 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:26:46,146 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2025-12-27 01:26:46,146 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:47,632 - algorithm - INFO - Regime labeling method: quantile
+2025-12-27 01:26:47,632 - algorithm - INFO -    Regime 0: 784 days (40.0%)
+2025-12-27 01:26:47,632 - algorithm - INFO -    Regime 1: 783 days (40.0%)
+2025-12-27 01:26:47,632 - algorithm - INFO -    Regime 2: 392 days (20.0%)
+2025-12-27 01:26:47,634 - __main__ - INFO - 
+Regime distribution:
+2025-12-27 01:26:47,634 - __main__ - INFO -    Bull/Low Vol: 40.0% (784 days)
+2025-12-27 01:26:47,634 - __main__ - INFO -    Normal/Bear: 40.0% (783 days)
+2025-12-27 01:26:47,634 - __main__ - INFO -    Crisis/Contagion: 20.0% (392 days)
+2025-12-27 01:26:47,634 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:26:47,635 - __main__ - INFO - STEP 4: Temporal Graph Construction [CACHED]
+2025-12-27 01:26:47,635 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:47,635 - __main__ - INFO - Loading from cache: cache/graphs_e4bf483ed7e05ae0.pkl
+2025-12-27 01:26:47,839 - __main__ - INFO - Loaded 965 graphs from cache
+2025-12-27 01:26:47,840 - __main__ - INFO - 
+Graph statistics:
+2025-12-27 01:26:47,840 - __main__ - INFO -    Number of graphs: 965
+2025-12-27 01:26:47,840 - __main__ - INFO -    Average nodes: 77.0
+2025-12-27 01:26:47,840 - __main__ - INFO -    Average edges: 5929.0
+2025-12-27 01:26:47,840 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:26:47,840 - __main__ - INFO - STEP 5a: Training Baseline Models
+2025-12-27 01:26:47,840 - __main__ - INFO - ================================================================================
+2025-12-27 01:26:49,582 - benchmarks - INFO - Training baseline: logistic_regression
+2025-12-27 01:26:49,582 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-27 01:26:49,630 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-27 01:26:49,695 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-27 01:26:49,777 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-27 01:26:49,885 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-27 01:26:50,045 - benchmarks - INFO -   logistic_regression: Acc=59.97%±8.89%, Crisis Recall=42.06%±35.21%, Macro-F1=0.451±0.140
+2025-12-27 01:26:50,045 - benchmarks - INFO - Training baseline: random_forest
+2025-12-27 01:26:50,045 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-27 01:26:50,242 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-27 01:26:50,408 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-27 01:26:50,581 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-27 01:26:50,810 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-27 01:26:51,052 - benchmarks - INFO -   random_forest: Acc=58.04%±8.00%, Crisis Recall=49.28%±27.86%, Macro-F1=0.495±0.141
+2025-12-27 01:26:51,052 - benchmarks - INFO - Training baseline: gradient_boosting
+2025-12-27 01:26:51,052 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-27 01:27:10,375 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-27 01:27:41,951 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-27 01:28:27,308 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-27 01:29:27,066 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-27 01:30:41,329 - benchmarks - INFO -   gradient_boosting: Acc=60.75%±7.75%, Crisis Recall=60.80%±33.50%, Macro-F1=0.504±0.153
+2025-12-27 01:30:41,332 - __main__ - INFO - 
+================================================================================
+2025-12-27 01:30:41,332 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2025-12-27 01:30:41,332 - __main__ - INFO - ================================================================================
+2025-12-27 01:30:41,386 - __main__ - INFO - Model parameters: 130,792
+2025-12-27 01:30:41,531 - algorithm - INFO - Created 950 training sequences
+2025-12-27 01:30:41,532 - algorithm - INFO - Label distribution in sequences:
+2025-12-27 01:30:41,532 - algorithm - INFO -    Regime 0: 387 (40.7%)
+2025-12-27 01:30:41,532 - algorithm - INFO -    Regime 1: 374 (39.4%)
+2025-12-27 01:30:41,532 - algorithm - INFO -    Regime 2: 189 (19.9%)
+2025-12-27 01:30:41,532 - benchmarks - INFO - Fold 1: train=220 (crisis=19), val=109 (crisis=69)
+2025-12-27 01:30:41,532 - algorithm - INFO - 
+============================================================
+2025-12-27 01:30:41,532 - algorithm - INFO - Fold 1/5
+2025-12-27 01:30:41,532 - algorithm - INFO - Train: 220, Val: 109
+2025-12-27 01:30:41,532 - algorithm - INFO - ============================================================
+2025-12-27 01:30:41,532 - algorithm - INFO - Train regimes (before augment): Bull=141, Normal=60, Crisis=19
+2025-12-27 01:30:41,532 - algorithm - INFO - Val regimes: Bull=13, Normal=27, Crisis=69
+2025-12-27 01:30:41,532 - algorithm - INFO - Train regimes (after augment): Bull=141, Normal=60, Crisis=57
+2025-12-27 01:30:42,082 - algorithm - INFO - Fold 0: Model compiled with torch.compile()
+2025-12-27 01:44:25,586 - algorithm - INFO - Fold 1, Epoch 10/150 - Train Loss: 1.1387, Train Acc: 71.32%, Val Loss: 1.2353, Val Acc: 71.56%, Crisis Recall: 100.00%, LR: 5.00e-04
+2025-12-27 01:57:27,687 - algorithm - INFO - Fold 1, Epoch 20/150 - Train Loss: 0.8451, Train Acc: 88.37%, Val Loss: 1.8625, Val Acc: 67.89%, Crisis Recall: 89.86%, LR: 2.51e-04
+2025-12-27 02:10:32,238 - algorithm - INFO - Fold 1, Epoch 30/150 - Train Loss: 0.7841, Train Acc: 89.15%, Val Loss: 2.1452, Val Acc: 68.81%, Crisis Recall: 82.61%, LR: 5.00e-04
+2025-12-27 02:19:45,243 - algorithm - INFO - Early stopping at epoch 37
+2025-12-27 02:19:45,249 - algorithm - INFO - New best crisis recall: 100.00%
+2025-12-27 02:19:45,249 - benchmarks - INFO - Fold 2: train=344 (crisis=93), val=134 (crisis=5)
+2025-12-27 02:19:45,249 - algorithm - INFO - 
+============================================================
+2025-12-27 02:19:45,249 - algorithm - INFO - Fold 2/5
+2025-12-27 02:19:45,249 - algorithm - INFO - Train: 344, Val: 134
+2025-12-27 02:19:45,249 - algorithm - INFO - ============================================================
+2025-12-27 02:19:45,249 - algorithm - INFO - Train regimes (before augment): Bull=155, Normal=96, Crisis=93
+2025-12-27 02:19:45,249 - algorithm - INFO - Val regimes: Bull=47, Normal=82, Crisis=5
+2025-12-27 02:19:45,249 - algorithm - INFO - Train regimes (after augment): Bull=155, Normal=96, Crisis=279
+2025-12-27 02:19:45,255 - algorithm - INFO - Fold 1: Model compiled with torch.compile()
+2025-12-27 02:44:23,417 - algorithm - INFO - Fold 2, Epoch 10/150 - Train Loss: 0.9350, Train Acc: 76.79%, Val Loss: 1.4935, Val Acc: 39.55%, Crisis Recall: 100.00%, LR: 5.00e-04
+2025-12-27 03:09:17,177 - algorithm - INFO - Fold 2, Epoch 20/150 - Train Loss: 0.7578, Train Acc: 87.36%, Val Loss: 1.5146, Val Acc: 64.93%, Crisis Recall: 60.00%, LR: 2.51e-04
+2025-12-27 03:34:02,873 - algorithm - INFO - Fold 2, Epoch 30/150 - Train Loss: 0.6437, Train Acc: 88.49%, Val Loss: 1.2754, Val Acc: 73.13%, Crisis Recall: 60.00%, LR: 5.00e-04
+2025-12-27 03:58:27,853 - algorithm - INFO - Fold 2, Epoch 40/150 - Train Loss: 0.6876, Train Acc: 90.57%, Val Loss: 1.5720, Val Acc: 66.42%, Crisis Recall: 0.00%, LR: 4.27e-04
+2025-12-27 04:22:54,168 - algorithm - INFO - Fold 2, Epoch 50/150 - Train Loss: 0.6413, Train Acc: 93.02%, Val Loss: 1.1935, Val Acc: 78.36%, Crisis Recall: 60.00%, LR: 2.51e-04
+2025-12-27 04:47:30,975 - algorithm - INFO - Fold 2, Epoch 60/150 - Train Loss: 0.6055, Train Acc: 93.21%, Val Loss: 1.2473, Val Acc: 78.36%, Crisis Recall: 60.00%, LR: 7.41e-05
+2025-12-27 05:02:58,559 - algorithm - INFO - Early stopping at epoch 66
+2025-12-27 05:02:58,562 - benchmarks - INFO - Fold 3: train=468 (crisis=93), val=109 (crisis=78)
+2025-12-27 05:02:58,562 - algorithm - INFO - 
+============================================================
+2025-12-27 05:02:58,562 - algorithm - INFO - Fold 3/5
+2025-12-27 05:02:58,562 - algorithm - INFO - Train: 468, Val: 109
+2025-12-27 05:02:58,562 - algorithm - INFO - ============================================================
+2025-12-27 05:02:58,562 - algorithm - INFO - Train regimes (before augment): Bull=202, Normal=173, Crisis=93
+2025-12-27 05:02:58,562 - algorithm - INFO - Val regimes: Bull=0, Normal=31, Crisis=78
+2025-12-27 05:02:58,562 - algorithm - INFO - Train regimes (after augment): Bull=202, Normal=173, Crisis=279
+2025-12-27 05:02:58,568 - algorithm - INFO - Fold 2: Model compiled with torch.compile()
+2025-12-27 05:32:23,745 - algorithm - INFO - Fold 3, Epoch 10/150 - Train Loss: 0.8125, Train Acc: 81.35%, Val Loss: 2.1820, Val Acc: 62.39%, Crisis Recall: 84.62%, LR: 5.00e-04
+2025-12-27 06:02:10,178 - algorithm - INFO - Fold 3, Epoch 20/150 - Train Loss: 0.6887, Train Acc: 87.31%, Val Loss: 2.3373, Val Acc: 62.39%, Crisis Recall: 84.62%, LR: 2.51e-04
+2025-12-27 06:31:58,804 - algorithm - INFO - Fold 3, Epoch 30/150 - Train Loss: 0.6137, Train Acc: 91.28%, Val Loss: 2.1739, Val Acc: 65.14%, Crisis Recall: 82.05%, LR: 5.00e-04
+2025-12-27 06:34:52,058 - algorithm - INFO - Early stopping at epoch 31
+2025-12-27 06:34:52,066 - benchmarks - INFO - Fold 4: train=592 (crisis=172), val=109 (crisis=0)
+2025-12-27 06:34:52,066 - algorithm - INFO - 
+============================================================
+2025-12-27 06:34:52,066 - algorithm - INFO - Fold 4/5
+2025-12-27 06:34:52,066 - algorithm - INFO - Train: 592, Val: 109
+2025-12-27 06:34:52,067 - algorithm - INFO - ============================================================
+2025-12-27 06:34:52,067 - algorithm - INFO - Train regimes (before augment): Bull=202, Normal=218, Crisis=172
+2025-12-27 06:34:52,067 - algorithm - INFO - Val regimes: Bull=40, Normal=69, Crisis=0
+2025-12-27 06:34:52,067 - algorithm - WARNING - Fold 4 has only 0 crisis samples in val, skipping...
+2025-12-27 06:34:52,067 - benchmarks - INFO - Fold 5: train=716 (crisis=172), val=144 (crisis=5)
+2025-12-27 06:34:52,067 - algorithm - INFO - 
+============================================================
+2025-12-27 06:34:52,067 - algorithm - INFO - Fold 5/5
+2025-12-27 06:34:52,067 - algorithm - INFO - Train: 716, Val: 144
+2025-12-27 06:34:52,067 - algorithm - INFO - ============================================================
+2025-12-27 06:34:52,067 - algorithm - INFO - Train regimes (before augment): Bull=247, Normal=297, Crisis=172
+2025-12-27 06:34:52,067 - algorithm - INFO - Val regimes: Bull=79, Normal=60, Crisis=5
+2025-12-27 06:34:52,067 - algorithm - INFO - Train regimes (after augment): Bull=247, Normal=297, Crisis=516
+2025-12-27 06:34:52,073 - algorithm - INFO - Fold 4: Model compiled with torch.compile()
+2025-12-27 07:20:25,969 - algorithm - INFO - Fold 5, Epoch 10/150 - Train Loss: 0.8386, Train Acc: 84.15%, Val Loss: 1.1881, Val Acc: 50.69%, Crisis Recall: 100.00%, LR: 5.00e-04
+2025-12-27 08:06:36,523 - algorithm - INFO - Fold 5, Epoch 20/150 - Train Loss: 0.7347, Train Acc: 85.66%, Val Loss: 1.1414, Val Acc: 54.86%, Crisis Recall: 100.00%, LR: 2.51e-04
+2025-12-27 08:52:31,127 - algorithm - INFO - Fold 5, Epoch 30/150 - Train Loss: 0.6716, Train Acc: 89.91%, Val Loss: 1.0911, Val Acc: 58.33%, Crisis Recall: 100.00%, LR: 5.00e-04
+2025-12-27 09:38:51,121 - algorithm - INFO - Fold 5, Epoch 40/150 - Train Loss: 0.6594, Train Acc: 90.19%, Val Loss: 1.0791, Val Acc: 73.61%, Crisis Recall: 100.00%, LR: 4.27e-04
+2025-12-27 10:15:32,414 - algorithm - INFO - Early stopping at epoch 48
+2025-12-27 10:15:32,426 - algorithm - INFO - 
+============================================================
+2025-12-27 10:15:32,426 - algorithm - INFO - Cross-Validation Results
+2025-12-27 10:15:32,426 - algorithm - INFO - ============================================================
+2025-12-27 10:15:32,426 - algorithm - INFO - Completed Folds: 4/5
+2025-12-27 10:15:32,426 - algorithm - INFO - Average Validation Accuracy: 73.37% ± 1.82%
+2025-12-27 10:15:32,426 - algorithm - INFO - Average Crisis Recall: 100.00% ± 0.00%
+2025-12-27 10:15:32,426 - algorithm - INFO - Average Validation Loss: 1.1280
+2025-12-27 10:15:32,426 - algorithm - INFO - 
+Comprehensive Metrics:
+2025-12-27 10:15:32,426 - algorithm - INFO -   Accuracy: 73.59% | Balanced: 76.19% | Macro-F1: 0.732 | Kappa: 0.608 | Crisis Recall: 100.00%
+2025-12-27 10:15:32,426 - algorithm - INFO -   ROC-AUC (OvR): 0.897
+2025-12-27 10:15:32,426 - algorithm - INFO -   ECE: 0.1182
+2025-12-27 10:15:32,426 - algorithm - INFO -   Early Warning Score: 1.000
+2025-12-27 10:15:32,427 - __main__ - INFO - 
+================================================================================
+2025-12-27 10:15:32,427 - __main__ - INFO - STEP 6: Generating Visualizations
+2025-12-27 10:15:32,427 - __main__ - INFO - ================================================================================
+2025-12-27 10:15:33,177 - visualizations - INFO - Saved comprehensive results to output/graphs/comprehensive_results.png
+2025-12-27 10:15:33,673 - visualizations - INFO - Saved metrics dashboard to output/graphs/metrics_dashboard.png
+2025-12-27 10:15:33,673 - __main__ - INFO - 
+================================================================================
+2025-12-27 10:15:33,673 - __main__ - INFO - STEP 7: Current Market State Analysis
+2025-12-27 10:15:33,673 - __main__ - INFO - ================================================================================
+2025-12-27 10:15:33,859 - __main__ - INFO - 
+PREDICTED REGIME: Crisis/Contagion
+2025-12-27 10:15:33,859 - __main__ - INFO - 
+Probabilities:
+2025-12-27 10:15:33,860 - __main__ - INFO -    Bull/Low Vol        :  28.0% ███████████
+2025-12-27 10:15:33,860 - __main__ - INFO -    Normal/Bear         :  34.7% █████████████
+2025-12-27 10:15:33,860 - __main__ - INFO -    Crisis/Contagion    :  37.3% ██████████████
+2025-12-27 10:15:33,860 - __main__ - INFO - 
+Contagion Risk: 45.8%
+2025-12-27 10:15:33,860 - __main__ - INFO - Volatility Forecast: -0.04
+2025-12-27 10:15:34,502 - visualizations - INFO - Saved learned edge analysis to output/graphs/learned_edges_analysis.png
+2025-12-27 10:15:34,502 - __main__ - INFO - 
+================================================================================
+2025-12-27 10:15:34,502 - __main__ - INFO - PIPELINE COMPLETE
+2025-12-27 10:15:34,502 - __main__ - INFO - ================================================================================
+2025-12-27 10:15:34,502 - __main__ - INFO - 
+Outputs saved to output/ directory:
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/graphs/comprehensive_results.png
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/graphs/metrics_dashboard.png
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/graphs/learned_edges_analysis.png
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/metrics/cv_results.json
+2025-12-27 10:15:34,502 - __main__ - INFO -    - output/baselines/baseline_results.json
+2025-12-27 10:15:34,502 - __main__ - INFO - 
+================================================================================
+2025-12-27 10:15:34,502 - __main__ - INFO - FINAL PERFORMANCE SUMMARY
+2025-12-27 10:15:34,503 - __main__ - INFO - ================================================================================
+2025-12-27 10:15:34,503 - __main__ - INFO - 
+  RALEC-GNN Model:
+2025-12-27 10:15:34,503 - __main__ - INFO -     Accuracy:        73.59% +/- 1.82%
+2025-12-27 10:15:34,503 - __main__ - INFO -     Balanced Acc:    76.19%
+2025-12-27 10:15:34,503 - __main__ - INFO -     Macro F1:        0.732
+2025-12-27 10:15:34,503 - __main__ - INFO -     Cohen's Kappa:   0.608
+2025-12-27 10:15:34,503 - __main__ - INFO -     Crisis Recall:   100.00% +/- 0.00%
+2025-12-27 10:15:34,503 - __main__ - INFO -     ROC-AUC:         0.897
+2025-12-27 10:15:34,503 - __main__ - INFO - 
+  Baseline Comparison (mean +/- std):
+2025-12-27 10:15:34,503 - __main__ - INFO -     logistic_regression: Acc=59.97%+/-8.89%, Crisis Recall=42.06%+/-35.21%, F1=0.451+/-0.140
+2025-12-27 10:15:34,503 - __main__ - INFO -     random_forest: Acc=58.04%+/-8.00%, Crisis Recall=49.28%+/-27.86%, F1=0.495+/-0.141
+2025-12-27 10:15:34,503 - __main__ - INFO -     gradient_boosting: Acc=60.75%+/-7.75%, Crisis Recall=60.80%+/-33.50%, F1=0.504+/-0.153

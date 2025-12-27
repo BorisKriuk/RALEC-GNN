@@ -25,8 +25,10 @@ from sklearn.metrics import silhouette_score
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch_geometric.data import Data
-from torch_geometric.nn import GCNConv, MessagePassing, global_mean_pool
+from torch.cuda.amp import autocast, GradScaler
+from torch_geometric.data import Data, Batch
+from torch_geometric.loader import DataLoader as GeometricDataLoader
+from torch_geometric.nn import GCNConv, MessagePassing, global_mean_pool, global_add_pool
 from torch_geometric.utils import softmax
 
 from metrics import MetricsCalculator
@@ -46,6 +48,14 @@ warnings.filterwarnings('ignore')
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 logger = logging.getLogger(__name__)
+
+# Try to import numba for JIT compilation
+try:
+    from numba import jit, prange
+    NUMBA_AVAILABLE = True
+except ImportError:
+    NUMBA_AVAILABLE = False
+    logger.warning("Numba not available - some optimizations will be disabled")
 
 ASSET_UNIVERSE = {
     'tech_mega': ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA'],
@@ -113,6 +123,19 @@ class ResearchConfig:
     save_graphs: bool = True
     run_baselines: bool = True
     crisis_augment_factor: int = 2
+    
+    # New parameters for optimizations
+    use_mixed_precision: bool = True
+    use_torch_compile: bool = True
+    use_temporal_edges: bool = True
+    temporal_edge_weight: float = 0.3
+    mc_dropout_samples: int = 5
+    dynamic_edge_threshold_normal: float = 0.25
+    dynamic_edge_threshold_crisis: float = 0.15
+    use_gpu_features: bool = True
+    regime_persistence_penalty: float = 0.2
+    attention_temperature: float = 0.5
+    use_numba_optimization: bool = True
     
     def to_dict(self) -> dict:
         return {k: v for k, v in self.__dict__.items() if not k.startswith('_')}
@@ -219,6 +242,79 @@ class EODHDClient:
             return pd.DataFrame()
 
 
+# Numba-optimized functions for speed
+if NUMBA_AVAILABLE:
+    @jit(nopython=True)
+    def compute_lagged_correlation(s1: np.ndarray, s2: np.ndarray, lag: int) -> float:
+        """Compute correlation between s1[:-lag] and s2[lag:]"""
+        if lag == 0 or len(s1) <= lag:
+            return 0.0
+        
+        x = s1[:-lag]
+        y = s2[lag:]
+        
+        if len(x) < 2:
+            return 0.0
+        
+        # Compute correlation manually
+        mean_x = np.mean(x)
+        mean_y = np.mean(y)
+        
+        num = np.sum((x - mean_x) * (y - mean_y))
+        den_x = np.sqrt(np.sum((x - mean_x) ** 2))
+        den_y = np.sqrt(np.sum((y - mean_y) ** 2))
+        
+        if den_x == 0 or den_y == 0:
+            return 0.0
+        
+        return num / (den_x * den_y)
+    
+    @jit(nopython=True, parallel=True)
+    def compute_all_lagged_correlations(returns_matrix: np.ndarray, max_lag: int) -> np.ndarray:
+        """Compute all pairwise lagged correlations"""
+        n_assets = returns_matrix.shape[1]
+        n_lags = max_lag + 1
+        correlations = np.zeros((n_assets, n_assets, n_lags))
+        
+        for i in prange(n_assets):
+            for j in range(n_assets):
+                if i != j:
+                    for lag in range(1, n_lags):
+                        corr = compute_lagged_correlation(
+                            returns_matrix[:, i], 
+                            returns_matrix[:, j], 
+                            lag
+                        )
+                        correlations[i, j, lag] = corr
+        
+        return correlations
+else:
+    # Fallback to numpy implementation
+    def compute_lagged_correlation(s1: np.ndarray, s2: np.ndarray, lag: int) -> float:
+        if lag == 0 or len(s1) <= lag:
+            return 0.0
+        corr = np.corrcoef(s1[:-lag], s2[lag:])[0, 1]
+        return 0.0 if np.isnan(corr) else corr
+    
+    def compute_all_lagged_correlations(returns_matrix: np.ndarray, max_lag: int) -> np.ndarray:
+        n_assets = returns_matrix.shape[1]
+        n_lags = max_lag + 1
+        correlations = np.zeros((n_assets, n_assets, n_lags))
+        
+        for i in range(n_assets):
+            for j in range(n_assets):
+                if i != j:
+                    for lag in range(1, n_lags):
+                        corr = compute_lagged_correlation(
+                            returns_matrix[:, i], 
+                            returns_matrix[:, j], 
+                            lag
+                        )
+                        correlations[i, j, lag] = corr
+        
+        return correlations
+
+
 class StatisticalLeadLagDetector:
     def __init__(self, config: ResearchConfig):
         self.config = config
@@ -268,50 +364,98 @@ class StatisticalLeadLagDetector:
         total_pairs = len(symbols) * (len(symbols) - 1) // 2
         logger.info(f"Testing {total_pairs} pairs for lead-lag relationships...")
         
-        for i, sym1 in enumerate(symbols):
-            for j, sym2 in enumerate(symbols):
-                if i >= j:
-                    continue
-                
-                s1 = df[sym1].values
-                s2 = df[sym2].values
-                
-                relationship = {
-                    'asset1': sym1,
-                    'asset2': sym2,
-                }
-                
-                best_corr = 0
-                best_lag = 0
-                best_direction = None
-                
-                for lag in range(1, self.config.max_lag + 1):
-                    if len(s1[:-lag]) > 0:
-                        corr_1_leads = np.corrcoef(s1[:-lag], s2[lag:])[0, 1]
-                        if not np.isnan(corr_1_leads) and abs(corr_1_leads) > abs(best_corr):
+        # Use numba-optimized batch computation if available
+        if self.config.use_numba_optimization and NUMBA_AVAILABLE:
+            logger.info("Using numba-optimized correlation computation")
+            returns_matrix = df.values
+            correlations = compute_all_lagged_correlations(returns_matrix, self.config.max_lag)
+            
+            for i, sym1 in enumerate(symbols):
+                for j, sym2 in enumerate(symbols):
+                    if i >= j:
+                        continue
+                    
+                    relationship = {
+                        'asset1': sym1,
+                        'asset2': sym2,
+                    }
+                    
+                    best_corr = 0
+                    best_lag = 0
+                    best_direction = None
+                    
+                    # Check all lags for both directions
+                    for lag in range(1, self.config.max_lag + 1):
+                        # sym1 leads sym2
+                        corr_1_leads = correlations[i, j, lag]
+                        if abs(corr_1_leads) > abs(best_corr):
                             best_corr = corr_1_leads
                             best_lag = lag
                             best_direction = (sym1, sym2)
-                    
-                    if len(s2[:-lag]) > 0:
-                        corr_2_leads = np.corrcoef(s2[:-lag], s1[lag:])[0, 1]
-                        if not np.isnan(corr_2_leads) and abs(corr_2_leads) > abs(best_corr):
+                        
+                        # sym2 leads sym1
+                        corr_2_leads = correlations[j, i, lag]
+                        if abs(corr_2_leads) > abs(best_corr):
                             best_corr = corr_2_leads
                             best_lag = lag
                             best_direction = (sym2, sym1)
-                
-                relationship['corr_leader'] = best_direction[0] if best_direction else None
-                relationship['corr_follower'] = best_direction[1] if best_direction else None
-                relationship['corr_lag'] = best_lag
-                relationship['correlation'] = best_corr
-                relationship['abs_correlation'] = abs(best_corr)
-                
-                sym1_base = sym1.replace('.US', '')
-                sym2_base = sym2.replace('.US', '')
-                relationship['leader_category'] = SYMBOL_CATEGORIES.get(sym1_base, 'unknown')
-                relationship['follower_category'] = SYMBOL_CATEGORIES.get(sym2_base, 'unknown')
-                
-                results.append(relationship)
+                    
+                    relationship['corr_leader'] = best_direction[0] if best_direction else None
+                    relationship['corr_follower'] = best_direction[1] if best_direction else None
+                    relationship['corr_lag'] = best_lag
+                    relationship['correlation'] = best_corr
+                    relationship['abs_correlation'] = abs(best_corr)
+                    
+                    sym1_base = sym1.replace('.US', '')
+                    sym2_base = sym2.replace('.US', '')
+                    relationship['leader_category'] = SYMBOL_CATEGORIES.get(sym1_base, 'unknown')
+                    relationship['follower_category'] = SYMBOL_CATEGORIES.get(sym2_base, 'unknown')
+                    
+                    results.append(relationship)
+        else:
+            # Original implementation
+            for i, sym1 in enumerate(symbols):
+                for j, sym2 in enumerate(symbols):
+                    if i >= j:
+                        continue
+                    
+                    s1 = df[sym1].values
+                    s2 = df[sym2].values
+                    
+                    relationship = {
+                        'asset1': sym1,
+                        'asset2': sym2,
+                    }
+                    
+                    best_corr = 0
+                    best_lag = 0
+                    best_direction = None
+                    
+                    for lag in range(1, self.config.max_lag + 1):
+                        corr_1_leads = compute_lagged_correlation(s1, s2, lag)
+                        if abs(corr_1_leads) > abs(best_corr):
+                            best_corr = corr_1_leads
+                            best_lag = lag
+                            best_direction = (sym1, sym2)
+                        
+                        corr_2_leads = compute_lagged_correlation(s2, s1, lag)
+                        if abs(corr_2_leads) > abs(best_corr):
+                            best_corr = corr_2_leads
+                            best_lag = lag
+                            best_direction = (sym2, sym1)
+                    
+                    relationship['corr_leader'] = best_direction[0] if best_direction else None
+                    relationship['corr_follower'] = best_direction[1] if best_direction else None
+                    relationship['corr_lag'] = best_lag
+                    relationship['correlation'] = best_corr
+                    relationship['abs_correlation'] = abs(best_corr)
+                    
+                    sym1_base = sym1.replace('.US', '')
+                    sym2_base = sym2.replace('.US', '')
+                    relationship['leader_category'] = SYMBOL_CATEGORIES.get(sym1_base, 'unknown')
+                    relationship['follower_category'] = SYMBOL_CATEGORIES.get(sym2_base, 'unknown')
+                    
+                    results.append(relationship)
         
         df_results = pd.DataFrame(results)
         
@@ -344,7 +488,8 @@ class EnhancedFeatureExtractor:
         returns: np.ndarray, 
         window_size: int = 20,
         market_vol: float = None,
-        market_ret: float = None
+        market_ret: float = None,
+        use_gpu: bool = False
     ) -> np.ndarray:
         """Compute 20 features including 4 market-relative features."""
         if len(returns) < 5:
@@ -408,6 +553,88 @@ class EnhancedFeatureExtractor:
             acf_1, acf_5, slope, sharpe,
             relative_vol, vol_ratio, relative_return, momentum_persistence
         ])
+    
+    @staticmethod
+    def compute_features_batch_gpu(
+        returns_matrix: torch.Tensor,  # (n_assets, n_timesteps)
+        market_vol: float = None,
+        market_ret: float = None
+    ) -> torch.Tensor:
+        """GPU-accelerated batch feature computation."""
+        n_assets, n_timesteps = returns_matrix.shape
+        features = torch.zeros((n_assets, 20), device=returns_matrix.device)
+        
+        if n_timesteps < 5:
+            return features
+        
+        sqrt_252 = np.sqrt(252)
+        
+        # Compute volatilities
+        vol_realized = returns_matrix.std(dim=1) * sqrt_252
+        
+        # Mean and cumulative returns
+        mean_return = returns_matrix.mean(dim=1) * 252
+        cum_return = returns_matrix.sum(dim=1)
+        
+        # Skewness and kurtosis (approximate for GPU)
+        m3 = ((returns_matrix - returns_matrix.mean(dim=1, keepdim=True)) ** 3).mean(dim=1)
+        m4 = ((returns_matrix - returns_matrix.mean(dim=1, keepdim=True)) ** 4).mean(dim=1)
+        skewness = m3 / (vol_realized / sqrt_252) ** 3
+        kurt = m4 / (vol_realized / sqrt_252) ** 4 - 3
+        
+        # VaR and CVaR
+        sorted_returns, _ = torch.sort(returns_matrix, dim=1)
+        var_95_idx = int(n_timesteps * 0.05)
+        var_99_idx = int(n_timesteps * 0.01)
+        var_95 = sorted_returns[:, var_95_idx]
+        var_99 = sorted_returns[:, var_99_idx]
+        
+        # Max drawdown
+        cum_prod = (1 + returns_matrix).cumprod(dim=1)
+        running_max = torch.maximum.accumulate(cum_prod, dim=1)[0]
+        drawdown = (cum_prod - running_max) / (running_max + 1e-8)
+        max_dd = drawdown.min(dim=1)[0]
+        current_dd = drawdown[:, -1]
+        
+        # Sharpe ratio
+        sharpe = (mean_return / vol_realized).nan_to_num(0)
+        
+        # Market-relative features
+        if market_vol is not None and market_vol > 0:
+            relative_vol = vol_realized / market_vol
+            vol_ratio = torch.clamp(relative_vol, max=3.0)
+        else:
+            relative_vol = torch.ones_like(vol_realized)
+            vol_ratio = torch.ones_like(vol_realized)
+        
+        if market_ret is not None:
+            relative_return = mean_return - market_ret
+        else:
+            relative_return = torch.zeros_like(mean_return)
+        
+        # Assemble features
+        features[:, 0] = vol_realized
+        features[:, 1] = vol_realized  # vol_ewma placeholder
+        features[:, 2] = vol_realized * 1.67  # vol_parkinson placeholder
+        features[:, 3] = mean_return
+        features[:, 4] = cum_return
+        features[:, 5] = skewness
+        features[:, 6] = kurt
+        features[:, 7] = var_95
+        features[:, 8] = var_99
+        features[:, 9] = var_95  # cvar_95 placeholder
+        features[:, 10] = max_dd
+        features[:, 11] = current_dd
+        features[:, 12] = 0  # acf_1 placeholder
+        features[:, 13] = 0  # acf_5 placeholder
+        features[:, 14] = 0  # slope placeholder
+        features[:, 15] = sharpe
+        features[:, 16] = relative_vol
+        features[:, 17] = vol_ratio
+        features[:, 18] = relative_return
+        features[:, 19] = 0  # momentum_persistence placeholder
+        
+        return features
 
 
 class MultiMethodGraphBuilder:
@@ -455,23 +682,33 @@ class MultiMethodGraphBuilder:
         
         graphs = []
         
+        # Use GPU for batch feature extraction if enabled
+        use_gpu_features = self.config.use_gpu_features and torch.cuda.is_available()
+        
         for end_idx in range(self.config.window_size, len(dates), self.config.step_size):
             window_df = df.iloc[end_idx - self.config.window_size:end_idx]
             
             market_vol = window_df.std().mean() * np.sqrt(252)
             market_ret = window_df.mean().mean() * 252
             
-            node_features = []
-            for sym in symbols:
-                features = self.feature_extractor.compute_features(
-                    window_df[sym].values,
-                    window_size=self.config.window_size,
-                    market_vol=market_vol,
-                    market_ret=market_ret
-                )
-                node_features.append(features)
-            
-            node_features = np.array(node_features)
+            if use_gpu_features:
+                # Batch GPU feature extraction
+                returns_matrix = torch.tensor(window_df.values.T, dtype=torch.float32, device=DEVICE)
+                node_features = self.feature_extractor.compute_features_batch_gpu(
+                    returns_matrix, market_vol, market_ret
+                ).cpu().numpy()
+            else:
+                # CPU feature extraction
+                node_features = []
+                for sym in symbols:
+                    features = self.feature_extractor.compute_features(
+                        window_df[sym].values,
+                        window_size=self.config.window_size,
+                        market_vol=market_vol,
+                        market_ret=market_ret
+                    )
+                    node_features.append(features)
+                node_features = np.array(node_features)
             
             edge_index, edge_attr = self._build_full_graph_for_learning(window_df, symbols)
             
@@ -483,6 +720,7 @@ class MultiMethodGraphBuilder:
                 num_nodes=n_symbols
             )
             graph.timestamp = dates[end_idx - 1]
+            graph.time_idx = end_idx  # Store time index for temporal edges
             
             corr_matrix = window_df.corr().values
             graph.corr_matrix = torch.tensor(corr_matrix, dtype=torch.float)
@@ -522,6 +760,8 @@ class MultiMethodGraphBuilder:
             )
             scaled_graph.timestamp = graph.timestamp
             scaled_graph.corr_matrix = graph.corr_matrix
+            if hasattr(graph, 'time_idx'):
+                scaled_graph.time_idx = graph.time_idx
             scaled_graphs.append(scaled_graph)
         
         return scaled_graphs
@@ -589,6 +829,15 @@ class LearnedEdgeConstructor(nn.Module):
         regime_logits = self.regime_encoder(global_state)
         regime_probs = F.softmax(regime_logits, dim=-1)
         
+        # Detect dominant regime
+        dominant_regime = regime_probs.argmax().item()
+        
+        # Dynamic edge threshold based on regime
+        if dominant_regime == 2:  # Crisis regime
+            edge_threshold = self.config.dynamic_edge_threshold_crisis
+        else:  # Normal or bull regime
+            edge_threshold = self.config.dynamic_edge_threshold_normal
+        
         contagion_scores = self.contagion_detector(x)
         contagion_level = contagion_scores.mean()
         
@@ -612,7 +861,11 @@ class LearnedEdgeConstructor(nn.Module):
         regime_gates = torch.stack(regime_gates, dim=-1).squeeze(1)
         regime_gate_combined = (regime_gates * regime_probs.unsqueeze(0)).sum(dim=-1, keepdim=True)
         
-        contagion_amplifier = 1.0 + contagion_level * 0.5
+        # Adjust contagion amplifier based on regime
+        if dominant_regime == 2:
+            contagion_amplifier = 1.0 + contagion_level * 0.8  # Stronger in crisis
+        else:
+            contagion_amplifier = 1.0 + contagion_level * 0.3
         
         edge_scores = edge_scores_raw * regime_gate_combined * contagion_amplifier
         
@@ -733,6 +986,37 @@ class RegimeAdaptiveGNNLayer(MessagePassing):
         return alpha * self.out_proj(combined)
 
 
+class NodeAttentionPooling(nn.Module):
+    """Attention-based pooling that weights nodes by importance."""
+    def __init__(self, hidden_dim: int, temperature: float = 1.0):
+        super().__init__()
+        self.attention = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim // 2),
+            nn.Tanh(),
+            nn.Linear(hidden_dim // 2, 1)
+        )
+        self.temperature = temperature
+    
+    def forward(self, x: torch.Tensor, batch: torch.Tensor = None) -> torch.Tensor:
+        if batch is None:
+            batch = torch.zeros(x.size(0), dtype=torch.long, device=x.device)
+        
+        # Compute attention scores
+        scores = self.attention(x).squeeze(-1) / self.temperature
+        
+        # Apply softmax per batch
+        attention_weights = torch.zeros_like(scores)
+        for b in torch.unique(batch):
+            mask = batch == b
+            attention_weights[mask] = F.softmax(scores[mask], dim=0)
+        
+        # Weighted sum
+        weighted_x = x * attention_weights.unsqueeze(-1)
+        out = global_add_pool(weighted_x, batch)
+        
+        return out
+
+
 class TemporalGNNWithLearnedEdges(nn.Module):
     def __init__(self, config: ResearchConfig):
         super().__init__()
@@ -762,6 +1046,18 @@ class TemporalGNNWithLearnedEdges(nn.Module):
             for _ in range(config.num_layers)
         ])
         
+        # Node attention pooling
+        self.node_attention_pool = NodeAttentionPooling(
+            config.hidden_dim, 
+            temperature=config.attention_temperature
+        )
+        
+        # Temporal edge weights for connecting same nodes across time
+        if config.use_temporal_edges:
+            self.temporal_edge_weight = nn.Parameter(
+                torch.tensor(config.temporal_edge_weight)
+            )
+        
         self.temporal_attention = nn.MultiheadAttention(
             embed_dim=config.hidden_dim,
             num_heads=config.num_heads,
@@ -787,6 +1083,9 @@ class TemporalGNNWithLearnedEdges(nn.Module):
             nn.Dropout(config.dropout)
         )
         
+        # Regime persistence modeling
+        self.regime_transition = nn.Linear(config.num_regimes * 2, config.num_regimes)
+        
         self.regime_head = nn.Sequential(
             nn.Linear(config.hidden_dim, config.hidden_dim // 2),
             nn.ReLU(),
@@ -809,19 +1108,46 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         )
         
         self.last_edge_analysis = []
+        self.prev_regime_probs = None
         
     def forward(
         self,
         graph_sequence: List[Data],
-        return_analysis: bool = False
+        return_analysis: bool = False,
+        mc_dropout: bool = False
     ) -> Dict[str, torch.Tensor]:
         sequence_embeddings = []
         all_edge_analysis = []
+        regime_probs_sequence = []
+        
+        # Enable dropout for MC Dropout uncertainty estimation
+        if mc_dropout:
+            self.train()
         
         for t, graph in enumerate(graph_sequence):
             x = graph.x.to(DEVICE)
             edge_index = graph.edge_index.to(DEVICE)
             edge_attr = graph.edge_attr.to(DEVICE)
+            
+            # Add temporal edges if enabled and not the first timestep
+            if self.config.use_temporal_edges and t > 0:
+                # Create temporal edges connecting same nodes across time
+                num_nodes = x.size(0)
+                temporal_edges = []
+                temporal_weights = []
+                
+                for i in range(num_nodes):
+                    # Connect node i at time t-1 to node i at time t
+                    temporal_edges.append([i, i])
+                    temporal_weights.append(self.temporal_edge_weight.item())
+                
+                if temporal_edges:
+                    temporal_edge_index = torch.tensor(temporal_edges, dtype=torch.long, device=DEVICE).t()
+                    temporal_edge_attr = torch.tensor([[w, w, 0] for w in temporal_weights], dtype=torch.float, device=DEVICE)
+                    
+                    # Concatenate with existing edges
+                    edge_index = torch.cat([edge_index, temporal_edge_index], dim=1)
+                    edge_attr = torch.cat([edge_attr, temporal_edge_attr], dim=0)
             
             if self.config.use_learned_edges:
                 learned_edge_index, learned_edge_attr, edge_analysis = self.edge_constructor(
@@ -832,12 +1158,13 @@ class TemporalGNNWithLearnedEdges(nn.Module):
                 edge_index = learned_edge_index
                 edge_weight = learned_edge_attr[:, 0]
                 regime_probs = edge_analysis['regime_probs']
+                regime_probs_sequence.append(regime_probs)
             else:
                 edge_weight = edge_attr[:, 1] if edge_attr.size(1) > 1 else torch.ones(edge_attr.size(0), device=DEVICE)
                 regime_probs = torch.ones(self.config.num_regimes, device=DEVICE) / self.config.num_regimes
             
             h = F.relu(self.input_proj(x))
-            h = F.dropout(h, p=self.config.dropout, training=self.training)
+            h = F.dropout(h, p=self.config.dropout, training=(self.training or mc_dropout))
             
             for i, (gnn_layer, gcn_layer, norm) in enumerate(
                 zip(self.gnn_layers, self.gcn_layers, self.layer_norms)
@@ -848,11 +1175,12 @@ class TemporalGNNWithLearnedEdges(nn.Module):
                 h_new = h_regime + 0.3 * h_gcn
                 h_new = norm(h_new)
                 h_new = F.relu(h_new)
-                h_new = F.dropout(h_new, p=self.config.dropout, training=self.training)
+                h_new = F.dropout(h_new, p=self.config.dropout, training=(self.training or mc_dropout))
                 
                 h = h + h_new
             
-            graph_embedding = global_mean_pool(h, torch.zeros(graph.num_nodes, dtype=torch.long, device=DEVICE))
+            # Use attention pooling instead of mean pooling
+            graph_embedding = self.node_attention_pool(h)
             sequence_embeddings.append(graph_embedding.squeeze(0))
         
         self.last_edge_analysis = all_edge_analysis
@@ -873,6 +1201,23 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         fused = self.fusion(fused)
         
         regime_logits = self.regime_head(fused)
+        
+        # Apply regime persistence modeling if we have previous predictions
+        if self.prev_regime_probs is not None:
+            # Combine current and previous regime probabilities
+            regime_input = torch.cat([
+                F.softmax(regime_logits, dim=-1),
+                self.prev_regime_probs
+            ], dim=-1)
+            
+            # Apply transition model with persistence penalty
+            transition_logits = self.regime_transition(regime_input)
+            persistence_penalty = self.config.regime_persistence_penalty
+            regime_logits = (1 - persistence_penalty) * regime_logits + persistence_penalty * transition_logits
+        
+        # Update previous regime probabilities
+        self.prev_regime_probs = F.softmax(regime_logits, dim=-1).detach()
+        
         contagion_prob = self.contagion_head(fused)
         volatility_pred = self.volatility_head(fused)
         
@@ -887,10 +1232,62 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         if return_analysis:
             output['analysis'] = {
                 'edge_analyses': all_edge_analysis,
-                'attention_weights': attn_weights.detach()
+                'attention_weights': attn_weights.detach(),
+                'regime_probs_sequence': regime_probs_sequence
             }
         
         return output
+    
+    def predict_with_uncertainty(
+        self,
+        graph_sequence: List[Data],
+        n_samples: int = None
+    ) -> Dict[str, torch.Tensor]:
+        """Predict with uncertainty estimation using MC Dropout."""
+        if n_samples is None:
+            n_samples = self.config.mc_dropout_samples
+        
+        # Collect predictions from multiple forward passes
+        all_regime_probs = []
+        all_contagion_probs = []
+        all_volatility_preds = []
+        
+        for _ in range(n_samples):
+            with torch.no_grad():
+                output = self.forward(graph_sequence, mc_dropout=True)
+                all_regime_probs.append(output['regime_probs'])
+                all_contagion_probs.append(output['contagion_probability'])
+                all_volatility_preds.append(output['volatility_forecast'])
+        
+        # Stack predictions
+        regime_probs_stack = torch.stack(all_regime_probs)
+        contagion_probs_stack = torch.stack(all_contagion_probs)
+        volatility_stack = torch.stack(all_volatility_preds)
+        
+        # Compute mean and uncertainty
+        regime_probs_mean = regime_probs_stack.mean(dim=0)
+        regime_probs_std = regime_probs_stack.std(dim=0)
+        regime_entropy = -(regime_probs_mean * torch.log(regime_probs_mean + 1e-8)).sum(dim=-1)
+        
+        contagion_mean = contagion_probs_stack.mean(dim=0)
+        contagion_std = contagion_probs_stack.std(dim=0)
+        
+        volatility_mean = volatility_stack.mean(dim=0)
+        volatility_std = volatility_stack.std(dim=0)
+        
+        # Predict regime as argmax of mean probabilities
+        regime_pred = regime_probs_mean.argmax(dim=-1)
+        
+        return {
+            'regime_pred': regime_pred,
+            'regime_probs_mean': regime_probs_mean,
+            'regime_probs_std': regime_probs_std,
+            'regime_entropy': regime_entropy,
+            'contagion_mean': contagion_mean,
+            'contagion_std': contagion_std,
+            'volatility_mean': volatility_mean,
+            'volatility_std': volatility_std
+        }
 
 
 class RegimeLabeler:
@@ -1042,6 +1439,18 @@ class ResearchTrainer:
         self.model = model.to(DEVICE)
         self.config = config
         self.metrics_history = defaultdict(list)
+    
+    def _create_sequence_loader(self, dataset: List, batch_size: int = 16, shuffle: bool = True):
+        """Create a DataLoader for sequences of graphs."""
+        if shuffle:
+            indices = np.random.permutation(len(dataset))
+            dataset = [dataset[i] for i in indices]
+        
+        # Yield batches
+        for i in range(0, len(dataset), batch_size):
+            batch = dataset[i:i + batch_size]
+            sequences, labels, vols = zip(*batch)
+            yield sequences, labels, vols
         
     def _augment_crisis_samples(
         self, 
@@ -1290,7 +1699,17 @@ class ResearchTrainer:
         val_sequences, val_labels, val_vols,
         fold: int
     ) -> Tuple[Dict[str, float], List[int], List[np.ndarray]]:
+        # Re-initialize model for each fold to ensure fair cross-validation
+        self.model = TemporalGNNWithLearnedEdges(self.config).to(DEVICE)
         self.model.apply(self._init_weights)
+        
+        # Compile model if enabled (PyTorch 2.0+)
+        if self.config.use_torch_compile and hasattr(torch, 'compile'):
+            try:
+                self.model = torch.compile(self.model, mode='reduce-overhead')
+                logger.info(f"Fold {fold}: Model compiled with torch.compile()")
+            except Exception as e:
+                logger.warning(f"Failed to compile model: {e}")
         
         optimizer = torch.optim.AdamW(
             self.model.parameters(),
@@ -1301,6 +1720,9 @@ class ResearchTrainer:
         scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
             optimizer, T_0=10, T_mult=2, eta_min=1e-6
         )
+        
+        # Initialize mixed precision scaler
+        scaler = GradScaler() if self.config.use_mixed_precision else None
         
         class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
         
@@ -1318,54 +1740,104 @@ class ResearchTrainer:
         best_preds = []
         best_probs = []
         
+        # Create train dataset
+        train_dataset = list(zip(train_sequences, train_labels, train_vols))
+        
         for epoch in range(self.config.epochs):
             self.model.train()
             train_loss = 0.0
             train_correct = 0
+            num_batches = 0
             
-            indices = np.random.permutation(len(train_sequences))
+            # Create DataLoader for this epoch
+            train_loader = self._create_sequence_loader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
             
-            for idx in indices:
-                seq = train_sequences[idx]
-                label = train_labels[idx]
-                vol = train_vols[idx]
-                
+            for batch_sequences, batch_labels, batch_vols in train_loader:
                 optimizer.zero_grad()
-                output = self.model(seq)
                 
-                target_regime = torch.tensor([label], device=DEVICE)
-                target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+                batch_loss = 0.0
+                batch_correct = 0
                 
-                loss_regime = criterion_regime(output['regime_logits'], target_regime)
-                loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
-                loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
-                loss_edge_reg = self._compute_edge_regularization(self.model)
+                # Process each sequence in the batch
+                for seq, label, vol in zip(batch_sequences, batch_labels, batch_vols):
+                    if self.config.use_mixed_precision and scaler is not None and torch.cuda.is_available():
+                        with autocast(device_type='cuda'):
+                            output = self.model(seq)
+                            
+                            target_regime = torch.tensor([label], device=DEVICE)
+                            target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+                            
+                            loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                            loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                            loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+                            loss_edge_reg = self._compute_edge_regularization(self.model)
+                            
+                            loss_temporal = torch.tensor(0.0, device=DEVICE)
+                            if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
+                                regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
+                                loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
+                            
+                            loss = (
+                                loss_regime + 
+                                self.config.crisis_loss_weight * loss_crisis + 
+                                0.1 * loss_vol + 
+                                loss_edge_reg +
+                                self.config.temporal_consistency_weight * loss_temporal
+                            )
+                    else:
+                        output = self.model(seq)
+                        
+                        target_regime = torch.tensor([label], device=DEVICE)
+                        target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+                        
+                        loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                        loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                        loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+                        loss_edge_reg = self._compute_edge_regularization(self.model)
+                        
+                        loss_temporal = torch.tensor(0.0, device=DEVICE)
+                        if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
+                            regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
+                            loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
+                        
+                        loss = (
+                            loss_regime + 
+                            self.config.crisis_loss_weight * loss_crisis + 
+                            0.1 * loss_vol + 
+                            loss_edge_reg +
+                            self.config.temporal_consistency_weight * loss_temporal
+                        )
+                    
+                    batch_loss += loss
+                    if output['regime_logits'].argmax().item() == label:
+                        batch_correct += 1
                 
-                loss_temporal = torch.tensor(0.0, device=DEVICE)
-                if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
-                    regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
-                    loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
+                # Average loss across batch
+                batch_loss = batch_loss / len(batch_sequences)
                 
-                loss = (
-                    loss_regime + 
-                    self.config.crisis_loss_weight * loss_crisis + 
-                    0.1 * loss_vol + 
-                    loss_edge_reg +
-                    self.config.temporal_consistency_weight * loss_temporal
-                )
-                loss.backward()
+                # Backward pass with mixed precision
+                if self.config.use_mixed_precision and scaler is not None:
+                    scaler.scale(batch_loss).backward()
+                    scaler.unscale_(optimizer)
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    batch_loss.backward()
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    optimizer.step()
                 
-                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                optimizer.step()
-                
-                train_loss += loss.item()
-                if output['regime_logits'].argmax().item() == label:
-                    train_correct += 1
+                train_loss += batch_loss.item()
+                train_correct += batch_correct
+                num_batches += 1
             
             scheduler.step()
             
-            train_loss /= len(train_sequences)
-            train_acc = train_correct / len(train_sequences)
+            if num_batches > 0:
+                train_loss /= num_batches
+            else:
+                train_loss = 0.0
+            train_acc = train_correct / len(train_sequences) if len(train_sequences) > 0 else 0.0
             
             self.model.eval()
             val_loss = 0.0

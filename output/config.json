@@ -38,5 +38,16 @@
   "save_models": true,
   "save_graphs": true,
   "run_baselines": true,
-  "crisis_augment_factor": 2
+  "crisis_augment_factor": 2,
+  "use_mixed_precision": true,
+  "use_torch_compile": true,
+  "use_temporal_edges": true,
+  "temporal_edge_weight": 0.3,
+  "mc_dropout_samples": 5,
+  "dynamic_edge_threshold_normal": 0.25,
+  "dynamic_edge_threshold_crisis": 0.15,
+  "use_gpu_features": true,
+  "regime_persistence_penalty": 0.2,
+  "attention_temperature": 0.5,
+  "use_numba_optimization": true
 }
