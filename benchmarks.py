@@ -162,8 +162,7 @@ class BaselineModels:
         if fast_mode:
             models = {
                 'logistic_regression': LogisticRegression(
-                    max_iter=500, 
-                    multi_class='multinomial',
+                    max_iter=500,
                     class_weight='balanced',
                     random_state=SEED,
                     solver='lbfgs'
@@ -185,8 +184,7 @@ class BaselineModels:
         else:
             models = {
                 'logistic_regression': LogisticRegression(
-                    max_iter=1000, 
-                    multi_class='multinomial',
+                    max_iter=1000,
                     class_weight='balanced',
                     random_state=SEED
                 ),

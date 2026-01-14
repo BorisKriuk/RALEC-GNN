@@ -106,8 +106,8 @@ class ResearchConfig:
     batch_size: int = 16
     learning_rate: float = 0.0005
     weight_decay: float = 0.01
-    epochs: int = 150
-    early_stopping_patience: int = 30
+    epochs: int = 50  # Reduced for CPU training
+    early_stopping_patience: int = 15
     dropout: float = 0.3
     edge_sparsity_weight: float = 0.005
     edge_entropy_weight: float = 0.0005
@@ -126,7 +126,7 @@ class ResearchConfig:
     
     # New parameters for optimizations
     use_mixed_precision: bool = True
-    use_torch_compile: bool = True
+    use_torch_compile: bool = False  # Disabled - requires OpenMP on macOS
     use_temporal_edges: bool = True
     temporal_edge_weight: float = 0.3
     mc_dropout_samples: int = 5
@@ -1535,286 +1535,427 @@ class ResearchTrainer:
         graphs: List[Data],
         regime_df: pd.DataFrame
     ) -> Dict[str, Any]:
+        """
+        Walk-Forward Validation for time-series data.
+
+        This implementation properly handles temporal data by:
+        1. Reserving the final 20% as a true out-of-sample test set
+        2. Using walk-forward validation on training data (expanding window)
+        3. Training a SINGLE model that accumulates knowledge across folds
+        4. Testing on strictly future data at each step
+        5. Final evaluation on held-out test set
+        """
         regime_df['date'] = pd.to_datetime(regime_df['date'])
-        
+
         sequences = []
         labels = []
         volatilities = []
-        
+
         for i in range(len(graphs) - self.config.seq_len):
             seq = graphs[i:i + self.config.seq_len]
             ts = seq[-1].timestamp
-            
+
             match = regime_df[regime_df['date'] <= ts]
             if len(match) > 0:
                 sequences.append(seq)
                 labels.append(match.iloc[-1]['regime'])
                 volatilities.append(match.iloc[-1]['volatility'])
-        
+
         logger.info(f"Created {len(sequences)} training sequences")
-        
+
         unique, counts = np.unique(labels, return_counts=True)
         logger.info(f"Label distribution in sequences:")
         for u, c in zip(unique, counts):
             logger.info(f"   Regime {u}: {c} ({c/len(labels)*100:.1f}%)")
-        
+
         if len(sequences) < 20:
             return {}
-        
+
         labels_array = np.array(labels)
-        
-        # Use crisis-aware cross-validation
-        from benchmarks import CrisisAwareTimeSeriesSplit
-        tscv = CrisisAwareTimeSeriesSplit(
-            n_splits=self.config.n_splits, 
-            purge_gap=self.config.purge_gap,
-            min_crisis_train=20,
-            min_crisis_val=5,
-            val_ratio=0.15
-        )
-        
+
+        # ==========================================
+        # STEP 1: Reserve held-out test set (final 20%)
+        # This data is NEVER seen during training or validation
+        # ==========================================
+        test_ratio = 0.20
+        n_total = len(sequences)
+        n_test = int(n_total * test_ratio)
+        n_train_val = n_total - n_test
+
+        # Apply purge gap between train/val and test to prevent lookahead
+        purge_gap = self.config.purge_gap
+        test_start_idx = n_train_val + purge_gap
+
+        train_val_sequences = sequences[:n_train_val]
+        train_val_labels = labels[:n_train_val]
+        train_val_volatilities = volatilities[:n_train_val]
+
+        test_sequences = sequences[test_start_idx:]
+        test_labels = labels[test_start_idx:]
+        test_volatilities = volatilities[test_start_idx:]
+
+        train_val_labels_array = np.array(train_val_labels)
+        test_labels_array = np.array(test_labels)
+
+        logger.info(f"\n{'='*60}")
+        logger.info("Walk-Forward Validation Setup")
+        logger.info(f"{'='*60}")
+        logger.info(f"Total sequences: {n_total}")
+        logger.info(f"Train/Val sequences: {n_train_val} (for walk-forward CV)")
+        logger.info(f"Held-out test sequences: {len(test_sequences)} (purge gap: {purge_gap})")
+
+        test_regime_dist = np.bincount(test_labels_array, minlength=3)
+        logger.info(f"Test set regimes: Bull={test_regime_dist[0]}, Normal={test_regime_dist[1]}, Crisis={test_regime_dist[2]}")
+
+        # ==========================================
+        # STEP 2: Walk-Forward Validation
+        # Train on expanding window, test on future data
+        # SINGLE MODEL accumulates knowledge across folds
+        # ==========================================
+
+        # Initialize model ONCE at the start (not per fold)
+        self.model = TemporalGNNWithLearnedEdges(self.config).to(DEVICE)
+        self.model.apply(self._init_weights)
+
+        # Compile model if enabled (PyTorch 2.0+)
+        if self.config.use_torch_compile and hasattr(torch, 'compile'):
+            try:
+                self.model = torch.compile(self.model, mode='reduce-overhead')
+                logger.info("Model compiled with torch.compile()")
+            except Exception as e:
+                logger.warning(f"Failed to compile model: {e}")
+
+        # Calculate walk-forward splits
+        n_splits = self.config.n_splits
+        min_train_ratio = 0.4  # Minimum 40% of train_val for first training window
+        val_size = int(n_train_val * 0.15)  # 15% for each validation window
+
         fold_results = []
-        all_preds = []
-        all_probs = []
-        all_labels_collected = []
-        
-        best_overall_model_state = None
-        best_overall_crisis_recall = 0
-        
-        for fold, (train_idx, val_idx) in enumerate(tscv.split(len(sequences), labels_array)):
+        all_val_preds = []
+        all_val_probs = []
+        all_val_labels_collected = []
+
+        best_model_state = None
+        best_crisis_recall = 0
+
+        for fold in range(n_splits):
+            # Expanding training window
+            train_end = int(n_train_val * min_train_ratio) + fold * (n_train_val - int(n_train_val * min_train_ratio) - val_size) // n_splits
+            val_start = train_end + purge_gap
+            val_end = min(val_start + val_size, n_train_val)
+
+            if val_start >= n_train_val or val_end <= val_start:
+                continue
+
+            train_idx = np.arange(0, train_end)
+            val_idx = np.arange(val_start, val_end)
+
             logger.info(f"\n{'='*60}")
-            logger.info(f"Fold {fold + 1}/{self.config.n_splits}")
-            logger.info(f"Train: {len(train_idx)}, Val: {len(val_idx)}")
+            logger.info(f"Walk-Forward Fold {fold + 1}/{n_splits}")
+            logger.info(f"Train indices: [0:{train_end}] ({len(train_idx)} samples)")
+            logger.info(f"Val indices: [{val_start}:{val_end}] ({len(val_idx)} samples)")
+            logger.info(f"Purge gap: {purge_gap}")
             logger.info(f"{'='*60}")
-            
-            train_sequences = [sequences[i] for i in train_idx]
-            train_labels = [labels[i] for i in train_idx]
-            train_vols = [volatilities[i] for i in train_idx]
-            
-            val_sequences = [sequences[i] for i in val_idx]
-            val_labels = [labels[i] for i in val_idx]
-            val_vols = [volatilities[i] for i in val_idx]
-            
-            train_regime_dist = np.bincount(train_labels, minlength=3)
-            val_regime_dist = np.bincount(val_labels, minlength=3)
-            
+
+            train_sequences_fold = [train_val_sequences[i] for i in train_idx]
+            train_labels_fold = [train_val_labels[i] for i in train_idx]
+            train_vols_fold = [train_val_volatilities[i] for i in train_idx]
+
+            val_sequences_fold = [train_val_sequences[i] for i in val_idx]
+            val_labels_fold = [train_val_labels[i] for i in val_idx]
+            val_vols_fold = [train_val_volatilities[i] for i in val_idx]
+
+            train_regime_dist = np.bincount(train_labels_fold, minlength=3)
+            val_regime_dist = np.bincount(val_labels_fold, minlength=3)
+
             logger.info(f"Train regimes (before augment): Bull={train_regime_dist[0]}, Normal={train_regime_dist[1]}, Crisis={train_regime_dist[2]}")
             logger.info(f"Val regimes: Bull={val_regime_dist[0]}, Normal={val_regime_dist[1]}, Crisis={val_regime_dist[2]}")
-            
-            if train_regime_dist[2] < 10:
+
+            if train_regime_dist[2] < 5:
                 logger.warning(f"Fold {fold+1} has only {train_regime_dist[2]} crisis samples in train, skipping...")
                 continue
-            
-            if val_regime_dist[2] < 3:
-                logger.warning(f"Fold {fold+1} has only {val_regime_dist[2]} crisis samples in val, skipping...")
-                continue
-            
-            train_sequences, train_labels, train_vols = self._augment_crisis_samples(
-                train_sequences, train_labels, train_vols, 
+
+            # Augment crisis samples
+            train_sequences_fold, train_labels_fold, train_vols_fold = self._augment_crisis_samples(
+                train_sequences_fold, train_labels_fold, train_vols_fold,
                 augment_factor=self.config.crisis_augment_factor
             )
-            
-            train_regime_dist_aug = np.bincount(train_labels, minlength=3)
+
+            train_regime_dist_aug = np.bincount(train_labels_fold, minlength=3)
             logger.info(f"Train regimes (after augment): Bull={train_regime_dist_aug[0]}, Normal={train_regime_dist_aug[1]}, Crisis={train_regime_dist_aug[2]}")
-            
-            fold_metrics, fold_preds, fold_probs = self._train_fold(
-                train_sequences, train_labels, train_vols,
-                val_sequences, val_labels, val_vols,
-                fold
+
+            # Train fold - CONTINUES from previous fold's model state (no reinitialization)
+            fold_metrics, fold_preds, fold_probs = self._train_fold_walk_forward(
+                train_sequences_fold, train_labels_fold, train_vols_fold,
+                val_sequences_fold, val_labels_fold, val_vols_fold,
+                fold,
+                is_first_fold=(fold == 0)
             )
-            
+
+            # Track best model by crisis recall
             fold_crisis_recall = 0
-            crisis_mask = np.array(val_labels) == 2
+            crisis_mask = np.array(val_labels_fold) == 2
             if crisis_mask.sum() > 0:
                 fold_crisis_recall = (np.array(fold_preds)[crisis_mask] == 2).mean()
-            
-            if fold_crisis_recall > best_overall_crisis_recall:
-                best_overall_crisis_recall = fold_crisis_recall
-                best_overall_model_state = copy.deepcopy(self.model.state_dict())
+
+            if fold_crisis_recall >= best_crisis_recall:
+                best_crisis_recall = fold_crisis_recall
+                best_model_state = copy.deepcopy(self.model.state_dict())
                 logger.info(f"New best crisis recall: {fold_crisis_recall:.2%}")
-            
+
             fold_results.append(fold_metrics)
-            all_preds.extend(fold_preds)
-            all_probs.extend(fold_probs)
-            all_labels_collected.extend(val_labels)
-        
+            all_val_preds.extend(fold_preds)
+            all_val_probs.extend(fold_probs)
+            all_val_labels_collected.extend(val_labels_fold)
+
         if not fold_results:
             logger.error("No valid folds completed!")
             return {}
-        
-        if best_overall_model_state:
-            torch.save(best_overall_model_state, 'output/models/best_crisis_model.pt')
-        
-        all_preds = np.array(all_preds)
-        all_probs = np.array(all_probs)
-        all_labels_collected = np.array(all_labels_collected)
-        
-        overall_metrics = MetricsCalculator.calculate_all_metrics(
-            all_labels_collected, all_preds, all_probs, self.config.num_regimes
+
+        # ==========================================
+        # STEP 3: Final Training on Full Train/Val Set
+        # ==========================================
+        logger.info(f"\n{'='*60}")
+        logger.info("Final Training on Full Training Set")
+        logger.info(f"{'='*60}")
+
+        # Augment crisis samples for final training
+        final_train_sequences, final_train_labels, final_train_vols = self._augment_crisis_samples(
+            train_val_sequences.copy(), train_val_labels.copy(), train_val_volatilities.copy(),
+            augment_factor=self.config.crisis_augment_factor
         )
-        
+
+        logger.info(f"Final training samples: {len(final_train_sequences)}")
+        final_regime_dist = np.bincount(final_train_labels, minlength=3)
+        logger.info(f"Final train regimes: Bull={final_regime_dist[0]}, Normal={final_regime_dist[1]}, Crisis={final_regime_dist[2]}")
+
+        # Continue training from best model state
+        if best_model_state:
+            self.model.load_state_dict(best_model_state)
+
+        # Final training pass (fewer epochs since model is already trained)
+        final_epochs = max(self.config.epochs // 3, 30)
+        self._train_final(final_train_sequences, final_train_labels, final_train_vols, final_epochs)
+
+        # ==========================================
+        # STEP 4: Out-of-Sample Test Evaluation
+        # ==========================================
+        logger.info(f"\n{'='*60}")
+        logger.info("Out-of-Sample Test Evaluation (True Future Data)")
+        logger.info(f"{'='*60}")
+
+        test_preds, test_probs = self._evaluate_out_of_sample(
+            test_sequences, test_labels, test_volatilities
+        )
+
+        test_metrics = MetricsCalculator.calculate_all_metrics(
+            np.array(test_labels), np.array(test_preds), np.array(test_probs), self.config.num_regimes
+        )
+
+        # Save best model
+        if self.config.save_models:
+            torch.save(self.model.state_dict(), 'output/models/best_crisis_model.pt')
+
+        # ==========================================
+        # Compile Results
+        # ==========================================
+        all_val_preds = np.array(all_val_preds)
+        all_val_probs = np.array(all_val_probs)
+        all_val_labels_collected = np.array(all_val_labels_collected)
+
+        val_metrics = MetricsCalculator.calculate_all_metrics(
+            all_val_labels_collected, all_val_preds, all_val_probs, self.config.num_regimes
+        )
+
         avg_metrics = {
+            # Walk-forward validation metrics
             'avg_val_acc': np.mean([f['best_val_acc'] for f in fold_results]),
             'avg_val_loss': np.mean([f['best_val_loss'] for f in fold_results]),
             'std_val_acc': np.std([f['best_val_acc'] for f in fold_results]),
             'avg_crisis_recall': np.mean([f['best_crisis_recall'] for f in fold_results]),
             'std_crisis_recall': np.std([f['best_crisis_recall'] for f in fold_results]),
             'fold_results': fold_results,
-            'overall_metrics': overall_metrics,
-            'all_predictions': all_preds,
-            'all_probabilities': all_probs,
-            'all_labels': all_labels_collected
+            'validation_metrics': val_metrics,
+            'all_val_predictions': all_val_preds,
+            'all_val_probabilities': all_val_probs,
+            'all_val_labels': all_val_labels_collected,
+
+            # Out-of-sample test metrics (TRUE performance indicator)
+            'test_metrics': test_metrics,
+            'test_predictions': np.array(test_preds),
+            'test_probabilities': np.array(test_probs),
+            'test_labels': np.array(test_labels),
+            'test_accuracy': test_metrics.accuracy,
+            'test_crisis_recall': test_metrics.crisis_recall,
+            'test_roc_auc': test_metrics.roc_auc_ovr,
         }
-        
+
         logger.info(f"\n{'='*60}")
-        logger.info("Cross-Validation Results")
+        logger.info("Walk-Forward Validation Results")
         logger.info(f"{'='*60}")
         logger.info(f"Completed Folds: {len(fold_results)}/{self.config.n_splits}")
-        logger.info(f"Average Validation Accuracy: {avg_metrics['avg_val_acc']:.2%} ± {avg_metrics['std_val_acc']:.2%}")
-        logger.info(f"Average Crisis Recall: {avg_metrics['avg_crisis_recall']:.2%} ± {avg_metrics['std_crisis_recall']:.2%}")
-        logger.info(f"Average Validation Loss: {avg_metrics['avg_val_loss']:.4f}")
-        logger.info(f"\nComprehensive Metrics:")
-        logger.info(f"  {overall_metrics.summary()}")
-        logger.info(f"  ROC-AUC (OvR): {overall_metrics.roc_auc_ovr:.3f}")
-        logger.info(f"  ECE: {overall_metrics.expected_calibration_error:.4f}")
-        logger.info(f"  Early Warning Score: {overall_metrics.early_warning_score:.3f}")
-        
+        logger.info(f"Walk-Forward Val Accuracy: {avg_metrics['avg_val_acc']:.2%} ± {avg_metrics['std_val_acc']:.2%}")
+        logger.info(f"Walk-Forward Crisis Recall: {avg_metrics['avg_crisis_recall']:.2%} ± {avg_metrics['std_crisis_recall']:.2%}")
+        logger.info(f"Walk-Forward Val Loss: {avg_metrics['avg_val_loss']:.4f}")
+
+        logger.info(f"\n{'='*60}")
+        logger.info("OUT-OF-SAMPLE TEST RESULTS (True Performance)")
+        logger.info(f"{'='*60}")
+        logger.info(f"  Test Accuracy: {test_metrics.accuracy:.2%}")
+        logger.info(f"  Test Crisis Recall: {test_metrics.crisis_recall:.2%}")
+        logger.info(f"  Test ROC-AUC: {test_metrics.roc_auc_ovr:.3f}")
+        logger.info(f"  Test Macro-F1: {test_metrics.macro_f1:.3f}")
+        logger.info(f"  Test ECE: {test_metrics.expected_calibration_error:.4f}")
+        logger.info(f"  {test_metrics.summary()}")
+
         with open('output/metrics/cv_results.json', 'w') as f:
             serializable_metrics = {
-                'avg_val_acc': float(avg_metrics['avg_val_acc']),
-                'std_val_acc': float(avg_metrics['std_val_acc']),
-                'avg_val_loss': float(avg_metrics['avg_val_loss']),
-                'avg_crisis_recall': float(avg_metrics['avg_crisis_recall']),
-                'std_crisis_recall': float(avg_metrics['std_crisis_recall']),
-                'n_folds': len(fold_results),
-                'overall_metrics': overall_metrics.to_dict()
+                'validation': {
+                    'avg_val_acc': float(avg_metrics['avg_val_acc']),
+                    'std_val_acc': float(avg_metrics['std_val_acc']),
+                    'avg_val_loss': float(avg_metrics['avg_val_loss']),
+                    'avg_crisis_recall': float(avg_metrics['avg_crisis_recall']),
+                    'std_crisis_recall': float(avg_metrics['std_crisis_recall']),
+                    'n_folds': len(fold_results),
+                },
+                'out_of_sample_test': {
+                    'accuracy': float(test_metrics.accuracy),
+                    'crisis_recall': float(test_metrics.crisis_recall),
+                    'roc_auc': float(test_metrics.roc_auc_ovr),
+                    'macro_f1': float(test_metrics.macro_f1),
+                    'ece': float(test_metrics.expected_calibration_error),
+                    'n_samples': len(test_labels),
+                    'crisis_samples': int((np.array(test_labels) == 2).sum()),
+                },
+                'overall_metrics': test_metrics.to_dict()
             }
             json.dump(serializable_metrics, f, indent=2)
-        
+
         return avg_metrics
     
-    def _train_fold(
+    def _train_fold_walk_forward(
         self,
         train_sequences, train_labels, train_vols,
         val_sequences, val_labels, val_vols,
-        fold: int
+        fold: int,
+        is_first_fold: bool = False
     ) -> Tuple[Dict[str, float], List[int], List[np.ndarray]]:
-        # Re-initialize model for each fold to ensure fair cross-validation
-        self.model = TemporalGNNWithLearnedEdges(self.config).to(DEVICE)
-        self.model.apply(self._init_weights)
-        
-        # Compile model if enabled (PyTorch 2.0+)
-        if self.config.use_torch_compile and hasattr(torch, 'compile'):
-            try:
-                self.model = torch.compile(self.model, mode='reduce-overhead')
-                logger.info(f"Fold {fold}: Model compiled with torch.compile()")
-            except Exception as e:
-                logger.warning(f"Failed to compile model: {e}")
-        
+        """
+        Walk-forward training for a single fold.
+
+        Key difference from standard CV: Model is NOT reinitialized.
+        Training continues from previous fold's state, allowing the model
+        to accumulate knowledge across the expanding training window.
+        """
+        # Create fresh optimizer for this fold (but keep model weights)
+        # This allows proper learning rate scheduling per fold while preserving learned features
         optimizer = torch.optim.AdamW(
             self.model.parameters(),
             lr=self.config.learning_rate,
             weight_decay=self.config.weight_decay
         )
-        
+
         scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
             optimizer, T_0=10, T_mult=2, eta_min=1e-6
         )
-        
+
         # Initialize mixed precision scaler
         scaler = GradScaler() if self.config.use_mixed_precision else None
-        
+
         class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
-        
+
         criterion_regime = FocalLoss(
-            alpha=class_weights, 
+            alpha=class_weights,
             gamma=self.config.focal_loss_gamma,
             label_smoothing=self.config.label_smoothing
         )
         criterion_vol = nn.MSELoss()
-        
+
         best_val_loss = float('inf')
         best_val_acc = 0.0
         best_crisis_recall = 0.0
         patience_counter = 0
         best_preds = []
         best_probs = []
-        
+
+        # Fewer epochs for later folds since model already has learned features
+        fold_epochs = self.config.epochs if is_first_fold else max(self.config.epochs // 2, 50)
+
         # Create train dataset
         train_dataset = list(zip(train_sequences, train_labels, train_vols))
-        
-        for epoch in range(self.config.epochs):
+
+        for epoch in range(fold_epochs):
             self.model.train()
             train_loss = 0.0
             train_correct = 0
             num_batches = 0
-            
+
             # Create DataLoader for this epoch
             train_loader = self._create_sequence_loader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
-            
+
             for batch_sequences, batch_labels, batch_vols in train_loader:
                 optimizer.zero_grad()
-                
+
                 batch_loss = 0.0
                 batch_correct = 0
-                
+
                 # Process each sequence in the batch
                 for seq, label, vol in zip(batch_sequences, batch_labels, batch_vols):
                     if self.config.use_mixed_precision and scaler is not None and torch.cuda.is_available():
                         with autocast(device_type='cuda'):
                             output = self.model(seq)
-                            
+
                             target_regime = torch.tensor([label], device=DEVICE)
                             target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
-                            
+
                             loss_regime = criterion_regime(output['regime_logits'], target_regime)
                             loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
                             loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
                             loss_edge_reg = self._compute_edge_regularization(self.model)
-                            
+
                             loss_temporal = torch.tensor(0.0, device=DEVICE)
                             if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
                                 regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
                                 loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
-                            
+
                             loss = (
-                                loss_regime + 
-                                self.config.crisis_loss_weight * loss_crisis + 
-                                0.1 * loss_vol + 
+                                loss_regime +
+                                self.config.crisis_loss_weight * loss_crisis +
+                                0.1 * loss_vol +
                                 loss_edge_reg +
                                 self.config.temporal_consistency_weight * loss_temporal
                             )
                     else:
                         output = self.model(seq)
-                        
+
                         target_regime = torch.tensor([label], device=DEVICE)
                         target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
-                        
+
                         loss_regime = criterion_regime(output['regime_logits'], target_regime)
                         loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
                         loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
                         loss_edge_reg = self._compute_edge_regularization(self.model)
-                        
+
                         loss_temporal = torch.tensor(0.0, device=DEVICE)
                         if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
                             regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
                             loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
-                        
+
                         loss = (
-                            loss_regime + 
-                            self.config.crisis_loss_weight * loss_crisis + 
-                            0.1 * loss_vol + 
+                            loss_regime +
+                            self.config.crisis_loss_weight * loss_crisis +
+                            0.1 * loss_vol +
                             loss_edge_reg +
                             self.config.temporal_consistency_weight * loss_temporal
                         )
-                    
+
                     batch_loss += loss
                     if output['regime_logits'].argmax().item() == label:
                         batch_correct += 1
-                
+
                 # Average loss across batch
                 batch_loss = batch_loss / len(batch_sequences)
-                
+
                 # Backward pass with mixed precision
                 if self.config.use_mixed_precision and scaler is not None:
                     scaler.scale(batch_loss).backward()
@@ -1826,61 +1967,61 @@ class ResearchTrainer:
                     batch_loss.backward()
                     torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
                     optimizer.step()
-                
+
                 train_loss += batch_loss.item()
                 train_correct += batch_correct
                 num_batches += 1
-            
+
             scheduler.step()
-            
+
             if num_batches > 0:
                 train_loss /= num_batches
             else:
                 train_loss = 0.0
             train_acc = train_correct / len(train_sequences) if len(train_sequences) > 0 else 0.0
-            
+
             self.model.eval()
             val_loss = 0.0
             val_correct = 0
             val_preds = []
             val_probs = []
-            
+
             with torch.no_grad():
                 for idx in range(len(val_sequences)):
                     seq = val_sequences[idx]
                     label = val_labels[idx]
                     vol = val_vols[idx]
-                    
+
                     output = self.model(seq)
-                    
+
                     target_regime = torch.tensor([label], device=DEVICE)
                     target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
-                    
+
                     loss_regime = criterion_regime(output['regime_logits'], target_regime)
                     loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
-                    
+
                     loss = loss_regime + 0.1 * loss_vol
                     val_loss += loss.item()
-                    
+
                     pred = output['regime_logits'].argmax().item()
                     prob = output['regime_probs'].cpu().numpy().flatten()
-                    
+
                     val_preds.append(pred)
                     val_probs.append(prob)
-                    
+
                     if pred == label:
                         val_correct += 1
-            
+
             val_loss /= len(val_sequences)
             val_acc = val_correct / len(val_sequences)
-            
+
             crisis_mask = np.array(val_labels) == 2
             crisis_recall = 0
             if crisis_mask.sum() > 0:
                 crisis_recall = (np.array(val_preds)[crisis_mask] == 2).mean()
-            
+
             combined_metric = 0.5 * val_acc + 0.5 * crisis_recall
-            
+
             if val_loss < best_val_loss or (crisis_recall > best_crisis_recall and combined_metric > 0.5 * best_val_acc + 0.5 * best_crisis_recall):
                 best_val_loss = min(best_val_loss, val_loss)
                 best_val_acc = val_acc
@@ -1888,7 +2029,7 @@ class ResearchTrainer:
                 best_preds = val_preds.copy()
                 best_probs = [p.copy() for p in val_probs]
                 patience_counter = 0
-                
+
                 if self.config.save_models:
                     torch.save(
                         self.model.state_dict(),
@@ -1896,25 +2037,160 @@ class ResearchTrainer:
                     )
             else:
                 patience_counter += 1
-            
-            if (epoch + 1) % 10 == 0:
+
+            if (epoch + 1) % 5 == 0 or epoch == 0:
                 current_lr = optimizer.param_groups[0]['lr']
                 logger.info(
-                    f"Fold {fold+1}, Epoch {epoch+1}/{self.config.epochs} - "
+                    f"Fold {fold+1}, Epoch {epoch+1}/{fold_epochs} - "
                     f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.2%}, "
                     f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.2%}, "
                     f"Crisis Recall: {crisis_recall:.2%}, LR: {current_lr:.2e}"
                 )
-            
+
             if patience_counter >= self.config.early_stopping_patience:
                 logger.info(f"Early stopping at epoch {epoch+1}")
                 break
-        
+
         return {
             'best_val_loss': best_val_loss,
             'best_val_acc': best_val_acc,
             'best_crisis_recall': best_crisis_recall
         }, best_preds, best_probs
+
+    def _train_final(
+        self,
+        train_sequences: List,
+        train_labels: List,
+        train_vols: List,
+        epochs: int
+    ) -> None:
+        """
+        Final training pass on full training set before out-of-sample evaluation.
+        """
+        optimizer = torch.optim.AdamW(
+            self.model.parameters(),
+            lr=self.config.learning_rate * 0.5,  # Lower LR for fine-tuning
+            weight_decay=self.config.weight_decay
+        )
+
+        scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
+            optimizer, T_max=epochs, eta_min=1e-6
+        )
+
+        scaler = GradScaler() if self.config.use_mixed_precision else None
+
+        class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
+        criterion_regime = FocalLoss(
+            alpha=class_weights,
+            gamma=self.config.focal_loss_gamma,
+            label_smoothing=self.config.label_smoothing
+        )
+        criterion_vol = nn.MSELoss()
+
+        train_dataset = list(zip(train_sequences, train_labels, train_vols))
+
+        for epoch in range(epochs):
+            self.model.train()
+            train_loss = 0.0
+            train_correct = 0
+            num_batches = 0
+
+            train_loader = self._create_sequence_loader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
+
+            for batch_sequences, batch_labels, batch_vols in train_loader:
+                optimizer.zero_grad()
+                batch_loss = 0.0
+                batch_correct = 0
+
+                for seq, label, vol in zip(batch_sequences, batch_labels, batch_vols):
+                    if self.config.use_mixed_precision and scaler is not None and torch.cuda.is_available():
+                        with autocast(device_type='cuda'):
+                            output = self.model(seq)
+                            target_regime = torch.tensor([label], device=DEVICE)
+                            target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+
+                            loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                            loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                            loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+
+                            loss = loss_regime + self.config.crisis_loss_weight * loss_crisis + 0.1 * loss_vol
+                    else:
+                        output = self.model(seq)
+                        target_regime = torch.tensor([label], device=DEVICE)
+                        target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+
+                        loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                        loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                        loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+
+                        loss = loss_regime + self.config.crisis_loss_weight * loss_crisis + 0.1 * loss_vol
+
+                    batch_loss += loss
+                    if output['regime_logits'].argmax().item() == label:
+                        batch_correct += 1
+
+                batch_loss = batch_loss / len(batch_sequences)
+
+                if self.config.use_mixed_precision and scaler is not None:
+                    scaler.scale(batch_loss).backward()
+                    scaler.unscale_(optimizer)
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    scaler.step(optimizer)
+                    scaler.update()
+                else:
+                    batch_loss.backward()
+                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                    optimizer.step()
+
+                train_loss += batch_loss.item()
+                train_correct += batch_correct
+                num_batches += 1
+
+            scheduler.step()
+
+            if num_batches > 0:
+                train_loss /= num_batches
+            train_acc = train_correct / len(train_sequences) if len(train_sequences) > 0 else 0.0
+
+            if (epoch + 1) % 5 == 0 or epoch == 0:
+                logger.info(f"Final Training Epoch {epoch+1}/{epochs} - Loss: {train_loss:.4f}, Acc: {train_acc:.2%}")
+
+    def _evaluate_out_of_sample(
+        self,
+        test_sequences: List,
+        test_labels: List,
+        test_vols: List
+    ) -> Tuple[List[int], List[np.ndarray]]:
+        """
+        Evaluate model on held-out test set (true out-of-sample data).
+        """
+        self.model.eval()
+        test_preds = []
+        test_probs = []
+
+        with torch.no_grad():
+            for idx in range(len(test_sequences)):
+                seq = test_sequences[idx]
+                output = self.model(seq)
+
+                pred = output['regime_logits'].argmax().item()
+                prob = output['regime_probs'].cpu().numpy().flatten()
+
+                test_preds.append(pred)
+                test_probs.append(prob)
+
+        # Log per-class performance
+        test_labels_arr = np.array(test_labels)
+        test_preds_arr = np.array(test_preds)
+
+        for regime in range(3):
+            mask = test_labels_arr == regime
+            if mask.sum() > 0:
+                recall = (test_preds_arr[mask] == regime).mean()
+                regime_names = ['Bull/Low-Vol', 'Normal', 'Crisis']
+                logger.info(f"  {regime_names[regime]} Recall: {recall:.2%} ({mask.sum()} samples)")
+
+        return test_preds, test_probs
     
     @staticmethod
     def _init_weights(m):
