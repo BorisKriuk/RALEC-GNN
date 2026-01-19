@@ -1608,3 +1608,482 @@ Outputs saved to output/ directory:
 2026-01-15 04:43:25,843 - __main__ - INFO -    - output/graphs/learned_edges_analysis.png
 2026-01-15 04:43:25,843 - __main__ - INFO -    - output/metrics/cv_results.json
 2026-01-15 04:43:25,843 - __main__ - INFO -    - output/baselines/baseline_results.json
+2026-01-19 00:42:22,049 - __main__ - INFO - Using device: cpu
+2026-01-19 00:42:22,049 - __main__ - INFO - ================================================================================
+2026-01-19 00:42:22,049 - __main__ - INFO - Cross-Market Contagion Networks - OPTIMIZED Implementation
+2026-01-19 00:42:22,049 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2026-01-19 00:42:22,049 - __main__ - INFO - ================================================================================
+2026-01-19 00:42:22,050 - __main__ - INFO - 
+Configuration saved to output/config.json
+2026-01-19 00:42:22,050 - __main__ - INFO - Config hash: 0b1c38de8f4c
+2026-01-19 00:42:22,050 - __main__ - INFO - Regime labeling method: quantile
+2026-01-19 00:42:22,050 - __main__ - INFO - Using learned edges: True
+2026-01-19 00:42:22,050 - __main__ - INFO - Step size: 2
+2026-01-19 00:42:22,050 - __main__ - INFO - Node features: 20
+2026-01-19 00:42:22,050 - __main__ - INFO - Crisis weight multiplier: 8.0
+2026-01-19 00:42:22,050 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:42:22,050 - __main__ - INFO - STEP 1: Data Collection (77 symbols) [OPTIMIZED]
+2026-01-19 00:42:22,050 - __main__ - INFO - ================================================================================
+2026-01-19 00:42:22,050 - __main__ - INFO - Fetching data from 2005-07-08 to 2026-01-19 (parallel)...
+2026-01-19 00:42:24,087 - __main__ - INFO -   Progress: 20/77 - Loaded 20 symbols
+2026-01-19 00:42:24,748 - __main__ - INFO -   Progress: 40/77 - Loaded 40 symbols
+2026-01-19 00:42:25,332 - __main__ - INFO -   Progress: 60/77 - Loaded 60 symbols
+2026-01-19 00:42:25,821 - __main__ - INFO -   Progress: 77/77 - Loaded 77 symbols
+2026-01-19 00:42:25,822 - __main__ - INFO - Saving to cache: cache/data_ae8d48cd921702ac.pkl
+2026-01-19 00:42:25,835 - __main__ - INFO - 
+Successfully loaded 77 assets
+2026-01-19 00:42:25,852 - __main__ - INFO - Working with 77 assets for analysis
+2026-01-19 00:42:25,852 - __main__ - INFO - 
+Asset category distribution:
+2026-01-19 00:42:25,852 - __main__ - INFO -    sector_etfs: 10
+2026-01-19 00:42:25,853 - __main__ - INFO -    intl_emerging: 8
+2026-01-19 00:42:25,853 - __main__ - INFO -    tech_mega: 7
+2026-01-19 00:42:25,853 - __main__ - INFO -    finance: 7
+2026-01-19 00:42:25,853 - __main__ - INFO -    intl_developed: 7
+2026-01-19 00:42:25,853 - __main__ - INFO -    fixed_income: 7
+2026-01-19 00:42:25,853 - __main__ - INFO -    consumer: 6
+2026-01-19 00:42:25,853 - __main__ - INFO -    healthcare: 5
+2026-01-19 00:42:25,853 - __main__ - INFO -    industrials: 5
+2026-01-19 00:42:25,853 - __main__ - INFO -    commodities: 5
+2026-01-19 00:42:25,853 - __main__ - INFO -    broad_market: 5
+2026-01-19 00:42:25,853 - __main__ - INFO -    energy: 4
+2026-01-19 00:42:25,853 - __main__ - INFO -    volatility: 1
+2026-01-19 00:42:25,853 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:42:25,853 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection [OPTIMIZED - FFT]
+2026-01-19 00:42:25,853 - __main__ - INFO - ================================================================================
+2026-01-19 00:42:26,133 - __main__ - INFO - Saving to cache: cache/leadlag_e4bf483ed7e05ae0.pkl
+2026-01-19 00:42:26,133 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2026-01-19 00:42:26,135 - __main__ - INFO -    VTI.US: influences 12 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    DIA.US: influences 12 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    SPY.US: influences 9 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    IWM.US: influences 7 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    XLF.US: influences 6 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    XLE.US: influences 4 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    EWC.US: influences 4 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    QQQ.US: influences 4 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    C.US: influences 4 assets
+2026-01-19 00:42:26,135 - __main__ - INFO -    MS.US: influences 3 assets
+2026-01-19 00:42:27,672 - visualizations - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2026-01-19 00:42:27,673 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:42:27,673 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2026-01-19 00:42:27,673 - __main__ - INFO - ================================================================================
+2026-01-19 00:42:31,159 - algorithm - INFO - Regime labeling method: quantile (FUTURE-based)
+2026-01-19 00:42:31,160 - algorithm - INFO - Prediction horizon: 5 days
+2026-01-19 00:42:31,160 - algorithm - INFO -    Regime 0 (Bull/Low-Vol): 789 days (40.0%)
+2026-01-19 00:42:31,160 - algorithm - INFO -    Regime 1 (Normal): 788 days (40.0%)
+2026-01-19 00:42:31,160 - algorithm - INFO -    Regime 2 (Crisis): 394 days (20.0%)
+2026-01-19 00:42:31,166 - __main__ - INFO - 
+Regime distribution:
+2026-01-19 00:42:31,167 - __main__ - INFO -    Bull/Low Vol: 40.0% (789 days)
+2026-01-19 00:42:31,168 - __main__ - INFO -    Normal/Bear: 40.0% (788 days)
+2026-01-19 00:42:31,168 - __main__ - INFO -    Crisis/Contagion: 20.0% (394 days)
+2026-01-19 00:42:31,168 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:42:31,168 - __main__ - INFO - STEP 4: Temporal Graph Construction [CACHED]
+2026-01-19 00:42:31,168 - __main__ - INFO - ================================================================================
+2026-01-19 00:44:04,096 - algorithm - INFO - Built 973 temporal graphs
+2026-01-19 00:44:04,097 - algorithm - INFO -   First graph timestamp: 2018-04-18 00:00:00
+2026-01-19 00:44:04,097 - algorithm - INFO -   Last graph timestamp: 2026-01-14 00:00:00
+2026-01-19 00:44:04,238 - __main__ - INFO - Saving to cache: cache/graphs_e4bf483ed7e05ae0.pkl
+2026-01-19 00:44:04,559 - __main__ - INFO - 
+Graph statistics:
+2026-01-19 00:44:04,559 - __main__ - INFO -    Number of graphs: 973
+2026-01-19 00:44:04,559 - __main__ - INFO -    Average nodes: 77.0
+2026-01-19 00:44:04,559 - __main__ - INFO -    Average edges: 5929.0
+2026-01-19 00:44:04,559 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:44:04,559 - __main__ - INFO - STEP 5a: Training Baseline Models
+2026-01-19 00:44:04,559 - __main__ - INFO - ================================================================================
+2026-01-19 00:44:06,949 - benchmarks - INFO - Training baseline: logistic_regression
+2026-01-19 00:44:06,949 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 00:44:07,311 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 00:44:07,765 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 00:44:08,250 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 00:44:08,903 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 00:44:09,685 - benchmarks - INFO -   logistic_regression: Acc=33.22%±6.64%, Crisis Recall=29.21%±22.35%, Macro-F1=0.303±0.047
+2026-01-19 00:44:09,685 - benchmarks - INFO - Training baseline: random_forest
+2026-01-19 00:44:09,685 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 00:44:10,006 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 00:44:10,273 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 00:44:10,545 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 00:44:10,864 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 00:44:11,207 - benchmarks - INFO -   random_forest: Acc=41.65%±8.91%, Crisis Recall=21.89%±36.44%, Macro-F1=0.314±0.046
+2026-01-19 00:44:11,210 - benchmarks - INFO - Training baseline: gradient_boosting
+2026-01-19 00:44:11,211 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 00:44:25,633 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 00:44:56,175 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 00:45:43,330 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 00:46:48,663 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 00:48:12,616 - benchmarks - INFO -   gradient_boosting: Acc=34.88%±6.01%, Crisis Recall=37.23%±33.05%, Macro-F1=0.309±0.057
+2026-01-19 00:48:12,618 - __main__ - INFO - 
+================================================================================
+2026-01-19 00:48:12,618 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2026-01-19 00:48:12,618 - __main__ - INFO - ================================================================================
+2026-01-19 00:48:12,715 - __main__ - INFO - Model parameters: 130,792
+2026-01-19 00:48:12,719 - algorithm - INFO - Creating sequences with prediction horizon: 5 days
+2026-01-19 00:48:12,939 - algorithm - INFO - Created 957 training sequences
+2026-01-19 00:48:12,940 - algorithm - INFO - Label distribution in sequences:
+2026-01-19 00:48:12,940 - algorithm - INFO -    Regime 0 (Bull/Low-Vol): 394 (41.2%)
+2026-01-19 00:48:12,940 - algorithm - INFO -    Regime 1 (Normal): 370 (38.7%)
+2026-01-19 00:48:12,940 - algorithm - INFO -    Regime 2 (Crisis): 193 (20.2%)
+2026-01-19 00:48:12,940 - algorithm - INFO - 
+============================================================
+2026-01-19 00:48:12,940 - algorithm - INFO - Walk-Forward Validation Setup (CORRECTED)
+2026-01-19 00:48:12,940 - algorithm - INFO - ============================================================
+2026-01-19 00:48:12,940 - algorithm - INFO - Total sequences: 957
+2026-01-19 00:48:12,940 - algorithm - INFO - Train/Val sequences: 766
+2026-01-19 00:48:12,940 - algorithm - INFO - Held-out test sequences: 186 (purge gap: 5)
+2026-01-19 00:48:12,940 - algorithm - INFO - Prediction horizon: 5 days
+2026-01-19 00:48:12,940 - algorithm - INFO - Test set regimes: Bull=97, Normal=72, Crisis=17
+2026-01-19 00:48:13,101 - algorithm - INFO - 
+============================================================
+2026-01-19 00:48:13,101 - algorithm - INFO - Walk-Forward Fold 1/5
+2026-01-19 00:48:13,101 - algorithm - INFO - Train indices: [0:306] (306 samples)
+2026-01-19 00:48:13,101 - algorithm - INFO - Val indices: [311:425] (114 samples)
+2026-01-19 00:48:13,101 - algorithm - INFO - ============================================================
+2026-01-19 00:48:13,101 - algorithm - INFO - Train regimes: Bull=132, Normal=94, Crisis=80
+2026-01-19 00:48:13,101 - algorithm - INFO - Val regimes: Bull=53, Normal=50, Crisis=11
+2026-01-19 00:51:25,098 - algorithm - INFO - Fold 1, Epoch 1/50 - Train Loss: 2.5769, Train Acc: 49.14%, Val Loss: 2.3543, Val Acc: 9.65%, Crisis Recall: 100.00%, LR: 4.88e-04
+2026-01-19 01:04:01,816 - algorithm - INFO - Fold 1, Epoch 5/50 - Train Loss: 1.7820, Train Acc: 51.50%, Val Loss: 2.0034, Val Acc: 9.65%, Crisis Recall: 100.00%, LR: 2.51e-04
+2026-01-19 01:19:56,860 - algorithm - INFO - Fold 1, Epoch 10/50 - Train Loss: 1.7242, Train Acc: 52.15%, Val Loss: 1.9107, Val Acc: 9.65%, Crisis Recall: 100.00%, LR: 5.00e-04
+2026-01-19 01:35:41,749 - algorithm - INFO - Fold 1, Epoch 15/50 - Train Loss: 1.4809, Train Acc: 55.36%, Val Loss: 1.9411, Val Acc: 25.44%, Crisis Recall: 81.82%, LR: 4.27e-04
+2026-01-19 01:51:45,865 - algorithm - INFO - Fold 1, Epoch 20/50 - Train Loss: 1.4578, Train Acc: 60.30%, Val Loss: 2.0133, Val Acc: 27.19%, Crisis Recall: 54.55%, LR: 2.51e-04
+2026-01-19 02:07:29,905 - algorithm - INFO - Fold 1, Epoch 25/50 - Train Loss: 1.3532, Train Acc: 66.09%, Val Loss: 2.1782, Val Acc: 24.56%, Crisis Recall: 81.82%, LR: 7.41e-05
+2026-01-19 02:13:46,389 - algorithm - INFO - Early stopping at epoch 27
+2026-01-19 02:13:46,398 - algorithm - INFO - New best crisis recall: 100.00%
+2026-01-19 02:13:46,398 - algorithm - INFO - 
+============================================================
+2026-01-19 02:13:46,398 - algorithm - INFO - Walk-Forward Fold 2/5
+2026-01-19 02:13:46,398 - algorithm - INFO - Train indices: [0:375] (375 samples)
+2026-01-19 02:13:46,399 - algorithm - INFO - Val indices: [380:494] (114 samples)
+2026-01-19 02:13:46,399 - algorithm - INFO - ============================================================
+2026-01-19 02:13:46,399 - algorithm - INFO - Train regimes: Bull=156, Normal=127, Crisis=92
+2026-01-19 02:13:46,399 - algorithm - INFO - Val regimes: Bull=42, Normal=50, Crisis=22
+2026-01-19 02:17:28,047 - algorithm - INFO - Fold 2, Epoch 1/25 - Train Loss: 1.6605, Train Acc: 56.17%, Val Loss: 2.0667, Val Acc: 19.30%, Crisis Recall: 100.00%, LR: 4.88e-04
+2026-01-19 02:32:14,118 - algorithm - INFO - Fold 2, Epoch 5/25 - Train Loss: 1.4934, Train Acc: 55.28%, Val Loss: 2.2845, Val Acc: 26.32%, Crisis Recall: 100.00%, LR: 2.51e-04
+2026-01-19 02:50:38,841 - algorithm - INFO - Fold 2, Epoch 10/25 - Train Loss: 1.4361, Train Acc: 57.25%, Val Loss: 2.3632, Val Acc: 26.32%, Crisis Recall: 100.00%, LR: 5.00e-04
+2026-01-19 03:09:05,099 - algorithm - INFO - Fold 2, Epoch 15/25 - Train Loss: 1.3766, Train Acc: 60.29%, Val Loss: 2.2586, Val Acc: 24.56%, Crisis Recall: 100.00%, LR: 4.27e-04
+2026-01-19 03:27:32,574 - algorithm - INFO - Fold 2, Epoch 20/25 - Train Loss: 1.3970, Train Acc: 57.60%, Val Loss: 1.9473, Val Acc: 28.95%, Crisis Recall: 90.91%, LR: 2.51e-04
+2026-01-19 03:45:58,219 - algorithm - INFO - Fold 2, Epoch 25/25 - Train Loss: 1.2607, Train Acc: 62.61%, Val Loss: 2.0789, Val Acc: 32.46%, Crisis Recall: 86.36%, LR: 7.41e-05
+2026-01-19 03:45:58,232 - algorithm - INFO - 
+============================================================
+2026-01-19 03:45:58,233 - algorithm - INFO - Walk-Forward Fold 3/5
+2026-01-19 03:45:58,233 - algorithm - INFO - Train indices: [0:444] (444 samples)
+2026-01-19 03:45:58,233 - algorithm - INFO - Val indices: [449:563] (114 samples)
+2026-01-19 03:45:58,233 - algorithm - INFO - ============================================================
+2026-01-19 03:45:58,233 - algorithm - INFO - Train regimes: Bull=195, Normal=152, Crisis=97
+2026-01-19 03:45:58,233 - algorithm - INFO - Val regimes: Bull=9, Normal=47, Crisis=58
+2026-01-19 03:50:07,094 - algorithm - INFO - Fold 3, Epoch 1/25 - Train Loss: 1.4565, Train Acc: 55.80%, Val Loss: 2.0559, Val Acc: 51.75%, Crisis Recall: 93.10%, LR: 4.88e-04
+2026-01-19 04:06:43,650 - algorithm - INFO - Fold 3, Epoch 5/25 - Train Loss: 1.3678, Train Acc: 61.13%, Val Loss: 2.2940, Val Acc: 52.63%, Crisis Recall: 93.10%, LR: 2.51e-04
+2026-01-19 04:27:31,450 - algorithm - INFO - Fold 3, Epoch 10/25 - Train Loss: 1.2782, Train Acc: 63.32%, Val Loss: 2.1483, Val Acc: 53.51%, Crisis Recall: 91.38%, LR: 5.00e-04
+2026-01-19 04:48:21,491 - algorithm - INFO - Fold 3, Epoch 15/25 - Train Loss: 1.2529, Train Acc: 65.20%, Val Loss: 2.1341, Val Acc: 50.88%, Crisis Recall: 93.10%, LR: 4.27e-04
+2026-01-19 05:09:08,304 - algorithm - INFO - Fold 3, Epoch 20/25 - Train Loss: 1.2108, Train Acc: 66.93%, Val Loss: 2.3023, Val Acc: 56.14%, Crisis Recall: 89.66%, LR: 2.51e-04
+2026-01-19 05:29:56,014 - algorithm - INFO - Fold 3, Epoch 25/25 - Train Loss: 1.1778, Train Acc: 68.18%, Val Loss: 2.5691, Val Acc: 60.53%, Crisis Recall: 87.93%, LR: 7.41e-05
+2026-01-19 05:29:56,027 - algorithm - INFO - 
+============================================================
+2026-01-19 05:29:56,027 - algorithm - INFO - Walk-Forward Fold 4/5
+2026-01-19 05:29:56,027 - algorithm - INFO - Train indices: [0:513] (513 samples)
+2026-01-19 05:29:56,027 - algorithm - INFO - Val indices: [518:632] (114 samples)
+2026-01-19 05:29:56,027 - algorithm - INFO - ============================================================
+2026-01-19 05:29:56,028 - algorithm - INFO - Train regimes: Bull=203, Normal=180, Crisis=130
+2026-01-19 05:29:56,028 - algorithm - INFO - Val regimes: Bull=17, Normal=55, Crisis=42
+2026-01-19 05:34:54,343 - algorithm - INFO - Fold 4, Epoch 1/25 - Train Loss: 1.2813, Train Acc: 65.33%, Val Loss: 2.9360, Val Acc: 53.51%, Crisis Recall: 57.14%, LR: 4.88e-04
+2026-01-19 05:54:44,183 - algorithm - INFO - Fold 4, Epoch 5/25 - Train Loss: 1.1927, Train Acc: 65.98%, Val Loss: 3.1494, Val Acc: 55.26%, Crisis Recall: 42.86%, LR: 2.51e-04
+2026-01-19 06:19:31,523 - algorithm - INFO - Fold 4, Epoch 10/25 - Train Loss: 1.1137, Train Acc: 70.38%, Val Loss: 3.1835, Val Acc: 55.26%, Crisis Recall: 42.86%, LR: 5.00e-04
+2026-01-19 06:44:19,301 - algorithm - INFO - Fold 4, Epoch 15/25 - Train Loss: 1.0974, Train Acc: 69.99%, Val Loss: 3.2487, Val Acc: 55.26%, Crisis Recall: 40.48%, LR: 4.27e-04
+2026-01-19 06:54:14,615 - algorithm - INFO - Early stopping at epoch 17
+2026-01-19 06:54:14,621 - algorithm - INFO - 
+============================================================
+2026-01-19 06:54:14,621 - algorithm - INFO - Walk-Forward Fold 5/5
+2026-01-19 06:54:14,621 - algorithm - INFO - Train indices: [0:582] (582 samples)
+2026-01-19 06:54:14,621 - algorithm - INFO - Val indices: [587:701] (114 samples)
+2026-01-19 06:54:14,621 - algorithm - INFO - ============================================================
+2026-01-19 06:54:14,622 - algorithm - INFO - Train regimes: Bull=207, Normal=208, Crisis=167
+2026-01-19 06:54:14,622 - algorithm - INFO - Val regimes: Bull=40, Normal=68, Crisis=6
+2026-01-19 07:00:02,498 - algorithm - INFO - Fold 5, Epoch 1/25 - Train Loss: 1.3327, Train Acc: 64.52%, Val Loss: 1.9979, Val Acc: 19.30%, Crisis Recall: 50.00%, LR: 4.88e-04
+2026-01-19 07:23:12,320 - algorithm - INFO - Fold 5, Epoch 5/25 - Train Loss: 1.1103, Train Acc: 69.87%, Val Loss: 2.0721, Val Acc: 31.58%, Crisis Recall: 50.00%, LR: 2.51e-04
+2026-01-19 07:52:18,877 - algorithm - INFO - Fold 5, Epoch 10/25 - Train Loss: 1.0575, Train Acc: 73.25%, Val Loss: 1.9768, Val Acc: 47.37%, Crisis Recall: 16.67%, LR: 5.00e-04
+2026-01-19 08:21:39,054 - algorithm - INFO - Fold 5, Epoch 15/25 - Train Loss: 1.1169, Train Acc: 73.47%, Val Loss: 1.9741, Val Acc: 48.25%, Crisis Recall: 0.00%, LR: 4.27e-04
+2026-01-19 10:07:11,671 - algorithm - INFO - Fold 5, Epoch 20/25 - Train Loss: 1.0603, Train Acc: 73.69%, Val Loss: 2.0675, Val Acc: 45.61%, Crisis Recall: 0.00%, LR: 2.51e-04
+2026-01-19 10:24:23,325 - algorithm - INFO - Early stopping at epoch 23
+2026-01-19 10:24:23,337 - algorithm - INFO - 
+============================================================
+2026-01-19 10:24:23,338 - algorithm - INFO - Final Training on Full Training Set
+2026-01-19 10:24:23,338 - algorithm - INFO - ============================================================
+2026-01-19 12:22:24,516 - algorithm - INFO - Final Training Epoch 1/30 - Loss: 1.7525, Acc: 49.91%
+2026-01-19 12:49:17,660 - algorithm - INFO - Final Training Epoch 5/30 - Loss: 1.6479, Acc: 48.57%
+2026-01-19 13:22:39,735 - algorithm - INFO - Final Training Epoch 10/30 - Loss: 1.5912, Acc: 50.89%
+2026-01-19 13:43:21,367 - __main__ - INFO - Using device: cpu
+2026-01-19 13:43:21,368 - __main__ - INFO - ================================================================================
+2026-01-19 13:43:21,368 - __main__ - INFO - Cross-Market Contagion Networks - OPTIMIZED Implementation
+2026-01-19 13:43:21,368 - __main__ - INFO - NOVEL: Regime-Adaptive Learned Edge Construction (RALEC)
+2026-01-19 13:43:21,368 - __main__ - INFO - ================================================================================
+2026-01-19 13:43:21,368 - __main__ - INFO - 
+Configuration saved to output/config.json
+2026-01-19 13:43:21,368 - __main__ - INFO - Config hash: 0b1c38de8f4c
+2026-01-19 13:43:21,368 - __main__ - INFO - Regime labeling method: quantile
+2026-01-19 13:43:21,368 - __main__ - INFO - Using learned edges: True
+2026-01-19 13:43:21,368 - __main__ - INFO - Step size: 2
+2026-01-19 13:43:21,368 - __main__ - INFO - Node features: 20
+2026-01-19 13:43:21,368 - __main__ - INFO - Crisis weight multiplier: 2.5
+2026-01-19 13:43:21,368 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:43:21,368 - __main__ - INFO - STEP 1: Data Collection (77 symbols) [OPTIMIZED]
+2026-01-19 13:43:21,368 - __main__ - INFO - ================================================================================
+2026-01-19 13:43:21,369 - __main__ - INFO - Loading from cache: cache/data_ae8d48cd921702ac.pkl
+2026-01-19 13:43:21,382 - __main__ - INFO - Loaded 77 assets from cache
+2026-01-19 13:43:21,382 - __main__ - INFO - 
+Successfully loaded 77 assets
+2026-01-19 13:43:21,401 - __main__ - INFO - Working with 77 assets for analysis
+2026-01-19 13:43:21,401 - __main__ - INFO - 
+Asset category distribution:
+2026-01-19 13:43:21,401 - __main__ - INFO -    sector_etfs: 10
+2026-01-19 13:43:21,401 - __main__ - INFO -    intl_emerging: 8
+2026-01-19 13:43:21,401 - __main__ - INFO -    tech_mega: 7
+2026-01-19 13:43:21,401 - __main__ - INFO -    finance: 7
+2026-01-19 13:43:21,401 - __main__ - INFO -    intl_developed: 7
+2026-01-19 13:43:21,401 - __main__ - INFO -    fixed_income: 7
+2026-01-19 13:43:21,401 - __main__ - INFO -    consumer: 6
+2026-01-19 13:43:21,401 - __main__ - INFO -    healthcare: 5
+2026-01-19 13:43:21,401 - __main__ - INFO -    industrials: 5
+2026-01-19 13:43:21,401 - __main__ - INFO -    commodities: 5
+2026-01-19 13:43:21,401 - __main__ - INFO -    broad_market: 5
+2026-01-19 13:43:21,401 - __main__ - INFO -    energy: 4
+2026-01-19 13:43:21,401 - __main__ - INFO -    volatility: 1
+2026-01-19 13:43:21,401 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:43:21,401 - __main__ - INFO - STEP 2: Statistical Lead-Lag Detection [OPTIMIZED - FFT]
+2026-01-19 13:43:21,401 - __main__ - INFO - ================================================================================
+2026-01-19 13:43:21,401 - __main__ - INFO - Loading from cache: cache/leadlag_e4bf483ed7e05ae0.pkl
+2026-01-19 13:43:21,402 - __main__ - INFO - 
+TOP MARKET LEADERS:
+2026-01-19 13:43:21,404 - __main__ - INFO -    VTI.US: influences 12 assets
+2026-01-19 13:43:21,404 - __main__ - INFO -    DIA.US: influences 12 assets
+2026-01-19 13:43:21,404 - __main__ - INFO -    SPY.US: influences 9 assets
+2026-01-19 13:43:21,404 - __main__ - INFO -    IWM.US: influences 7 assets
+2026-01-19 13:43:21,404 - __main__ - INFO -    XLF.US: influences 6 assets
+2026-01-19 13:43:21,405 - __main__ - INFO -    XLE.US: influences 4 assets
+2026-01-19 13:43:21,405 - __main__ - INFO -    EWC.US: influences 4 assets
+2026-01-19 13:43:21,405 - __main__ - INFO -    QQQ.US: influences 4 assets
+2026-01-19 13:43:21,405 - __main__ - INFO -    C.US: influences 4 assets
+2026-01-19 13:43:21,405 - __main__ - INFO -    MS.US: influences 3 assets
+2026-01-19 13:43:22,784 - visualizations - INFO - Saved network visualization to output/graphs/lead_lag_network.png
+2026-01-19 13:43:22,785 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:43:22,785 - __main__ - INFO - STEP 3: Regime Detection & Labeling
+2026-01-19 13:43:22,785 - __main__ - INFO - ================================================================================
+2026-01-19 13:43:26,251 - algorithm - INFO - Regime labeling method: quantile (FUTURE-based)
+2026-01-19 13:43:26,251 - algorithm - INFO - Prediction horizon: 5 days
+2026-01-19 13:43:26,251 - algorithm - INFO -    Regime 0 (Bull/Low-Vol): 789 days (40.0%)
+2026-01-19 13:43:26,251 - algorithm - INFO -    Regime 1 (Normal): 788 days (40.0%)
+2026-01-19 13:43:26,251 - algorithm - INFO -    Regime 2 (Crisis): 394 days (20.0%)
+2026-01-19 13:43:26,256 - __main__ - INFO - 
+Regime distribution:
+2026-01-19 13:43:26,257 - __main__ - INFO -    Bull/Low Vol: 40.0% (789 days)
+2026-01-19 13:43:26,257 - __main__ - INFO -    Normal/Bear: 40.0% (788 days)
+2026-01-19 13:43:26,257 - __main__ - INFO -    Crisis/Contagion: 20.0% (394 days)
+2026-01-19 13:43:26,257 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:43:26,257 - __main__ - INFO - STEP 4: Temporal Graph Construction [CACHED]
+2026-01-19 13:43:26,257 - __main__ - INFO - ================================================================================
+2026-01-19 13:44:56,851 - algorithm - INFO - Built 973 temporal graphs
+2026-01-19 13:44:56,852 - algorithm - INFO -   First graph timestamp: 2018-04-18 00:00:00
+2026-01-19 13:44:56,852 - algorithm - INFO -   Last graph timestamp: 2026-01-14 00:00:00
+2026-01-19 13:44:56,962 - __main__ - INFO - Saving to cache: cache/graphs_e4bf483ed7e05ae0.pkl
+2026-01-19 13:44:57,165 - __main__ - INFO - 
+Graph statistics:
+2026-01-19 13:44:57,165 - __main__ - INFO -    Number of graphs: 973
+2026-01-19 13:44:57,165 - __main__ - INFO -    Average nodes: 77.0
+2026-01-19 13:44:57,165 - __main__ - INFO -    Average edges: 5929.0
+2026-01-19 13:44:57,165 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:44:57,165 - __main__ - INFO - STEP 5a: Training Baseline Models
+2026-01-19 13:44:57,165 - __main__ - INFO - ================================================================================
+2026-01-19 13:44:59,376 - benchmarks - INFO - Training baseline: logistic_regression
+2026-01-19 13:44:59,377 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 13:44:59,710 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 13:45:00,120 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 13:45:00,577 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 13:45:01,141 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 13:45:01,824 - benchmarks - INFO -   logistic_regression: Acc=33.22%±6.64%, Crisis Recall=29.21%±22.35%, Macro-F1=0.303±0.047
+2026-01-19 13:45:01,824 - benchmarks - INFO - Training baseline: random_forest
+2026-01-19 13:45:01,824 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 13:45:02,133 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 13:45:02,386 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 13:45:02,651 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 13:45:02,984 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 13:45:03,328 - benchmarks - INFO -   random_forest: Acc=41.65%±8.91%, Crisis Recall=21.89%±36.44%, Macro-F1=0.314±0.046
+2026-01-19 13:45:03,328 - benchmarks - INFO - Training baseline: gradient_boosting
+2026-01-19 13:45:03,329 - benchmarks - INFO - Fold 1: train=146 (crisis=19), val=121 (crisis=46)
+2026-01-19 13:45:17,554 - benchmarks - INFO - Fold 2: train=284 (crisis=71), val=121 (crisis=19)
+2026-01-19 13:45:47,509 - benchmarks - INFO - Fold 3: train=422 (crisis=94), val=121 (crisis=51)
+2026-01-19 13:46:34,032 - benchmarks - INFO - Fold 4: train=560 (crisis=156), val=121 (crisis=16)
+2026-01-19 13:47:38,344 - benchmarks - INFO - Fold 5: train=698 (crisis=173), val=121 (crisis=7)
+2026-01-19 13:49:01,017 - benchmarks - INFO -   gradient_boosting: Acc=34.88%±6.01%, Crisis Recall=37.23%±33.05%, Macro-F1=0.309±0.057
+2026-01-19 13:49:01,020 - __main__ - INFO - 
+================================================================================
+2026-01-19 13:49:01,020 - __main__ - INFO - STEP 5b: Training RALEC-GNN Model
+2026-01-19 13:49:01,020 - __main__ - INFO - ================================================================================
+2026-01-19 13:49:01,121 - __main__ - INFO - Model parameters: 130,792
+2026-01-19 13:49:01,130 - algorithm - INFO - Creating sequences with prediction horizon: 5 days
+2026-01-19 13:49:01,336 - algorithm - INFO - Created 957 training sequences
+2026-01-19 13:49:01,336 - algorithm - INFO - Label distribution in sequences:
+2026-01-19 13:49:01,336 - algorithm - INFO -    Regime 0 (Bull/Low-Vol): 394 (41.2%)
+2026-01-19 13:49:01,336 - algorithm - INFO -    Regime 1 (Normal): 370 (38.7%)
+2026-01-19 13:49:01,336 - algorithm - INFO -    Regime 2 (Crisis): 193 (20.2%)
+2026-01-19 13:49:01,336 - algorithm - INFO - 
+============================================================
+2026-01-19 13:49:01,336 - algorithm - INFO - Walk-Forward Validation Setup
+2026-01-19 13:49:01,336 - algorithm - INFO - ============================================================
+2026-01-19 13:49:01,336 - algorithm - INFO - Total sequences: 957
+2026-01-19 13:49:01,336 - algorithm - INFO - Train/Val sequences: 766
+2026-01-19 13:49:01,336 - algorithm - INFO - Held-out test sequences: 186 (purge gap: 5)
+2026-01-19 13:49:01,336 - algorithm - INFO - Prediction horizon: 5 days
+2026-01-19 13:49:01,336 - algorithm - INFO - Test set regimes: Bull=97, Normal=72, Crisis=17
+2026-01-19 13:49:01,341 - algorithm - INFO - 
+============================================================
+2026-01-19 13:49:01,341 - algorithm - INFO - Walk-Forward Fold 1/5
+2026-01-19 13:49:01,341 - algorithm - INFO - Train: [0:306] (306), Val: [311:425] (114)
+2026-01-19 13:49:01,341 - algorithm - INFO - ============================================================
+2026-01-19 13:49:01,341 - algorithm - INFO - Train: Bull=132, Normal=94, Crisis=80
+2026-01-19 13:49:01,341 - algorithm - INFO - Val: Bull=53, Normal=50, Crisis=11
+2026-01-19 13:49:01,342 - algorithm - INFO - Class weights: Bull=0.50, Normal=0.65, Crisis=1.90
+2026-01-19 13:51:13,098 - algorithm - INFO - Fold 1, Epoch 1/50 - Train Loss: 0.7206, Train Acc: 25.82%, Val Acc: 9.65%, Balanced: 33.33%, Crisis Recall: 100.00%, Preds: [  0   0 114]
+2026-01-19 14:00:01,764 - algorithm - INFO - Fold 1, Epoch 5/50 - Train Loss: 0.5815, Train Acc: 28.76%, Val Acc: 9.65%, Balanced: 33.33%, Crisis Recall: 100.00%, Preds: [  0   0 114]
+2026-01-19 14:11:01,491 - algorithm - INFO - Fold 1, Epoch 10/50 - Train Loss: 0.5441, Train Acc: 29.74%, Val Acc: 9.65%, Balanced: 33.33%, Crisis Recall: 100.00%, Preds: [  0   0 114]
+2026-01-19 14:22:09,831 - algorithm - INFO - Fold 1, Epoch 15/50 - Train Loss: 0.5356, Train Acc: 34.97%, Val Acc: 45.61%, Balanced: 32.70%, Crisis Recall: 0.00%, Preds: [113   0   1]
+2026-01-19 14:33:19,367 - algorithm - INFO - Fold 1, Epoch 20/50 - Train Loss: 0.5344, Train Acc: 41.50%, Val Acc: 35.96%, Balanced: 42.60%, Crisis Recall: 63.64%, Preds: [71  0 43]
+2026-01-19 14:44:27,748 - algorithm - INFO - Fold 1, Epoch 25/50 - Train Loss: 0.5066, Train Acc: 41.50%, Val Acc: 41.23%, Balanced: 34.36%, Crisis Recall: 18.18%, Preds: [101   0  13]
+2026-01-19 14:55:38,136 - algorithm - INFO - Fold 1, Epoch 30/50 - Train Loss: 0.5263, Train Acc: 42.48%, Val Acc: 40.35%, Balanced: 36.13%, Crisis Recall: 27.27%, Preds: [94  0 20]
+2026-01-19 15:06:49,664 - algorithm - INFO - Fold 1, Epoch 35/50 - Train Loss: 0.4959, Train Acc: 39.54%, Val Acc: 35.96%, Balanced: 40.19%, Crisis Recall: 54.55%, Preds: [69  0 45]
+2026-01-19 15:06:49,665 - algorithm - INFO - Early stopping at epoch 35
+2026-01-19 15:06:49,682 - algorithm - INFO - New best model: balanced_acc=42.60%, diversity=0.67
+2026-01-19 15:06:49,682 - algorithm - INFO - 
+============================================================
+2026-01-19 15:06:49,682 - algorithm - INFO - Walk-Forward Fold 2/5
+2026-01-19 15:06:49,682 - algorithm - INFO - Train: [0:375] (375), Val: [380:494] (114)
+2026-01-19 15:06:49,682 - algorithm - INFO - ============================================================
+2026-01-19 15:06:49,682 - algorithm - INFO - Train: Bull=156, Normal=127, Crisis=92
+2026-01-19 15:06:49,682 - algorithm - INFO - Val: Bull=42, Normal=50, Crisis=22
+2026-01-19 15:06:49,684 - algorithm - INFO - Class weights: Bull=0.50, Normal=0.57, Crisis=1.97
+2026-01-19 15:09:28,983 - algorithm - INFO - Fold 2, Epoch 1/25 - Train Loss: 0.5041, Train Acc: 32.53%, Val Acc: 26.32%, Balanced: 38.96%, Crisis Recall: 95.45%, Preds: [20  0 94]
+2026-01-19 15:20:00,179 - algorithm - INFO - Fold 2, Epoch 5/25 - Train Loss: 0.4934, Train Acc: 38.93%, Val Acc: 43.86%, Balanced: 50.51%, Crisis Recall: 68.18%, Preds: [68  0 46]
+2026-01-19 15:33:05,033 - algorithm - INFO - Fold 2, Epoch 10/25 - Train Loss: 0.4834, Train Acc: 41.07%, Val Acc: 39.47%, Balanced: 47.26%, Crisis Recall: 72.73%, Preds: [59  1 54]
+2026-01-19 15:46:19,060 - algorithm - INFO - Fold 2, Epoch 15/25 - Train Loss: 0.4711, Train Acc: 42.40%, Val Acc: 29.82%, Balanced: 41.41%, Crisis Recall: 90.91%, Preds: [27  0 87]
+2026-01-19 15:59:23,178 - algorithm - INFO - Fold 2, Epoch 20/25 - Train Loss: 0.4539, Train Acc: 44.27%, Val Acc: 33.33%, Balanced: 44.59%, Crisis Recall: 90.91%, Preds: [35  0 79]
+2026-01-19 15:59:23,179 - algorithm - INFO - Early stopping at epoch 20
+2026-01-19 15:59:23,206 - algorithm - INFO - New best model: balanced_acc=50.51%, diversity=0.67
+2026-01-19 15:59:23,206 - algorithm - INFO - 
+============================================================
+2026-01-19 15:59:23,206 - algorithm - INFO - Walk-Forward Fold 3/5
+2026-01-19 15:59:23,206 - algorithm - INFO - Train: [0:444] (444), Val: [449:563] (114)
+2026-01-19 15:59:23,206 - algorithm - INFO - ============================================================
+2026-01-19 15:59:23,206 - algorithm - INFO - Train: Bull=195, Normal=152, Crisis=97
+2026-01-19 15:59:23,206 - algorithm - INFO - Val: Bull=9, Normal=47, Crisis=58
+2026-01-19 15:59:23,208 - algorithm - INFO - Class weights: Bull=0.50, Normal=0.53, Crisis=2.06
+2026-01-19 16:02:24,590 - algorithm - INFO - Fold 3, Epoch 1/25 - Train Loss: 0.4764, Train Acc: 40.54%, Val Acc: 55.26%, Balanced: 43.68%, Crisis Recall: 89.66%, Preds: [ 5 15 94]
+2026-01-19 16:14:22,008 - algorithm - INFO - Fold 3, Epoch 5/25 - Train Loss: 0.4466, Train Acc: 44.82%, Val Acc: 52.63%, Balanced: 41.28%, Crisis Recall: 93.10%, Preds: [  8   5 101]
+2026-01-19 16:29:15,479 - algorithm - INFO - Fold 3, Epoch 10/25 - Train Loss: 0.4436, Train Acc: 44.82%, Val Acc: 53.51%, Balanced: 39.26%, Crisis Recall: 89.66%, Preds: [ 3 14 97]
+2026-01-19 16:44:19,345 - algorithm - INFO - Fold 3, Epoch 15/25 - Train Loss: 0.4330, Train Acc: 47.52%, Val Acc: 50.88%, Balanced: 37.00%, Crisis Recall: 91.38%, Preds: [ 8  7 99]
+2026-01-19 16:59:23,515 - algorithm - INFO - Fold 3, Epoch 20/25 - Train Loss: 0.4399, Train Acc: 49.10%, Val Acc: 49.12%, Balanced: 35.45%, Crisis Recall: 93.10%, Preds: [  6   5 103]
+2026-01-19 17:14:26,273 - algorithm - INFO - Fold 3, Epoch 25/25 - Train Loss: 0.4200, Train Acc: 50.23%, Val Acc: 53.51%, Balanced: 42.53%, Crisis Recall: 86.21%, Preds: [ 8 17 89]
+2026-01-19 17:14:26,294 - algorithm - INFO - New best model: balanced_acc=48.67%, diversity=1.00
+2026-01-19 17:14:26,295 - algorithm - INFO - 
+============================================================
+2026-01-19 17:14:26,295 - algorithm - INFO - Walk-Forward Fold 4/5
+2026-01-19 17:14:26,295 - algorithm - INFO - Train: [0:513] (513), Val: [518:632] (114)
+2026-01-19 17:14:26,295 - algorithm - INFO - ============================================================
+2026-01-19 17:14:26,295 - algorithm - INFO - Train: Bull=203, Normal=180, Crisis=130
+2026-01-19 17:14:26,295 - algorithm - INFO - Val: Bull=17, Normal=55, Crisis=42
+2026-01-19 17:14:26,295 - algorithm - INFO - Class weights: Bull=0.50, Normal=0.56, Crisis=1.94
+2026-01-19 17:17:51,094 - algorithm - INFO - Fold 4, Epoch 1/25 - Train Loss: 0.4573, Train Acc: 47.95%, Val Acc: 41.23%, Balanced: 43.18%, Crisis Recall: 83.33%, Preds: [11 15 88]
+2026-01-19 17:31:43,827 - algorithm - INFO - Fold 4, Epoch 5/25 - Train Loss: 0.4380, Train Acc: 50.68%, Val Acc: 41.23%, Balanced: 46.68%, Crisis Recall: 76.19%, Preds: [23 13 78]
+2026-01-19 17:49:06,826 - algorithm - INFO - Fold 4, Epoch 10/25 - Train Loss: 0.4230, Train Acc: 52.63%, Val Acc: 43.86%, Balanced: 52.00%, Crisis Recall: 69.05%, Preds: [35 19 60]
+2026-01-19 18:06:26,213 - algorithm - INFO - Fold 4, Epoch 15/25 - Train Loss: 0.4350, Train Acc: 52.05%, Val Acc: 42.98%, Balanced: 46.12%, Crisis Recall: 88.10%, Preds: [11 10 93]
+2026-01-19 18:23:25,192 - algorithm - INFO - Fold 4, Epoch 20/25 - Train Loss: 0.4103, Train Acc: 56.14%, Val Acc: 44.74%, Balanced: 52.98%, Crisis Recall: 73.81%, Preds: [37 16 61]
+2026-01-19 18:37:07,655 - algorithm - INFO - Early stopping at epoch 24
+2026-01-19 18:37:07,660 - algorithm - INFO - New best model: balanced_acc=53.59%, diversity=1.00
+2026-01-19 18:37:07,661 - algorithm - INFO - 
+============================================================
+2026-01-19 18:37:07,661 - algorithm - INFO - Walk-Forward Fold 5/5
+2026-01-19 18:37:07,661 - algorithm - INFO - Train: [0:582] (582), Val: [587:701] (114)
+2026-01-19 18:37:07,661 - algorithm - INFO - ============================================================
+2026-01-19 18:37:07,661 - algorithm - INFO - Train: Bull=207, Normal=208, Crisis=167
+2026-01-19 18:37:07,661 - algorithm - INFO - Val: Bull=40, Normal=68, Crisis=6
+2026-01-19 18:37:07,661 - algorithm - INFO - Class weights: Bull=0.59, Normal=0.59, Crisis=1.82
+2026-01-19 18:41:01,778 - algorithm - INFO - Fold 5, Epoch 1/25 - Train Loss: 0.4883, Train Acc: 53.95%, Val Acc: 28.07%, Balanced: 55.00%, Crisis Recall: 100.00%, Preds: [48  0 66]
+2026-01-19 18:56:29,260 - algorithm - INFO - Fold 5, Epoch 5/25 - Train Loss: 0.4617, Train Acc: 52.92%, Val Acc: 28.95%, Balanced: 51.11%, Crisis Recall: 83.33%, Preds: [59  0 55]
+2026-01-19 19:15:41,089 - algorithm - INFO - Fold 5, Epoch 10/25 - Train Loss: 0.4588, Train Acc: 56.36%, Val Acc: 29.82%, Balanced: 51.60%, Crisis Recall: 83.33%, Preds: [59  1 54]
+2026-01-19 19:35:17,567 - algorithm - INFO - Fold 5, Epoch 15/25 - Train Loss: 0.4629, Train Acc: 55.67%, Val Acc: 30.70%, Balanced: 57.16%, Crisis Recall: 100.00%, Preds: [58  1 55]
+2026-01-19 19:53:15,531 - algorithm - INFO - Fold 5, Epoch 20/25 - Train Loss: 0.4469, Train Acc: 55.50%, Val Acc: 33.33%, Balanced: 49.18%, Crisis Recall: 66.67%, Preds: [67  4 43]
+2026-01-19 20:10:16,088 - algorithm - INFO - Fold 5, Epoch 25/25 - Train Loss: 0.4254, Train Acc: 60.31%, Val Acc: 35.09%, Balanced: 51.54%, Crisis Recall: 66.67%, Preds: [79  2 33]
+2026-01-19 20:10:16,097 - algorithm - INFO - New best model: balanced_acc=58.09%, diversity=1.00
+2026-01-19 20:10:16,097 - algorithm - INFO - 
+============================================================
+2026-01-19 20:10:16,097 - algorithm - INFO - Final Training on Full Training Set
+2026-01-19 20:10:16,097 - algorithm - INFO - ============================================================
+2026-01-19 20:10:16,101 - algorithm - INFO - Class weights: Bull=0.50, Normal=0.50, Crisis=2.03
+2026-01-19 20:14:17,374 - algorithm - INFO - Final Training Epoch 1/30 - Loss: 0.3920, Acc: 53.00%, Preds: [303  58 405]
+2026-01-19 20:30:22,100 - algorithm - INFO - Final Training Epoch 5/30 - Loss: 0.3821, Acc: 51.83%, Preds: [294  36 436]
+2026-01-19 20:50:25,484 - algorithm - INFO - Final Training Epoch 10/30 - Loss: 0.3678, Acc: 52.61%, Preds: [267  63 436]
+2026-01-19 21:10:10,987 - algorithm - INFO - Final Training Epoch 15/30 - Loss: 0.3671, Acc: 54.31%, Preds: [291  62 413]
+2026-01-19 21:29:53,011 - algorithm - INFO - Final Training Epoch 20/30 - Loss: 0.3664, Acc: 56.14%, Preds: [325  62 379]
+2026-01-19 21:49:33,928 - algorithm - INFO - Final Training Epoch 25/30 - Loss: 0.3621, Acc: 56.92%, Preds: [307  78 381]
+2026-01-19 22:09:14,753 - algorithm - INFO - Final Training Epoch 30/30 - Loss: 0.3489, Acc: 55.74%, Preds: [301  74 391]
+2026-01-19 22:09:14,765 - algorithm - INFO - 
+============================================================
+2026-01-19 22:09:14,765 - algorithm - INFO - Out-of-Sample Test Evaluation
+2026-01-19 22:09:14,765 - algorithm - INFO - ============================================================
+2026-01-19 22:09:46,561 - algorithm - INFO -   Bull/Low-Vol Recall: 63.92% (97 samples)
+2026-01-19 22:09:46,562 - algorithm - INFO -   Normal Recall: 2.78% (72 samples)
+2026-01-19 22:09:46,562 - algorithm - INFO -   Crisis Recall: 52.94% (17 samples)
+2026-01-19 22:09:46,562 - algorithm - INFO -   Prediction distribution: [108   2  76]
+2026-01-19 22:09:46,585 - algorithm - INFO -   Test Accuracy: 39.25%
+2026-01-19 22:09:46,585 - algorithm - INFO -   Test Balanced Accuracy: 39.88%
+2026-01-19 22:09:46,585 - algorithm - INFO -   Test Crisis Recall: 52.94%
+2026-01-19 22:09:46,585 - algorithm - INFO -   Test ROC-AUC: 0.619
+2026-01-19 22:09:46,585 - algorithm - INFO -   Test Macro-F1: 0.284
+2026-01-19 22:09:46,592 - algorithm - INFO - 
+============================================================
+2026-01-19 22:09:46,592 - algorithm - INFO - Walk-Forward Validation Results
+2026-01-19 22:09:46,592 - algorithm - INFO - ============================================================
+2026-01-19 22:09:46,592 - algorithm - INFO - Prediction Horizon: 5 days
+2026-01-19 22:09:46,593 - algorithm - INFO - Completed Folds: 5/5
+2026-01-19 22:09:46,593 - algorithm - INFO - Val Accuracy: 41.93% ± 5.96%
+2026-01-19 22:09:46,593 - algorithm - INFO - Val Crisis Recall: 78.37% ± 13.20%
+2026-01-19 22:09:46,598 - __main__ - INFO - 
+================================================================================
+2026-01-19 22:09:46,598 - __main__ - INFO - STEP 6: Generating Visualizations
+2026-01-19 22:09:46,598 - __main__ - INFO - ================================================================================
+2026-01-19 22:09:46,598 - __main__ - INFO - 
+================================================================================
+2026-01-19 22:09:46,598 - __main__ - INFO - STEP 7: Current Market State Analysis
+2026-01-19 22:09:46,598 - __main__ - INFO - ================================================================================
+2026-01-19 22:09:46,611 - __main__ - INFO - Loaded best crisis detection model
+2026-01-19 22:09:46,789 - __main__ - INFO - 
+PREDICTED REGIME: Bull/Low Vol
+2026-01-19 22:09:46,790 - __main__ - INFO - 
+Probabilities:
+2026-01-19 22:09:46,790 - __main__ - INFO -    Bull/Low Vol        :  44.8% █████████████████
+2026-01-19 22:09:46,790 - __main__ - INFO -    Normal/Bear         :  24.7% █████████
+2026-01-19 22:09:46,790 - __main__ - INFO -    Crisis/Contagion    :  30.5% ████████████
+2026-01-19 22:09:46,790 - __main__ - INFO - 
+Contagion Risk: 24.1%
+2026-01-19 22:09:46,790 - __main__ - INFO - Volatility Forecast: 0.17
+2026-01-19 22:09:47,905 - visualizations - INFO - Saved learned edge analysis to output/graphs/learned_edges_analysis.png
+2026-01-19 22:09:47,908 - __main__ - INFO - 
+================================================================================
+2026-01-19 22:09:47,908 - __main__ - INFO - PIPELINE COMPLETE
+2026-01-19 22:09:47,908 - __main__ - INFO - ================================================================================
+2026-01-19 22:09:47,908 - __main__ - INFO - 
+Outputs saved to output/ directory:
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/graphs/comprehensive_results.png
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/graphs/metrics_dashboard.png
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/graphs/lead_lag_network.png
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/graphs/learned_edges_analysis.png
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/metrics/cv_results.json
+2026-01-19 22:09:47,908 - __main__ - INFO -    - output/baselines/baseline_results.json

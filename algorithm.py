@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+RALEC-GNN Algorithm - FULLY CORRECTED VERSION
+Fixes:
+1. Temporal alignment (predicting FUTURE regimes)
+2. Balanced class weighting (prevents mode collapse)
+3. Improved model selection criteria
+"""
 
 import os
 import logging
@@ -49,7 +56,6 @@ DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 logger = logging.getLogger(__name__)
 
-# Try to import numba for JIT compilation
 try:
     from numba import jit, prange
     NUMBA_AVAILABLE = True
@@ -106,15 +112,19 @@ class ResearchConfig:
     batch_size: int = 16
     learning_rate: float = 0.0005
     weight_decay: float = 0.01
-    epochs: int = 50  # Reduced for CPU training
+    epochs: int = 50
     early_stopping_patience: int = 15
     dropout: float = 0.3
     edge_sparsity_weight: float = 0.005
     edge_entropy_weight: float = 0.0005
-    label_smoothing: float = 0.1
-    crisis_weight_multiplier: float = 8.0
-    focal_loss_gamma: float = 2.0
-    crisis_loss_weight: float = 0.7
+    
+    # CORRECTED: Balanced class weighting - key changes
+    label_smoothing: float = 0.15          # Was 0.1 - more regularization
+    crisis_weight_multiplier: float = 2.5  # Was 8.0 - much less aggressive
+    focal_loss_gamma: float = 1.0          # Was 2.0 - softer focal loss
+    crisis_loss_weight: float = 0.15       # Was 0.7 - much less emphasis
+    crisis_augment_factor: int = 1         # Was 2 - no augmentation
+    
     temporal_consistency_weight: float = 0.1
     n_splits: int = 5
     purge_gap: int = 5
@@ -122,11 +132,11 @@ class ResearchConfig:
     save_models: bool = True
     save_graphs: bool = True
     run_baselines: bool = True
-    crisis_augment_factor: int = 2
     
-    # New parameters for optimizations
+    prediction_horizon: int = 5
+    
     use_mixed_precision: bool = True
-    use_torch_compile: bool = False  # Disabled - requires OpenMP on macOS
+    use_torch_compile: bool = False
     use_temporal_edges: bool = True
     temporal_edge_weight: float = 0.3
     mc_dropout_samples: int = 5
@@ -146,6 +156,7 @@ class ResearchConfig:
 
 
 class FocalLoss(nn.Module):
+    """Focal loss with optional label smoothing."""
     def __init__(self, alpha: torch.Tensor = None, gamma: float = 2.0, label_smoothing: float = 0.0):
         super().__init__()
         self.alpha = alpha
@@ -242,11 +253,9 @@ class EODHDClient:
             return pd.DataFrame()
 
 
-# Numba-optimized functions for speed
 if NUMBA_AVAILABLE:
     @jit(nopython=True)
     def compute_lagged_correlation(s1: np.ndarray, s2: np.ndarray, lag: int) -> float:
-        """Compute correlation between s1[:-lag] and s2[lag:]"""
         if lag == 0 or len(s1) <= lag:
             return 0.0
         
@@ -256,7 +265,6 @@ if NUMBA_AVAILABLE:
         if len(x) < 2:
             return 0.0
         
-        # Compute correlation manually
         mean_x = np.mean(x)
         mean_y = np.mean(y)
         
@@ -271,7 +279,6 @@ if NUMBA_AVAILABLE:
     
     @jit(nopython=True, parallel=True)
     def compute_all_lagged_correlations(returns_matrix: np.ndarray, max_lag: int) -> np.ndarray:
-        """Compute all pairwise lagged correlations"""
         n_assets = returns_matrix.shape[1]
         n_lags = max_lag + 1
         correlations = np.zeros((n_assets, n_assets, n_lags))
@@ -289,7 +296,6 @@ if NUMBA_AVAILABLE:
         
         return correlations
 else:
-    # Fallback to numpy implementation
     def compute_lagged_correlation(s1: np.ndarray, s2: np.ndarray, lag: int) -> float:
         if lag == 0 or len(s1) <= lag:
             return 0.0
@@ -364,7 +370,6 @@ class StatisticalLeadLagDetector:
         total_pairs = len(symbols) * (len(symbols) - 1) // 2
         logger.info(f"Testing {total_pairs} pairs for lead-lag relationships...")
         
-        # Use numba-optimized batch computation if available
         if self.config.use_numba_optimization and NUMBA_AVAILABLE:
             logger.info("Using numba-optimized correlation computation")
             returns_matrix = df.values
@@ -384,16 +389,13 @@ class StatisticalLeadLagDetector:
                     best_lag = 0
                     best_direction = None
                     
-                    # Check all lags for both directions
                     for lag in range(1, self.config.max_lag + 1):
-                        # sym1 leads sym2
                         corr_1_leads = correlations[i, j, lag]
                         if abs(corr_1_leads) > abs(best_corr):
                             best_corr = corr_1_leads
                             best_lag = lag
                             best_direction = (sym1, sym2)
                         
-                        # sym2 leads sym1
                         corr_2_leads = correlations[j, i, lag]
                         if abs(corr_2_leads) > abs(best_corr):
                             best_corr = corr_2_leads
@@ -413,7 +415,6 @@ class StatisticalLeadLagDetector:
                     
                     results.append(relationship)
         else:
-            # Original implementation
             for i, sym1 in enumerate(symbols):
                 for j, sym2 in enumerate(symbols):
                     if i >= j:
@@ -472,14 +473,11 @@ class StatisticalLeadLagDetector:
 
 
 class EnhancedFeatureExtractor:
-    """Enhanced feature extractor with market-relative features."""
-    
     def __init__(self):
         self.market_vol = None
         self.market_ret = None
     
     def set_market_context(self, market_vol: float, market_ret: float):
-        """Set market-wide statistics for relative features."""
         self.market_vol = market_vol
         self.market_ret = market_ret
     
@@ -491,7 +489,6 @@ class EnhancedFeatureExtractor:
         market_ret: float = None,
         use_gpu: bool = False
     ) -> np.ndarray:
-        """Compute 20 features including 4 market-relative features."""
         if len(returns) < 5:
             return np.zeros(20)
         
@@ -556,11 +553,10 @@ class EnhancedFeatureExtractor:
     
     @staticmethod
     def compute_features_batch_gpu(
-        returns_matrix: torch.Tensor,  # (n_assets, n_timesteps)
+        returns_matrix: torch.Tensor,
         market_vol: float = None,
         market_ret: float = None
     ) -> torch.Tensor:
-        """GPU-accelerated batch feature computation."""
         n_assets, n_timesteps = returns_matrix.shape
         features = torch.zeros((n_assets, 20), device=returns_matrix.device)
         
@@ -569,37 +565,29 @@ class EnhancedFeatureExtractor:
         
         sqrt_252 = np.sqrt(252)
         
-        # Compute volatilities
         vol_realized = returns_matrix.std(dim=1) * sqrt_252
-        
-        # Mean and cumulative returns
         mean_return = returns_matrix.mean(dim=1) * 252
         cum_return = returns_matrix.sum(dim=1)
         
-        # Skewness and kurtosis (approximate for GPU)
         m3 = ((returns_matrix - returns_matrix.mean(dim=1, keepdim=True)) ** 3).mean(dim=1)
         m4 = ((returns_matrix - returns_matrix.mean(dim=1, keepdim=True)) ** 4).mean(dim=1)
-        skewness = m3 / (vol_realized / sqrt_252) ** 3
-        kurt = m4 / (vol_realized / sqrt_252) ** 4 - 3
+        skewness = m3 / (vol_realized / sqrt_252 + 1e-8) ** 3
+        kurt = m4 / (vol_realized / sqrt_252 + 1e-8) ** 4 - 3
         
-        # VaR and CVaR
         sorted_returns, _ = torch.sort(returns_matrix, dim=1)
-        var_95_idx = int(n_timesteps * 0.05)
-        var_99_idx = int(n_timesteps * 0.01)
+        var_95_idx = max(int(n_timesteps * 0.05), 0)
+        var_99_idx = max(int(n_timesteps * 0.01), 0)
         var_95 = sorted_returns[:, var_95_idx]
         var_99 = sorted_returns[:, var_99_idx]
         
-        # Max drawdown
         cum_prod = (1 + returns_matrix).cumprod(dim=1)
-        running_max = torch.maximum.accumulate(cum_prod, dim=1)[0]
+        running_max = torch.cummax(cum_prod, dim=1)[0]
         drawdown = (cum_prod - running_max) / (running_max + 1e-8)
         max_dd = drawdown.min(dim=1)[0]
         current_dd = drawdown[:, -1]
         
-        # Sharpe ratio
-        sharpe = (mean_return / vol_realized).nan_to_num(0)
+        sharpe = (mean_return / (vol_realized + 1e-8)).nan_to_num(0)
         
-        # Market-relative features
         if market_vol is not None and market_vol > 0:
             relative_vol = vol_realized / market_vol
             vol_ratio = torch.clamp(relative_vol, max=3.0)
@@ -612,27 +600,26 @@ class EnhancedFeatureExtractor:
         else:
             relative_return = torch.zeros_like(mean_return)
         
-        # Assemble features
         features[:, 0] = vol_realized
-        features[:, 1] = vol_realized  # vol_ewma placeholder
-        features[:, 2] = vol_realized * 1.67  # vol_parkinson placeholder
+        features[:, 1] = vol_realized
+        features[:, 2] = vol_realized * 1.67
         features[:, 3] = mean_return
         features[:, 4] = cum_return
-        features[:, 5] = skewness
-        features[:, 6] = kurt
+        features[:, 5] = skewness.nan_to_num(0)
+        features[:, 6] = kurt.nan_to_num(0)
         features[:, 7] = var_95
         features[:, 8] = var_99
-        features[:, 9] = var_95  # cvar_95 placeholder
+        features[:, 9] = var_95
         features[:, 10] = max_dd
         features[:, 11] = current_dd
-        features[:, 12] = 0  # acf_1 placeholder
-        features[:, 13] = 0  # acf_5 placeholder
-        features[:, 14] = 0  # slope placeholder
+        features[:, 12] = 0
+        features[:, 13] = 0
+        features[:, 14] = 0
         features[:, 15] = sharpe
         features[:, 16] = relative_vol
         features[:, 17] = vol_ratio
         features[:, 18] = relative_return
-        features[:, 19] = 0  # momentum_persistence placeholder
+        features[:, 19] = 0
         
         return features
 
@@ -682,7 +669,6 @@ class MultiMethodGraphBuilder:
         
         graphs = []
         
-        # Use GPU for batch feature extraction if enabled
         use_gpu_features = self.config.use_gpu_features and torch.cuda.is_available()
         
         for end_idx in range(self.config.window_size, len(dates), self.config.step_size):
@@ -692,13 +678,11 @@ class MultiMethodGraphBuilder:
             market_ret = window_df.mean().mean() * 252
             
             if use_gpu_features:
-                # Batch GPU feature extraction
                 returns_matrix = torch.tensor(window_df.values.T, dtype=torch.float32, device=DEVICE)
                 node_features = self.feature_extractor.compute_features_batch_gpu(
                     returns_matrix, market_vol, market_ret
                 ).cpu().numpy()
             else:
-                # CPU feature extraction
                 node_features = []
                 for sym in symbols:
                     features = self.feature_extractor.compute_features(
@@ -719,8 +703,9 @@ class MultiMethodGraphBuilder:
                 edge_attr=edge_attr,
                 num_nodes=n_symbols
             )
+            
             graph.timestamp = dates[end_idx - 1]
-            graph.time_idx = end_idx  # Store time index for temporal edges
+            graph.time_idx = end_idx
             
             corr_matrix = window_df.corr().values
             graph.corr_matrix = torch.tensor(corr_matrix, dtype=torch.float)
@@ -728,6 +713,8 @@ class MultiMethodGraphBuilder:
             graphs.append(graph)
         
         logger.info(f"Built {len(graphs)} temporal graphs")
+        logger.info(f"  First graph timestamp: {graphs[0].timestamp if graphs else 'N/A'}")
+        logger.info(f"  Last graph timestamp: {graphs[-1].timestamp if graphs else 'N/A'}")
         
         if graphs:
             graphs = self.scale_graph_features(graphs)
@@ -829,13 +816,11 @@ class LearnedEdgeConstructor(nn.Module):
         regime_logits = self.regime_encoder(global_state)
         regime_probs = F.softmax(regime_logits, dim=-1)
         
-        # Detect dominant regime
         dominant_regime = regime_probs.argmax().item()
         
-        # Dynamic edge threshold based on regime
-        if dominant_regime == 2:  # Crisis regime
+        if dominant_regime == 2:
             edge_threshold = self.config.dynamic_edge_threshold_crisis
-        else:  # Normal or bull regime
+        else:
             edge_threshold = self.config.dynamic_edge_threshold_normal
         
         contagion_scores = self.contagion_detector(x)
@@ -861,9 +846,8 @@ class LearnedEdgeConstructor(nn.Module):
         regime_gates = torch.stack(regime_gates, dim=-1).squeeze(1)
         regime_gate_combined = (regime_gates * regime_probs.unsqueeze(0)).sum(dim=-1, keepdim=True)
         
-        # Adjust contagion amplifier based on regime
         if dominant_regime == 2:
-            contagion_amplifier = 1.0 + contagion_level * 0.8  # Stronger in crisis
+            contagion_amplifier = 1.0 + contagion_level * 0.8
         else:
             contagion_amplifier = 1.0 + contagion_level * 0.3
         
@@ -987,7 +971,6 @@ class RegimeAdaptiveGNNLayer(MessagePassing):
 
 
 class NodeAttentionPooling(nn.Module):
-    """Attention-based pooling that weights nodes by importance."""
     def __init__(self, hidden_dim: int, temperature: float = 1.0):
         super().__init__()
         self.attention = nn.Sequential(
@@ -1001,16 +984,13 @@ class NodeAttentionPooling(nn.Module):
         if batch is None:
             batch = torch.zeros(x.size(0), dtype=torch.long, device=x.device)
         
-        # Compute attention scores
         scores = self.attention(x).squeeze(-1) / self.temperature
         
-        # Apply softmax per batch
         attention_weights = torch.zeros_like(scores)
         for b in torch.unique(batch):
             mask = batch == b
             attention_weights[mask] = F.softmax(scores[mask], dim=0)
         
-        # Weighted sum
         weighted_x = x * attention_weights.unsqueeze(-1)
         out = global_add_pool(weighted_x, batch)
         
@@ -1046,13 +1026,11 @@ class TemporalGNNWithLearnedEdges(nn.Module):
             for _ in range(config.num_layers)
         ])
         
-        # Node attention pooling
         self.node_attention_pool = NodeAttentionPooling(
             config.hidden_dim, 
             temperature=config.attention_temperature
         )
         
-        # Temporal edge weights for connecting same nodes across time
         if config.use_temporal_edges:
             self.temporal_edge_weight = nn.Parameter(
                 torch.tensor(config.temporal_edge_weight)
@@ -1083,7 +1061,6 @@ class TemporalGNNWithLearnedEdges(nn.Module):
             nn.Dropout(config.dropout)
         )
         
-        # Regime persistence modeling
         self.regime_transition = nn.Linear(config.num_regimes * 2, config.num_regimes)
         
         self.regime_head = nn.Sequential(
@@ -1120,7 +1097,6 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         all_edge_analysis = []
         regime_probs_sequence = []
         
-        # Enable dropout for MC Dropout uncertainty estimation
         if mc_dropout:
             self.train()
         
@@ -1129,15 +1105,12 @@ class TemporalGNNWithLearnedEdges(nn.Module):
             edge_index = graph.edge_index.to(DEVICE)
             edge_attr = graph.edge_attr.to(DEVICE)
             
-            # Add temporal edges if enabled and not the first timestep
             if self.config.use_temporal_edges and t > 0:
-                # Create temporal edges connecting same nodes across time
                 num_nodes = x.size(0)
                 temporal_edges = []
                 temporal_weights = []
                 
                 for i in range(num_nodes):
-                    # Connect node i at time t-1 to node i at time t
                     temporal_edges.append([i, i])
                     temporal_weights.append(self.temporal_edge_weight.item())
                 
@@ -1145,7 +1118,6 @@ class TemporalGNNWithLearnedEdges(nn.Module):
                     temporal_edge_index = torch.tensor(temporal_edges, dtype=torch.long, device=DEVICE).t()
                     temporal_edge_attr = torch.tensor([[w, w, 0] for w in temporal_weights], dtype=torch.float, device=DEVICE)
                     
-                    # Concatenate with existing edges
                     edge_index = torch.cat([edge_index, temporal_edge_index], dim=1)
                     edge_attr = torch.cat([edge_attr, temporal_edge_attr], dim=0)
             
@@ -1179,7 +1151,6 @@ class TemporalGNNWithLearnedEdges(nn.Module):
                 
                 h = h + h_new
             
-            # Use attention pooling instead of mean pooling
             graph_embedding = self.node_attention_pool(h)
             sequence_embeddings.append(graph_embedding.squeeze(0))
         
@@ -1202,20 +1173,16 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         
         regime_logits = self.regime_head(fused)
         
-        # Apply regime persistence modeling if we have previous predictions
         if self.prev_regime_probs is not None:
-            # Combine current and previous regime probabilities
             regime_input = torch.cat([
                 F.softmax(regime_logits, dim=-1),
                 self.prev_regime_probs
             ], dim=-1)
             
-            # Apply transition model with persistence penalty
             transition_logits = self.regime_transition(regime_input)
             persistence_penalty = self.config.regime_persistence_penalty
             regime_logits = (1 - persistence_penalty) * regime_logits + persistence_penalty * transition_logits
         
-        # Update previous regime probabilities
         self.prev_regime_probs = F.softmax(regime_logits, dim=-1).detach()
         
         contagion_prob = self.contagion_head(fused)
@@ -1243,11 +1210,9 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         graph_sequence: List[Data],
         n_samples: int = None
     ) -> Dict[str, torch.Tensor]:
-        """Predict with uncertainty estimation using MC Dropout."""
         if n_samples is None:
             n_samples = self.config.mc_dropout_samples
         
-        # Collect predictions from multiple forward passes
         all_regime_probs = []
         all_contagion_probs = []
         all_volatility_preds = []
@@ -1259,12 +1224,10 @@ class TemporalGNNWithLearnedEdges(nn.Module):
                 all_contagion_probs.append(output['contagion_probability'])
                 all_volatility_preds.append(output['volatility_forecast'])
         
-        # Stack predictions
         regime_probs_stack = torch.stack(all_regime_probs)
         contagion_probs_stack = torch.stack(all_contagion_probs)
         volatility_stack = torch.stack(all_volatility_preds)
         
-        # Compute mean and uncertainty
         regime_probs_mean = regime_probs_stack.mean(dim=0)
         regime_probs_std = regime_probs_stack.std(dim=0)
         regime_entropy = -(regime_probs_mean * torch.log(regime_probs_mean + 1e-8)).sum(dim=-1)
@@ -1275,7 +1238,6 @@ class TemporalGNNWithLearnedEdges(nn.Module):
         volatility_mean = volatility_stack.mean(dim=0)
         volatility_std = volatility_stack.std(dim=0)
         
-        # Predict regime as argmax of mean probabilities
         regime_pred = regime_probs_mean.argmax(dim=-1)
         
         return {
@@ -1304,72 +1266,99 @@ class RegimeLabeler:
             
         df = pd.DataFrame(returns_dict).dropna()
         
-        features_list = []
-        dates = []
-        window = 30
+        prediction_horizon = self.config.prediction_horizon
+        feature_window = 30
         
-        for i in range(window, len(df)):
-            window_data = df.iloc[i-window:i]
+        features_list = []
+        future_features_list = []
+        dates = []
+        
+        for i in range(feature_window, len(df) - prediction_horizon):
+            past_window = df.iloc[i - feature_window:i]
+            future_window = df.iloc[i:i + prediction_horizon]
             
-            avg_vol = window_data.std().mean() * np.sqrt(252)
-            max_vol = window_data.std().max() * np.sqrt(252)
-            corr_matrix = window_data.corr().values
-            avg_corr = np.nanmean(corr_matrix[np.triu_indices(len(corr_matrix), k=1)])
-            avg_ret = window_data.mean().mean() * 252
+            past_avg_vol = past_window.std().mean() * np.sqrt(252)
+            past_max_vol = past_window.std().max() * np.sqrt(252)
+            past_corr_matrix = past_window.corr().values
+            past_avg_corr = np.nanmean(past_corr_matrix[np.triu_indices(len(past_corr_matrix), k=1)])
+            past_avg_ret = past_window.mean().mean() * 252
+            past_pct_negative = (past_window.mean(axis=1) < 0).sum() / len(past_window)
             
-            pct_negative = (window_data.mean(axis=1) < 0).sum() / len(window_data)
-            
-            cumsum = window_data.cumsum()
-            running_max = cumsum.max()
+            past_cumsum = past_window.cumsum()
+            past_running_max = past_cumsum.max()
             with np.errstate(divide='ignore', invalid='ignore'):
-                drawdown = (cumsum - running_max) / running_max.replace(0, 1)
-                max_drawdown = drawdown.min().min()
-                if np.isinf(max_drawdown) or np.isnan(max_drawdown):
-                    max_drawdown = 0
+                past_drawdown = (past_cumsum - past_running_max) / past_running_max.replace(0, 1)
+                past_max_drawdown = past_drawdown.min().min()
+                if np.isinf(past_max_drawdown) or np.isnan(past_max_drawdown):
+                    past_max_drawdown = 0
+            
+            future_avg_vol = future_window.std().mean() * np.sqrt(252)
+            future_max_vol = future_window.std().max() * np.sqrt(252)
+            future_corr_matrix = future_window.corr().values
+            future_avg_corr = np.nanmean(future_corr_matrix[np.triu_indices(len(future_corr_matrix), k=1)])
+            future_avg_ret = future_window.mean().mean() * 252
             
             features_list.append([
-                avg_vol, max_vol,
-                avg_corr if not np.isnan(avg_corr) else 0, 
-                avg_ret, pct_negative, max_drawdown
+                past_avg_vol, past_max_vol,
+                past_avg_corr if not np.isnan(past_avg_corr) else 0, 
+                past_avg_ret, past_pct_negative, past_max_drawdown
             ])
-            dates.append(df.index[i])
+            
+            future_features_list.append([
+                future_avg_vol, future_max_vol,
+                future_avg_corr if not np.isnan(future_avg_corr) else 0,
+                future_avg_ret
+            ])
+            
+            dates.append(df.index[i - 1])
         
         features = np.array(features_list)
+        future_features = np.array(future_features_list)
+        
         features = np.clip(features, -1e10, 1e10)
         features = np.nan_to_num(features, nan=0.0, posinf=1e10, neginf=-1e10)
+        future_features = np.clip(future_features, -1e10, 1e10)
+        future_features = np.nan_to_num(future_features, nan=0.0, posinf=1e10, neginf=-1e10)
         
         if method == 'quantile':
-            regimes = self._label_by_quantile(features)
+            regimes = self._label_by_quantile_future(future_features)
         elif method == 'adaptive':
-            regimes = self._label_adaptive(features)
+            regimes = self._label_adaptive_future(future_features, features)
         elif method == 'kmeans':
-            regimes = self._label_by_kmeans(features)
+            regimes = self._label_by_kmeans_future(future_features)
         else:
-            regimes = self._label_by_quantile(features)
+            regimes = self._label_by_quantile_future(future_features)
         
         unique, counts = np.unique(regimes, return_counts=True)
-        logger.info(f"Regime labeling method: {method}")
+        logger.info(f"Regime labeling method: {method} (FUTURE-based)")
+        logger.info(f"Prediction horizon: {prediction_horizon} days")
         for r, c in zip(unique, counts):
             pct = c / len(regimes) * 100
-            logger.info(f"   Regime {r}: {c} days ({pct:.1f}%)")
+            regime_names = ['Bull/Low-Vol', 'Normal', 'Crisis']
+            logger.info(f"   Regime {r} ({regime_names[r]}): {c} days ({pct:.1f}%)")
         
         return pd.DataFrame({
             'date': dates,
             'regime': regimes,
+            'past_volatility': features[:, 0],
+            'past_max_volatility': features[:, 1],
+            'past_correlation': features[:, 2],
+            'past_return': features[:, 3],
+            'past_pct_negative': features[:, 4],
+            'past_max_drawdown': features[:, 5],
+            'future_volatility': future_features[:, 0],
+            'future_max_volatility': future_features[:, 1],
+            'future_correlation': future_features[:, 2],
+            'future_return': future_features[:, 3],
             'volatility': features[:, 0],
-            'max_volatility': features[:, 1],
-            'correlation': features[:, 2],
-            'return': features[:, 3],
-            'pct_negative': features[:, 4],
-            'max_drawdown': features[:, 5]
         })
     
-    def _label_by_quantile(self, features: np.ndarray) -> np.ndarray:
-        volatility = features[:, 0]
-        correlation = features[:, 2]
+    def _label_by_quantile_future(self, future_features: np.ndarray) -> np.ndarray:
+        future_vol = future_features[:, 0]
+        future_corr = future_features[:, 2]
         
-        vol_z = (volatility - np.mean(volatility)) / (np.std(volatility) + 1e-8)
-        corr_z = (correlation - np.mean(correlation)) / (np.std(correlation) + 1e-8)
+        vol_z = (future_vol - np.mean(future_vol)) / (np.std(future_vol) + 1e-8)
+        corr_z = (future_corr - np.mean(future_corr)) / (np.std(future_corr) + 1e-8)
         
         stress_score = vol_z + 0.5 * corr_z
         
@@ -1382,20 +1371,24 @@ class RegimeLabeler:
         
         return regimes
     
-    def _label_adaptive(self, features: np.ndarray) -> np.ndarray:
-        volatility = features[:, 0]
-        correlation = features[:, 2]
+    def _label_adaptive_future(
+        self, 
+        future_features: np.ndarray, 
+        past_features: np.ndarray
+    ) -> np.ndarray:
+        future_vol = future_features[:, 0]
+        future_corr = future_features[:, 2]
         
-        regimes = np.ones(len(volatility), dtype=int)
+        regimes = np.ones(len(future_vol), dtype=int)
         
         lookback = 252
         
-        for i in range(lookback, len(volatility)):
-            hist_vol = volatility[max(0, i-lookback):i]
-            hist_corr = correlation[max(0, i-lookback):i]
+        for i in range(lookback, len(future_vol)):
+            hist_vol = future_vol[max(0, i-lookback):i]
+            hist_corr = future_corr[max(0, i-lookback):i]
             
-            current_vol = volatility[i]
-            current_corr = correlation[i]
+            current_vol = future_vol[i]
+            current_corr = future_corr[i]
             
             vol_percentile = stats.percentileofscore(hist_vol, current_vol)
             corr_percentile = stats.percentileofscore(hist_corr, current_corr)
@@ -1409,20 +1402,20 @@ class RegimeLabeler:
             else:
                 regimes[i] = 1
         
-        if lookback > 0 and lookback < len(volatility):
-            early_regimes = self._label_by_quantile(features[:lookback])
+        if lookback > 0 and lookback < len(future_vol):
+            early_regimes = self._label_by_quantile_future(future_features[:lookback])
             regimes[:lookback] = early_regimes
         
         return regimes
     
-    def _label_by_kmeans(self, features: np.ndarray) -> np.ndarray:
+    def _label_by_kmeans_future(self, future_features: np.ndarray) -> np.ndarray:
         scaler = RobustScaler()
-        features_scaled = scaler.fit_transform(features)
+        features_scaled = scaler.fit_transform(future_features)
         
         kmeans = KMeans(n_clusters=self.config.num_regimes, random_state=SEED, n_init=20)
         regimes = kmeans.fit_predict(features_scaled)
         
-        regime_vols = {r: features[regimes == r, 0].mean() 
+        regime_vols = {r: future_features[regimes == r, 0].mean() 
                       for r in range(self.config.num_regimes)}
         sorted_regimes = sorted(regime_vols.keys(), key=lambda x: regime_vols[x])
         mapping = {sorted_regimes[i]: i for i in range(self.config.num_regimes)}
@@ -1435,43 +1428,50 @@ class RegimeLabeler:
 
 
 class ResearchTrainer:
+    """
+    FULLY CORRECTED Trainer with:
+    1. Proper temporal alignment
+    2. Balanced class weighting
+    3. Model selection based on balanced accuracy (not just crisis recall)
+    """
+    
     def __init__(self, model: nn.Module, config: ResearchConfig):
         self.model = model.to(DEVICE)
         self.config = config
         self.metrics_history = defaultdict(list)
     
     def _create_sequence_loader(self, dataset: List, batch_size: int = 16, shuffle: bool = True):
-        """Create a DataLoader for sequences of graphs."""
         if shuffle:
             indices = np.random.permutation(len(dataset))
             dataset = [dataset[i] for i in indices]
         
-        # Yield batches
         for i in range(0, len(dataset), batch_size):
             batch = dataset[i:i + batch_size]
             sequences, labels, vols = zip(*batch)
             yield sequences, labels, vols
+    
+    def _compute_balanced_class_weights(self, labels: List[int]) -> torch.Tensor:
+        """Compute balanced class weights using inverse frequency."""
+        labels_array = np.array(labels)
+        class_counts = np.bincount(labels_array, minlength=self.config.num_regimes)
+        class_counts = np.maximum(class_counts, 1)  # Avoid div by zero
         
-    def _augment_crisis_samples(
-        self, 
-        sequences: List, 
-        labels: List, 
-        volatilities: List, 
-        augment_factor: int = 2
-    ) -> Tuple[List, List, List]:
-        """Duplicate crisis samples for better learning."""
-        augmented_seqs = list(sequences)
-        augmented_labels = list(labels)
-        augmented_vols = list(volatilities)
+        # Inverse frequency
+        total = len(labels_array)
+        weights = total / (self.config.num_regimes * class_counts)
         
-        for i, label in enumerate(labels):
-            if label == 2:
-                for _ in range(augment_factor):
-                    augmented_seqs.append(sequences[i])
-                    augmented_labels.append(label)
-                    augmented_vols.append(volatilities[i])
+        # Mild boost for crisis (not extreme)
+        weights[2] = weights[2] * self.config.crisis_weight_multiplier
         
-        return augmented_seqs, augmented_labels, augmented_vols
+        # Normalize so mean weight = 1
+        weights = weights / weights.mean()
+        
+        # Cap max weight
+        weights = np.clip(weights, 0.5, 4.0)
+        
+        logger.info(f"Class weights: Bull={weights[0]:.2f}, Normal={weights[1]:.2f}, Crisis={weights[2]:.2f}")
+        
+        return torch.tensor(weights, dtype=torch.float, device=DEVICE)
         
     def _compute_edge_regularization(self, model: nn.Module) -> torch.Tensor:
         reg_loss = torch.tensor(0.0, device=DEVICE)
@@ -1505,6 +1505,7 @@ class ResearchTrainer:
         return reg_loss
     
     def _compute_crisis_loss(self, logits: torch.Tensor, targets: torch.Tensor) -> torch.Tensor:
+        """Mild additional crisis loss - not too aggressive."""
         crisis_mask = (targets == 2)
         if crisis_mask.sum() == 0:
             return torch.tensor(0.0, device=DEVICE)
@@ -1512,14 +1513,14 @@ class ResearchTrainer:
         crisis_logits = logits[crisis_mask]
         crisis_probs = F.softmax(crisis_logits, dim=-1)[:, 2]
         
-        crisis_loss = -torch.log(crisis_probs + 1e-8).mean()
+        # Softer loss
+        crisis_loss = F.binary_cross_entropy(crisis_probs, torch.ones_like(crisis_probs))
         return crisis_loss
     
     def _compute_temporal_consistency_loss(
         self, 
         regime_probs_sequence: List[torch.Tensor]
     ) -> torch.Tensor:
-        """Penalize rapid regime probability changes."""
         if len(regime_probs_sequence) < 2:
             return torch.tensor(0.0, device=DEVICE)
         
@@ -1535,54 +1536,52 @@ class ResearchTrainer:
         graphs: List[Data],
         regime_df: pd.DataFrame
     ) -> Dict[str, Any]:
-        """
-        Walk-Forward Validation for time-series data.
-
-        This implementation properly handles temporal data by:
-        1. Reserving the final 20% as a true out-of-sample test set
-        2. Using walk-forward validation on training data (expanding window)
-        3. Training a SINGLE model that accumulates knowledge across folds
-        4. Testing on strictly future data at each step
-        5. Final evaluation on held-out test set
-        """
         regime_df['date'] = pd.to_datetime(regime_df['date'])
-
+        
         sequences = []
         labels = []
         volatilities = []
-
+        
+        logger.info(f"Creating sequences with prediction horizon: {self.config.prediction_horizon} days")
+        
         for i in range(len(graphs) - self.config.seq_len):
             seq = graphs[i:i + self.config.seq_len]
-            ts = seq[-1].timestamp
-
-            match = regime_df[regime_df['date'] <= ts]
+            last_graph_ts = seq[-1].timestamp
+            
+            match = regime_df[regime_df['date'] == last_graph_ts]
+            
             if len(match) > 0:
                 sequences.append(seq)
-                labels.append(match.iloc[-1]['regime'])
-                volatilities.append(match.iloc[-1]['volatility'])
-
+                labels.append(match.iloc[0]['regime'])
+                volatilities.append(match.iloc[0]['volatility'])
+            else:
+                close_match = regime_df[
+                    (regime_df['date'] >= last_graph_ts - pd.Timedelta(days=3)) &
+                    (regime_df['date'] <= last_graph_ts)
+                ]
+                if len(close_match) > 0:
+                    sequences.append(seq)
+                    labels.append(close_match.iloc[-1]['regime'])
+                    volatilities.append(close_match.iloc[-1]['volatility'])
+        
         logger.info(f"Created {len(sequences)} training sequences")
-
+        
+        if len(sequences) < 20:
+            logger.error("Not enough sequences for training")
+            return {}
+        
         unique, counts = np.unique(labels, return_counts=True)
         logger.info(f"Label distribution in sequences:")
+        regime_names = ['Bull/Low-Vol', 'Normal', 'Crisis']
         for u, c in zip(unique, counts):
-            logger.info(f"   Regime {u}: {c} ({c/len(labels)*100:.1f}%)")
+            logger.info(f"   Regime {u} ({regime_names[u]}): {c} ({c/len(labels)*100:.1f}%)")
 
-        if len(sequences) < 20:
-            return {}
-
-        labels_array = np.array(labels)
-
-        # ==========================================
-        # STEP 1: Reserve held-out test set (final 20%)
-        # This data is NEVER seen during training or validation
-        # ==========================================
+        # Reserve held-out test set
         test_ratio = 0.20
         n_total = len(sequences)
         n_test = int(n_total * test_ratio)
         n_train_val = n_total - n_test
 
-        # Apply purge gap between train/val and test to prevent lookahead
         purge_gap = self.config.purge_gap
         test_start_idx = n_train_val + purge_gap
 
@@ -1590,45 +1589,31 @@ class ResearchTrainer:
         train_val_labels = labels[:n_train_val]
         train_val_volatilities = volatilities[:n_train_val]
 
-        test_sequences = sequences[test_start_idx:]
-        test_labels = labels[test_start_idx:]
-        test_volatilities = volatilities[test_start_idx:]
+        test_sequences = sequences[test_start_idx:] if test_start_idx < n_total else []
+        test_labels = labels[test_start_idx:] if test_start_idx < n_total else []
+        test_volatilities = volatilities[test_start_idx:] if test_start_idx < n_total else []
 
-        train_val_labels_array = np.array(train_val_labels)
-        test_labels_array = np.array(test_labels)
+        test_labels_array = np.array(test_labels) if test_labels else np.array([])
 
         logger.info(f"\n{'='*60}")
         logger.info("Walk-Forward Validation Setup")
         logger.info(f"{'='*60}")
         logger.info(f"Total sequences: {n_total}")
-        logger.info(f"Train/Val sequences: {n_train_val} (for walk-forward CV)")
+        logger.info(f"Train/Val sequences: {n_train_val}")
         logger.info(f"Held-out test sequences: {len(test_sequences)} (purge gap: {purge_gap})")
+        logger.info(f"Prediction horizon: {self.config.prediction_horizon} days")
 
-        test_regime_dist = np.bincount(test_labels_array, minlength=3)
-        logger.info(f"Test set regimes: Bull={test_regime_dist[0]}, Normal={test_regime_dist[1]}, Crisis={test_regime_dist[2]}")
+        if len(test_labels) > 0:
+            test_regime_dist = np.bincount(test_labels_array, minlength=3)
+            logger.info(f"Test set regimes: Bull={test_regime_dist[0]}, Normal={test_regime_dist[1]}, Crisis={test_regime_dist[2]}")
 
-        # ==========================================
-        # STEP 2: Walk-Forward Validation
-        # Train on expanding window, test on future data
-        # SINGLE MODEL accumulates knowledge across folds
-        # ==========================================
-
-        # Initialize model ONCE at the start (not per fold)
+        # Initialize model
         self.model = TemporalGNNWithLearnedEdges(self.config).to(DEVICE)
         self.model.apply(self._init_weights)
 
-        # Compile model if enabled (PyTorch 2.0+)
-        if self.config.use_torch_compile and hasattr(torch, 'compile'):
-            try:
-                self.model = torch.compile(self.model, mode='reduce-overhead')
-                logger.info("Model compiled with torch.compile()")
-            except Exception as e:
-                logger.warning(f"Failed to compile model: {e}")
-
-        # Calculate walk-forward splits
         n_splits = self.config.n_splits
-        min_train_ratio = 0.4  # Minimum 40% of train_val for first training window
-        val_size = int(n_train_val * 0.15)  # 15% for each validation window
+        min_train_ratio = 0.4
+        val_size = int(n_train_val * 0.15)
 
         fold_results = []
         all_val_preds = []
@@ -1636,10 +1621,9 @@ class ResearchTrainer:
         all_val_labels_collected = []
 
         best_model_state = None
-        best_crisis_recall = 0
+        best_balanced_score = 0
 
         for fold in range(n_splits):
-            # Expanding training window
             train_end = int(n_train_val * min_train_ratio) + fold * (n_train_val - int(n_train_val * min_train_ratio) - val_size) // n_splits
             val_start = train_end + purge_gap
             val_end = min(val_start + val_size, n_train_val)
@@ -1652,9 +1636,7 @@ class ResearchTrainer:
 
             logger.info(f"\n{'='*60}")
             logger.info(f"Walk-Forward Fold {fold + 1}/{n_splits}")
-            logger.info(f"Train indices: [0:{train_end}] ({len(train_idx)} samples)")
-            logger.info(f"Val indices: [{val_start}:{val_end}] ({len(val_idx)} samples)")
-            logger.info(f"Purge gap: {purge_gap}")
+            logger.info(f"Train: [0:{train_end}] ({len(train_idx)}), Val: [{val_start}:{val_end}] ({len(val_idx)})")
             logger.info(f"{'='*60}")
 
             train_sequences_fold = [train_val_sequences[i] for i in train_idx]
@@ -1668,23 +1650,13 @@ class ResearchTrainer:
             train_regime_dist = np.bincount(train_labels_fold, minlength=3)
             val_regime_dist = np.bincount(val_labels_fold, minlength=3)
 
-            logger.info(f"Train regimes (before augment): Bull={train_regime_dist[0]}, Normal={train_regime_dist[1]}, Crisis={train_regime_dist[2]}")
-            logger.info(f"Val regimes: Bull={val_regime_dist[0]}, Normal={val_regime_dist[1]}, Crisis={val_regime_dist[2]}")
+            logger.info(f"Train: Bull={train_regime_dist[0]}, Normal={train_regime_dist[1]}, Crisis={train_regime_dist[2]}")
+            logger.info(f"Val: Bull={val_regime_dist[0]}, Normal={val_regime_dist[1]}, Crisis={val_regime_dist[2]}")
 
-            if train_regime_dist[2] < 5:
-                logger.warning(f"Fold {fold+1} has only {train_regime_dist[2]} crisis samples in train, skipping...")
+            if train_regime_dist[2] < 3:
+                logger.warning(f"Fold {fold+1} has only {train_regime_dist[2]} crisis samples, skipping...")
                 continue
 
-            # Augment crisis samples
-            train_sequences_fold, train_labels_fold, train_vols_fold = self._augment_crisis_samples(
-                train_sequences_fold, train_labels_fold, train_vols_fold,
-                augment_factor=self.config.crisis_augment_factor
-            )
-
-            train_regime_dist_aug = np.bincount(train_labels_fold, minlength=3)
-            logger.info(f"Train regimes (after augment): Bull={train_regime_dist_aug[0]}, Normal={train_regime_dist_aug[1]}, Crisis={train_regime_dist_aug[2]}")
-
-            # Train fold - CONTINUES from previous fold's model state (no reinitialization)
             fold_metrics, fold_preds, fold_probs = self._train_fold_walk_forward(
                 train_sequences_fold, train_labels_fold, train_vols_fold,
                 val_sequences_fold, val_labels_fold, val_vols_fold,
@@ -1692,16 +1664,26 @@ class ResearchTrainer:
                 is_first_fold=(fold == 0)
             )
 
-            # Track best model by crisis recall
-            fold_crisis_recall = 0
-            crisis_mask = np.array(val_labels_fold) == 2
-            if crisis_mask.sum() > 0:
-                fold_crisis_recall = (np.array(fold_preds)[crisis_mask] == 2).mean()
+            # Compute balanced score for model selection
+            val_preds_arr = np.array(fold_preds)
+            val_labels_arr = np.array(val_labels_fold)
+            
+            per_class_recall = []
+            for c in range(3):
+                mask = val_labels_arr == c
+                if mask.sum() > 0:
+                    per_class_recall.append((val_preds_arr[mask] == c).mean())
+            
+            balanced_acc = np.mean(per_class_recall) if per_class_recall else 0
+            pred_diversity = len(np.unique(val_preds_arr)) / 3.0
+            
+            # Score: balanced accuracy + diversity bonus
+            fold_score = balanced_acc * 0.8 + pred_diversity * 0.2
 
-            if fold_crisis_recall >= best_crisis_recall:
-                best_crisis_recall = fold_crisis_recall
+            if fold_score > best_balanced_score and pred_diversity >= 0.66:
+                best_balanced_score = fold_score
                 best_model_state = copy.deepcopy(self.model.state_dict())
-                logger.info(f"New best crisis recall: {fold_crisis_recall:.2%}")
+                logger.info(f"New best model: balanced_acc={balanced_acc:.2%}, diversity={pred_diversity:.2f}")
 
             fold_results.append(fold_metrics)
             all_val_preds.extend(fold_preds)
@@ -1712,53 +1694,45 @@ class ResearchTrainer:
             logger.error("No valid folds completed!")
             return {}
 
-        # ==========================================
-        # STEP 3: Final Training on Full Train/Val Set
-        # ==========================================
+        # Final training
         logger.info(f"\n{'='*60}")
         logger.info("Final Training on Full Training Set")
         logger.info(f"{'='*60}")
 
-        # Augment crisis samples for final training
-        final_train_sequences, final_train_labels, final_train_vols = self._augment_crisis_samples(
-            train_val_sequences.copy(), train_val_labels.copy(), train_val_volatilities.copy(),
-            augment_factor=self.config.crisis_augment_factor
-        )
-
-        logger.info(f"Final training samples: {len(final_train_sequences)}")
-        final_regime_dist = np.bincount(final_train_labels, minlength=3)
-        logger.info(f"Final train regimes: Bull={final_regime_dist[0]}, Normal={final_regime_dist[1]}, Crisis={final_regime_dist[2]}")
-
-        # Continue training from best model state
         if best_model_state:
             self.model.load_state_dict(best_model_state)
 
-        # Final training pass (fewer epochs since model is already trained)
         final_epochs = max(self.config.epochs // 3, 30)
-        self._train_final(final_train_sequences, final_train_labels, final_train_vols, final_epochs)
+        self._train_final(train_val_sequences, train_val_labels, train_val_volatilities, final_epochs)
 
-        # ==========================================
-        # STEP 4: Out-of-Sample Test Evaluation
-        # ==========================================
-        logger.info(f"\n{'='*60}")
-        logger.info("Out-of-Sample Test Evaluation (True Future Data)")
-        logger.info(f"{'='*60}")
+        # Test evaluation
+        test_metrics = None
+        test_preds = []
+        test_probs = []
+        
+        if len(test_sequences) > 0:
+            logger.info(f"\n{'='*60}")
+            logger.info("Out-of-Sample Test Evaluation")
+            logger.info(f"{'='*60}")
 
-        test_preds, test_probs = self._evaluate_out_of_sample(
-            test_sequences, test_labels, test_volatilities
-        )
+            test_preds, test_probs = self._evaluate_out_of_sample(
+                test_sequences, test_labels, test_volatilities
+            )
 
-        test_metrics = MetricsCalculator.calculate_all_metrics(
-            np.array(test_labels), np.array(test_preds), np.array(test_probs), self.config.num_regimes
-        )
+            test_metrics = MetricsCalculator.calculate_all_metrics(
+                np.array(test_labels), np.array(test_preds), np.array(test_probs), self.config.num_regimes
+            )
+            
+            logger.info(f"  Test Accuracy: {test_metrics.accuracy:.2%}")
+            logger.info(f"  Test Balanced Accuracy: {test_metrics.balanced_accuracy:.2%}")
+            logger.info(f"  Test Crisis Recall: {test_metrics.crisis_recall:.2%}")
+            logger.info(f"  Test ROC-AUC: {test_metrics.roc_auc_ovr:.3f}")
+            logger.info(f"  Test Macro-F1: {test_metrics.macro_f1:.3f}")
 
-        # Save best model
         if self.config.save_models:
             torch.save(self.model.state_dict(), 'output/models/best_crisis_model.pt')
 
-        # ==========================================
-        # Compile Results
-        # ==========================================
+        # Compile results
         all_val_preds = np.array(all_val_preds)
         all_val_probs = np.array(all_val_probs)
         all_val_labels_collected = np.array(all_val_labels_collected)
@@ -1768,46 +1742,41 @@ class ResearchTrainer:
         )
 
         avg_metrics = {
-            # Walk-forward validation metrics
             'avg_val_acc': np.mean([f['best_val_acc'] for f in fold_results]),
             'avg_val_loss': np.mean([f['best_val_loss'] for f in fold_results]),
             'std_val_acc': np.std([f['best_val_acc'] for f in fold_results]),
             'avg_crisis_recall': np.mean([f['best_crisis_recall'] for f in fold_results]),
             'std_crisis_recall': np.std([f['best_crisis_recall'] for f in fold_results]),
+            'avg_balanced_acc': np.mean([f.get('best_balanced_acc', f['best_val_acc']) for f in fold_results]),
             'fold_results': fold_results,
             'validation_metrics': val_metrics,
             'all_val_predictions': all_val_preds,
             'all_val_probabilities': all_val_probs,
             'all_val_labels': all_val_labels_collected,
-
-            # Out-of-sample test metrics (TRUE performance indicator)
-            'test_metrics': test_metrics,
-            'test_predictions': np.array(test_preds),
-            'test_probabilities': np.array(test_probs),
-            'test_labels': np.array(test_labels),
-            'test_accuracy': test_metrics.accuracy,
-            'test_crisis_recall': test_metrics.crisis_recall,
-            'test_roc_auc': test_metrics.roc_auc_ovr,
         }
+        
+        if test_metrics is not None:
+            avg_metrics.update({
+                'test_metrics': test_metrics,
+                'test_predictions': np.array(test_preds),
+                'test_probabilities': np.array(test_probs),
+                'test_labels': np.array(test_labels),
+                'test_accuracy': test_metrics.accuracy,
+                'test_balanced_accuracy': test_metrics.balanced_accuracy,
+                'test_crisis_recall': test_metrics.crisis_recall,
+                'test_roc_auc': test_metrics.roc_auc_ovr,
+            })
 
         logger.info(f"\n{'='*60}")
         logger.info("Walk-Forward Validation Results")
         logger.info(f"{'='*60}")
+        logger.info(f"Prediction Horizon: {self.config.prediction_horizon} days")
         logger.info(f"Completed Folds: {len(fold_results)}/{self.config.n_splits}")
-        logger.info(f"Walk-Forward Val Accuracy: {avg_metrics['avg_val_acc']:.2%} ± {avg_metrics['std_val_acc']:.2%}")
-        logger.info(f"Walk-Forward Crisis Recall: {avg_metrics['avg_crisis_recall']:.2%} ± {avg_metrics['std_crisis_recall']:.2%}")
-        logger.info(f"Walk-Forward Val Loss: {avg_metrics['avg_val_loss']:.4f}")
+        logger.info(f"Val Accuracy: {avg_metrics['avg_val_acc']:.2%} ± {avg_metrics['std_val_acc']:.2%}")
+        logger.info(f"Val Crisis Recall: {avg_metrics['avg_crisis_recall']:.2%} ± {avg_metrics['std_crisis_recall']:.2%}")
 
-        logger.info(f"\n{'='*60}")
-        logger.info("OUT-OF-SAMPLE TEST RESULTS (True Performance)")
-        logger.info(f"{'='*60}")
-        logger.info(f"  Test Accuracy: {test_metrics.accuracy:.2%}")
-        logger.info(f"  Test Crisis Recall: {test_metrics.crisis_recall:.2%}")
-        logger.info(f"  Test ROC-AUC: {test_metrics.roc_auc_ovr:.3f}")
-        logger.info(f"  Test Macro-F1: {test_metrics.macro_f1:.3f}")
-        logger.info(f"  Test ECE: {test_metrics.expected_calibration_error:.4f}")
-        logger.info(f"  {test_metrics.summary()}")
-
+        # Save results
+        os.makedirs('output/metrics', exist_ok=True)
         with open('output/metrics/cv_results.json', 'w') as f:
             serializable_metrics = {
                 'validation': {
@@ -1817,18 +1786,20 @@ class ResearchTrainer:
                     'avg_crisis_recall': float(avg_metrics['avg_crisis_recall']),
                     'std_crisis_recall': float(avg_metrics['std_crisis_recall']),
                     'n_folds': len(fold_results),
+                    'prediction_horizon': self.config.prediction_horizon,
                 },
-                'out_of_sample_test': {
+            }
+            if test_metrics is not None:
+                serializable_metrics['out_of_sample_test'] = {
                     'accuracy': float(test_metrics.accuracy),
+                    'balanced_accuracy': float(test_metrics.balanced_accuracy),
                     'crisis_recall': float(test_metrics.crisis_recall),
                     'roc_auc': float(test_metrics.roc_auc_ovr),
                     'macro_f1': float(test_metrics.macro_f1),
                     'ece': float(test_metrics.expected_calibration_error),
                     'n_samples': len(test_labels),
                     'crisis_samples': int((np.array(test_labels) == 2).sum()),
-                },
-                'overall_metrics': test_metrics.to_dict()
-            }
+                }
             json.dump(serializable_metrics, f, indent=2)
 
         return avg_metrics
@@ -1840,15 +1811,6 @@ class ResearchTrainer:
         fold: int,
         is_first_fold: bool = False
     ) -> Tuple[Dict[str, float], List[int], List[np.ndarray]]:
-        """
-        Walk-forward training for a single fold.
-
-        Key difference from standard CV: Model is NOT reinitialized.
-        Training continues from previous fold's state, allowing the model
-        to accumulate knowledge across the expanding training window.
-        """
-        # Create fresh optimizer for this fold (but keep model weights)
-        # This allows proper learning rate scheduling per fold while preserving learned features
         optimizer = torch.optim.AdamW(
             self.model.parameters(),
             lr=self.config.learning_rate,
@@ -1859,10 +1821,8 @@ class ResearchTrainer:
             optimizer, T_0=10, T_mult=2, eta_min=1e-6
         )
 
-        # Initialize mixed precision scaler
-        scaler = GradScaler() if self.config.use_mixed_precision else None
-
-        class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
+        # Compute balanced class weights
+        class_weights = self._compute_balanced_class_weights(train_labels)
 
         criterion_regime = FocalLoss(
             alpha=class_weights,
@@ -1873,24 +1833,23 @@ class ResearchTrainer:
 
         best_val_loss = float('inf')
         best_val_acc = 0.0
+        best_balanced_acc = 0.0
         best_crisis_recall = 0.0
         patience_counter = 0
         best_preds = []
         best_probs = []
 
-        # Fewer epochs for later folds since model already has learned features
-        fold_epochs = self.config.epochs if is_first_fold else max(self.config.epochs // 2, 50)
+        fold_epochs = self.config.epochs if is_first_fold else max(self.config.epochs // 2, 25)
 
-        # Create train dataset
         train_dataset = list(zip(train_sequences, train_labels, train_vols))
 
         for epoch in range(fold_epochs):
             self.model.train()
             train_loss = 0.0
             train_correct = 0
+            train_preds_epoch = []
             num_batches = 0
 
-            # Create DataLoader for this epoch
             train_loader = self._create_sequence_loader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
 
             for batch_sequences, batch_labels, batch_vols in train_loader:
@@ -1899,74 +1858,41 @@ class ResearchTrainer:
                 batch_loss = 0.0
                 batch_correct = 0
 
-                # Process each sequence in the batch
                 for seq, label, vol in zip(batch_sequences, batch_labels, batch_vols):
-                    if self.config.use_mixed_precision and scaler is not None and torch.cuda.is_available():
-                        with autocast(device_type='cuda'):
-                            output = self.model(seq)
+                    output = self.model(seq)
 
-                            target_regime = torch.tensor([label], device=DEVICE)
-                            target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+                    target_regime = torch.tensor([label], device=DEVICE)
+                    target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
 
-                            loss_regime = criterion_regime(output['regime_logits'], target_regime)
-                            loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
-                            loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
-                            loss_edge_reg = self._compute_edge_regularization(self.model)
+                    loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                    loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                    loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+                    loss_edge_reg = self._compute_edge_regularization(self.model)
 
-                            loss_temporal = torch.tensor(0.0, device=DEVICE)
-                            if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
-                                regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
-                                loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
+                    loss_temporal = torch.tensor(0.0, device=DEVICE)
+                    if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
+                        regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
+                        loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
 
-                            loss = (
-                                loss_regime +
-                                self.config.crisis_loss_weight * loss_crisis +
-                                0.1 * loss_vol +
-                                loss_edge_reg +
-                                self.config.temporal_consistency_weight * loss_temporal
-                            )
-                    else:
-                        output = self.model(seq)
-
-                        target_regime = torch.tensor([label], device=DEVICE)
-                        target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
-
-                        loss_regime = criterion_regime(output['regime_logits'], target_regime)
-                        loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
-                        loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
-                        loss_edge_reg = self._compute_edge_regularization(self.model)
-
-                        loss_temporal = torch.tensor(0.0, device=DEVICE)
-                        if hasattr(self.model, 'last_edge_analysis') and self.model.last_edge_analysis:
-                            regime_probs_seq = [ea['regime_probs'] for ea in self.model.last_edge_analysis]
-                            loss_temporal = self._compute_temporal_consistency_loss(regime_probs_seq)
-
-                        loss = (
-                            loss_regime +
-                            self.config.crisis_loss_weight * loss_crisis +
-                            0.1 * loss_vol +
-                            loss_edge_reg +
-                            self.config.temporal_consistency_weight * loss_temporal
-                        )
+                    loss = (
+                        loss_regime +
+                        self.config.crisis_loss_weight * loss_crisis +
+                        0.1 * loss_vol +
+                        loss_edge_reg +
+                        self.config.temporal_consistency_weight * loss_temporal
+                    )
 
                     batch_loss += loss
-                    if output['regime_logits'].argmax().item() == label:
+                    pred = output['regime_logits'].argmax().item()
+                    train_preds_epoch.append(pred)
+                    if pred == label:
                         batch_correct += 1
 
-                # Average loss across batch
                 batch_loss = batch_loss / len(batch_sequences)
 
-                # Backward pass with mixed precision
-                if self.config.use_mixed_precision and scaler is not None:
-                    scaler.scale(batch_loss).backward()
-                    scaler.unscale_(optimizer)
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                    scaler.step(optimizer)
-                    scaler.update()
-                else:
-                    batch_loss.backward()
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                    optimizer.step()
+                batch_loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                optimizer.step()
 
                 train_loss += batch_loss.item()
                 train_correct += batch_correct
@@ -1974,12 +1900,13 @@ class ResearchTrainer:
 
             scheduler.step()
 
-            if num_batches > 0:
-                train_loss /= num_batches
-            else:
-                train_loss = 0.0
+            train_loss = train_loss / num_batches if num_batches > 0 else 0.0
             train_acc = train_correct / len(train_sequences) if len(train_sequences) > 0 else 0.0
+            
+            # Check training prediction diversity
+            train_pred_counts = np.bincount(train_preds_epoch, minlength=3)
 
+            # Validation
             self.model.eval()
             val_loss = 0.0
             val_correct = 0
@@ -2015,22 +1942,41 @@ class ResearchTrainer:
             val_loss /= len(val_sequences)
             val_acc = val_correct / len(val_sequences)
 
-            crisis_mask = np.array(val_labels) == 2
+            # Compute per-class metrics
+            val_preds_arr = np.array(val_preds)
+            val_labels_arr = np.array(val_labels)
+            
+            per_class_recall = []
+            for c in range(3):
+                mask = val_labels_arr == c
+                if mask.sum() > 0:
+                    per_class_recall.append((val_preds_arr[mask] == c).mean())
+            
+            balanced_acc = np.mean(per_class_recall) if per_class_recall else 0
+            
+            crisis_mask = val_labels_arr == 2
             crisis_recall = 0
             if crisis_mask.sum() > 0:
-                crisis_recall = (np.array(val_preds)[crisis_mask] == 2).mean()
+                crisis_recall = (val_preds_arr[crisis_mask] == 2).mean()
+            
+            pred_counts = np.bincount(val_preds_arr, minlength=3)
+            pred_diversity = (pred_counts > 0).sum() / 3.0
 
-            combined_metric = 0.5 * val_acc + 0.5 * crisis_recall
+            # Model selection: prioritize balanced accuracy with diversity requirement
+            combined_score = balanced_acc * 0.7 + val_acc * 0.2 + crisis_recall * 0.1
 
-            if val_loss < best_val_loss or (crisis_recall > best_crisis_recall and combined_metric > 0.5 * best_val_acc + 0.5 * best_crisis_recall):
-                best_val_loss = min(best_val_loss, val_loss)
+            if (combined_score > best_balanced_acc * 0.7 + best_val_acc * 0.2 + best_crisis_recall * 0.1 
+                and pred_diversity >= 0.66):
+                best_val_loss = val_loss
                 best_val_acc = val_acc
+                best_balanced_acc = balanced_acc
                 best_crisis_recall = crisis_recall
                 best_preds = val_preds.copy()
                 best_probs = [p.copy() for p in val_probs]
                 patience_counter = 0
 
                 if self.config.save_models:
+                    os.makedirs('output/models', exist_ok=True)
                     torch.save(
                         self.model.state_dict(),
                         f'output/models/best_model_fold{fold}.pt'
@@ -2043,17 +1989,26 @@ class ResearchTrainer:
                 logger.info(
                     f"Fold {fold+1}, Epoch {epoch+1}/{fold_epochs} - "
                     f"Train Loss: {train_loss:.4f}, Train Acc: {train_acc:.2%}, "
-                    f"Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.2%}, "
-                    f"Crisis Recall: {crisis_recall:.2%}, LR: {current_lr:.2e}"
+                    f"Val Acc: {val_acc:.2%}, Balanced: {balanced_acc:.2%}, "
+                    f"Crisis Recall: {crisis_recall:.2%}, Preds: {pred_counts}"
                 )
 
             if patience_counter >= self.config.early_stopping_patience:
                 logger.info(f"Early stopping at epoch {epoch+1}")
                 break
 
+        # If no good model found, use last
+        if not best_preds:
+            best_preds = val_preds
+            best_probs = val_probs
+            best_val_acc = val_acc
+            best_balanced_acc = balanced_acc
+            best_crisis_recall = crisis_recall
+
         return {
             'best_val_loss': best_val_loss,
             'best_val_acc': best_val_acc,
+            'best_balanced_acc': best_balanced_acc,
             'best_crisis_recall': best_crisis_recall
         }, best_preds, best_probs
 
@@ -2064,12 +2019,9 @@ class ResearchTrainer:
         train_vols: List,
         epochs: int
     ) -> None:
-        """
-        Final training pass on full training set before out-of-sample evaluation.
-        """
         optimizer = torch.optim.AdamW(
             self.model.parameters(),
-            lr=self.config.learning_rate * 0.5,  # Lower LR for fine-tuning
+            lr=self.config.learning_rate * 0.5,
             weight_decay=self.config.weight_decay
         )
 
@@ -2077,9 +2029,7 @@ class ResearchTrainer:
             optimizer, T_max=epochs, eta_min=1e-6
         )
 
-        scaler = GradScaler() if self.config.use_mixed_precision else None
-
-        class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
+        class_weights = self._compute_balanced_class_weights(train_labels)
         criterion_regime = FocalLoss(
             alpha=class_weights,
             gamma=self.config.focal_loss_gamma,
@@ -2093,6 +2043,7 @@ class ResearchTrainer:
             self.model.train()
             train_loss = 0.0
             train_correct = 0
+            train_preds = []
             num_batches = 0
 
             train_loader = self._create_sequence_loader(train_dataset, batch_size=self.config.batch_size, shuffle=True)
@@ -2103,44 +2054,27 @@ class ResearchTrainer:
                 batch_correct = 0
 
                 for seq, label, vol in zip(batch_sequences, batch_labels, batch_vols):
-                    if self.config.use_mixed_precision and scaler is not None and torch.cuda.is_available():
-                        with autocast(device_type='cuda'):
-                            output = self.model(seq)
-                            target_regime = torch.tensor([label], device=DEVICE)
-                            target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
+                    output = self.model(seq)
+                    target_regime = torch.tensor([label], device=DEVICE)
+                    target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
 
-                            loss_regime = criterion_regime(output['regime_logits'], target_regime)
-                            loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
-                            loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
+                    loss_regime = criterion_regime(output['regime_logits'], target_regime)
+                    loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
+                    loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
 
-                            loss = loss_regime + self.config.crisis_loss_weight * loss_crisis + 0.1 * loss_vol
-                    else:
-                        output = self.model(seq)
-                        target_regime = torch.tensor([label], device=DEVICE)
-                        target_vol = torch.tensor([[vol]], device=DEVICE, dtype=torch.float)
-
-                        loss_regime = criterion_regime(output['regime_logits'], target_regime)
-                        loss_crisis = self._compute_crisis_loss(output['regime_logits'], target_regime)
-                        loss_vol = criterion_vol(output['volatility_forecast'], target_vol)
-
-                        loss = loss_regime + self.config.crisis_loss_weight * loss_crisis + 0.1 * loss_vol
+                    loss = loss_regime + self.config.crisis_loss_weight * loss_crisis + 0.1 * loss_vol
 
                     batch_loss += loss
-                    if output['regime_logits'].argmax().item() == label:
+                    pred = output['regime_logits'].argmax().item()
+                    train_preds.append(pred)
+                    if pred == label:
                         batch_correct += 1
 
                 batch_loss = batch_loss / len(batch_sequences)
 
-                if self.config.use_mixed_precision and scaler is not None:
-                    scaler.scale(batch_loss).backward()
-                    scaler.unscale_(optimizer)
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                    scaler.step(optimizer)
-                    scaler.update()
-                else:
-                    batch_loss.backward()
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
-                    optimizer.step()
+                batch_loss.backward()
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), 1.0)
+                optimizer.step()
 
                 train_loss += batch_loss.item()
                 train_correct += batch_correct
@@ -2148,12 +2082,12 @@ class ResearchTrainer:
 
             scheduler.step()
 
-            if num_batches > 0:
-                train_loss /= num_batches
+            train_loss = train_loss / num_batches if num_batches > 0 else 0.0
             train_acc = train_correct / len(train_sequences) if len(train_sequences) > 0 else 0.0
+            pred_counts = np.bincount(train_preds, minlength=3)
 
             if (epoch + 1) % 5 == 0 or epoch == 0:
-                logger.info(f"Final Training Epoch {epoch+1}/{epochs} - Loss: {train_loss:.4f}, Acc: {train_acc:.2%}")
+                logger.info(f"Final Training Epoch {epoch+1}/{epochs} - Loss: {train_loss:.4f}, Acc: {train_acc:.2%}, Preds: {pred_counts}")
 
     def _evaluate_out_of_sample(
         self,
@@ -2161,9 +2095,6 @@ class ResearchTrainer:
         test_labels: List,
         test_vols: List
     ) -> Tuple[List[int], List[np.ndarray]]:
-        """
-        Evaluate model on held-out test set (true out-of-sample data).
-        """
         self.model.eval()
         test_preds = []
         test_probs = []
@@ -2179,16 +2110,18 @@ class ResearchTrainer:
                 test_preds.append(pred)
                 test_probs.append(prob)
 
-        # Log per-class performance
         test_labels_arr = np.array(test_labels)
         test_preds_arr = np.array(test_preds)
 
+        regime_names = ['Bull/Low-Vol', 'Normal', 'Crisis']
         for regime in range(3):
             mask = test_labels_arr == regime
             if mask.sum() > 0:
                 recall = (test_preds_arr[mask] == regime).mean()
-                regime_names = ['Bull/Low-Vol', 'Normal', 'Crisis']
                 logger.info(f"  {regime_names[regime]} Recall: {recall:.2%} ({mask.sum()} samples)")
+        
+        pred_counts = np.bincount(test_preds_arr, minlength=3)
+        logger.info(f"  Prediction distribution: {pred_counts}")
 
         return test_preds, test_probs
     
