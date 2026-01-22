@@ -20,7 +20,7 @@ from scipy import stats
 from statsmodels.tsa.stattools import grangercausalitytests
 from sklearn.preprocessing import RobustScaler, StandardScaler
 from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score
+# silhouette_score removed - not used with expanding window K-means
 
 import torch
 import torch.nn as nn
@@ -117,7 +117,7 @@ class ResearchConfig:
     crisis_loss_weight: float = 0.7
     temporal_consistency_weight: float = 0.1
     n_splits: int = 5
-    purge_gap: int = 5
+    purge_gap: int = 20  # Must be >= seq_len to prevent sequence overlap
     regime_method: str = 'quantile'
     save_models: bool = True
     save_graphs: bool = True
@@ -125,7 +125,7 @@ class ResearchConfig:
     crisis_augment_factor: int = 2
     
     # New parameters for optimizations
-    use_mixed_precision: bool = True
+    use_mixed_precision: bool = False  # Only enable on GPU, auto-detected at runtime
     use_torch_compile: bool = False  # Disabled - requires OpenMP on macOS
     use_temporal_edges: bool = True
     temporal_edge_weight: float = 0.3
@@ -685,8 +685,8 @@ class MultiMethodGraphBuilder:
         # Use GPU for batch feature extraction if enabled
         use_gpu_features = self.config.use_gpu_features and torch.cuda.is_available()
         
-        for end_idx in range(self.config.window_size, len(dates), self.config.step_size):
-            window_df = df.iloc[end_idx - self.config.window_size:end_idx]
+        for end_idx in range(self.config.window_size + 1, len(dates), self.config.step_size):
+            window_df = df.iloc[end_idx - self.config.window_size - 1:end_idx - 1]  # Exclude day we're predicting
             
             market_vol = window_df.std().mean() * np.sqrt(252)
             market_ret = window_df.mean().mean() * 252
@@ -726,32 +726,48 @@ class MultiMethodGraphBuilder:
             graph.corr_matrix = torch.tensor(corr_matrix, dtype=torch.float)
             
             graphs.append(graph)
-        
+
         logger.info(f"Built {len(graphs)} temporal graphs")
-        
-        if graphs:
-            graphs = self.scale_graph_features(graphs)
-        
+
+        # NOTE: Scaling moved to train_with_cross_validation to prevent leakage
+        # Scaler will be fit ONLY on training data, not test data
+
         return graphs, symbols
     
-    def scale_graph_features(self, graphs: List[Data]) -> List[Data]:
+    def scale_graph_features(self, graphs: List[Data], fit_indices: List[int] = None) -> List[Data]:
+        """
+        Scale graph features. If fit_indices is provided, fit scaler ONLY on those graphs
+        to prevent data leakage from future data.
+
+        Args:
+            graphs: List of all graphs
+            fit_indices: Indices of graphs to use for fitting scaler (training data only).
+                        If None, fits on all data (NOT RECOMMENDED - causes leakage)
+        """
         if not graphs:
             return graphs
-        
-        all_features = torch.cat([g.x for g in graphs], dim=0).numpy()
-        
-        all_features = np.nan_to_num(all_features, nan=0.0, posinf=1e6, neginf=-1e6)
-        all_features = np.clip(all_features, -1e6, 1e6)
-        
-        self.scaler.fit(all_features)
-        
+
+        # Fit scaler only on training data to prevent leakage
+        if fit_indices is not None:
+            fit_graphs = [graphs[i] for i in fit_indices]
+            fit_features = torch.cat([g.x for g in fit_graphs], dim=0).numpy()
+            logger.info(f"Fitting scaler on {len(fit_indices)} training graphs only (no leakage)")
+        else:
+            fit_features = torch.cat([g.x for g in graphs], dim=0).numpy()
+            logger.warning("Fitting scaler on ALL data - potential leakage!")
+
+        fit_features = np.nan_to_num(fit_features, nan=0.0, posinf=1e6, neginf=-1e6)
+        fit_features = np.clip(fit_features, -1e6, 1e6)
+
+        self.scaler.fit(fit_features)
+
         scaled_graphs = []
         for graph in graphs:
             features = graph.x.numpy()
             features = np.nan_to_num(features, nan=0.0, posinf=1e6, neginf=-1e6)
             features = np.clip(features, -1e6, 1e6)
             scaled_x = self.scaler.transform(features)
-            
+
             scaled_graph = Data(
                 x=torch.tensor(scaled_x, dtype=torch.float),
                 edge_index=graph.edge_index,
@@ -763,7 +779,7 @@ class MultiMethodGraphBuilder:
             if hasattr(graph, 'time_idx'):
                 scaled_graph.time_idx = graph.time_idx
             scaled_graphs.append(scaled_graph)
-        
+
         return scaled_graphs
 
 
@@ -1308,8 +1324,8 @@ class RegimeLabeler:
         dates = []
         window = 30
         
-        for i in range(window, len(df)):
-            window_data = df.iloc[i-window:i]
+        for i in range(window + 1, len(df)):
+            window_data = df.iloc[i-window-1:i-1]  # Use data up to day i-2 to predict day i (no lookahead)
             
             avg_vol = window_data.std().mean() * np.sqrt(252)
             max_vol = window_data.std().max() * np.sqrt(252)
@@ -1365,17 +1381,68 @@ class RegimeLabeler:
         })
     
     def _label_by_quantile(self, features: np.ndarray) -> np.ndarray:
+        """
+        Label regimes using expanding window to prevent lookahead bias.
+        Each label at time t uses only data from times 0 to t-1.
+        """
         volatility = features[:, 0]
         correlation = features[:, 2]
-        
+
+        min_history = 252  # Minimum 1 year of history before labeling
+        regimes = np.ones(len(volatility), dtype=int)
+
+        for i in range(len(volatility)):
+            if i < min_history:
+                # Not enough history - use simple heuristic for early period
+                # These early labels will likely be excluded from training anyway
+                regimes[i] = 1  # Default to normal
+                continue
+
+            # Use ONLY past data (0 to i-1) to compute statistics
+            hist_vol = volatility[:i]
+            hist_corr = correlation[:i]
+
+            # Compute z-scores using historical statistics only
+            vol_mean = np.mean(hist_vol)
+            vol_std = np.std(hist_vol) + 1e-8
+            corr_mean = np.mean(hist_corr)
+            corr_std = np.std(hist_corr) + 1e-8
+
+            vol_z = (volatility[i] - vol_mean) / vol_std
+            corr_z = (correlation[i] - corr_mean) / corr_std
+
+            stress_score = vol_z + 0.5 * corr_z
+
+            # Compute percentile thresholds from historical stress scores
+            hist_stress = (hist_vol - vol_mean) / vol_std + 0.5 * (hist_corr - corr_mean) / corr_std
+            q_low = np.percentile(hist_stress, 40)
+            q_high = np.percentile(hist_stress, 80)
+
+            # Assign regime based on historical thresholds
+            if stress_score <= q_low:
+                regimes[i] = 0  # Bull/Low vol
+            elif stress_score > q_high:
+                regimes[i] = 2  # Crisis
+            else:
+                regimes[i] = 1  # Normal
+
+        logger.info(f"Regime labeling: using expanding window (min_history={min_history})")
+
+        return regimes
+
+    def _label_by_quantile_legacy(self, features: np.ndarray) -> np.ndarray:
+        """DEPRECATED: Original method with lookahead bias. Kept for reference."""
+        volatility = features[:, 0]
+        correlation = features[:, 2]
+
         vol_z = (volatility - np.mean(volatility)) / (np.std(volatility) + 1e-8)
         corr_z = (correlation - np.mean(correlation)) / (np.std(correlation) + 1e-8)
-        
+
         stress_score = vol_z + 0.5 * corr_z
-        
+
         q_low = np.percentile(stress_score, 40)
         q_high = np.percentile(stress_score, 80)
-        
+
         regimes = np.ones(len(stress_score), dtype=int)
         regimes[stress_score <= q_low] = 0
         regimes[stress_score > q_high] = 2
@@ -1416,21 +1483,53 @@ class RegimeLabeler:
         return regimes
     
     def _label_by_kmeans(self, features: np.ndarray) -> np.ndarray:
-        scaler = RobustScaler()
-        features_scaled = scaler.fit_transform(features)
-        
-        kmeans = KMeans(n_clusters=self.config.num_regimes, random_state=SEED, n_init=20)
-        regimes = kmeans.fit_predict(features_scaled)
-        
-        regime_vols = {r: features[regimes == r, 0].mean() 
-                      for r in range(self.config.num_regimes)}
-        sorted_regimes = sorted(regime_vols.keys(), key=lambda x: regime_vols[x])
-        mapping = {sorted_regimes[i]: i for i in range(self.config.num_regimes)}
-        regimes = np.array([mapping[r] for r in regimes])
-        
-        silhouette = silhouette_score(features_scaled, regimes)
-        logger.info(f"K-Means silhouette score: {silhouette:.3f}")
-        
+        """
+        Label regimes using K-means with expanding window to prevent lookahead.
+
+        WARNING: K-means is generally not ideal for time-series regime detection
+        because clusters can shift as new data arrives. Consider using 'quantile'
+        or 'adaptive' methods instead.
+        """
+        logger.warning("K-means regime labeling has limitations for time-series. "
+                      "Consider using 'quantile' or 'adaptive' method instead.")
+
+        min_history = 504  # 2 years minimum for stable clustering
+        regimes = np.ones(len(features), dtype=int)
+
+        # For points before min_history, use quantile method
+        if min_history < len(features):
+            early_regimes = self._label_by_quantile(features[:min_history])
+            regimes[:min_history] = early_regimes
+
+        # For later points, use expanding window K-means
+        for i in range(min_history, len(features)):
+            # Fit K-means on data up to (but not including) current point
+            hist_features = features[:i]
+
+            scaler = RobustScaler()
+            hist_scaled = scaler.fit_transform(hist_features)
+
+            kmeans = KMeans(n_clusters=self.config.num_regimes, random_state=SEED, n_init=10)
+            kmeans.fit(hist_scaled)
+
+            # Map clusters to regimes by volatility (0=low vol, 2=high vol)
+            hist_regimes = kmeans.labels_
+            regime_vols = {r: hist_features[hist_regimes == r, 0].mean()
+                         for r in range(self.config.num_regimes) if (hist_regimes == r).sum() > 0}
+
+            if len(regime_vols) == self.config.num_regimes:
+                sorted_regimes = sorted(regime_vols.keys(), key=lambda x: regime_vols[x])
+                mapping = {sorted_regimes[j]: j for j in range(self.config.num_regimes)}
+
+                # Predict current point's cluster
+                current_scaled = scaler.transform(features[i:i+1])
+                cluster = kmeans.predict(current_scaled)[0]
+                regimes[i] = mapping.get(cluster, 1)
+            else:
+                regimes[i] = 1  # Default to normal if clustering fails
+
+        logger.info(f"K-means labeling completed with expanding window (min_history={min_history})")
+
         return regimes
 
 
@@ -1439,6 +1538,52 @@ class ResearchTrainer:
         self.model = model.to(DEVICE)
         self.config = config
         self.metrics_history = defaultdict(list)
+        self.scaler = RobustScaler()  # For scaling graph features
+
+    def _scale_graphs(self, graphs: List[Data], fit_indices: List[int]) -> List[Data]:
+        """
+        Scale graph features, fitting scaler ONLY on training graphs to prevent leakage.
+
+        Args:
+            graphs: All graphs to scale
+            fit_indices: Indices of graphs to use for fitting (training data only)
+
+        Returns:
+            Scaled graphs
+        """
+        if not graphs:
+            return graphs
+
+        # Fit scaler ONLY on training graphs
+        fit_graphs = [graphs[i] for i in fit_indices if i < len(graphs)]
+        fit_features = torch.cat([g.x for g in fit_graphs], dim=0).numpy()
+        fit_features = np.nan_to_num(fit_features, nan=0.0, posinf=1e6, neginf=-1e6)
+        fit_features = np.clip(fit_features, -1e6, 1e6)
+
+        self.scaler.fit(fit_features)
+        logger.info(f"Scaler fit on {len(fit_indices)} training graphs (no future leakage)")
+
+        # Transform ALL graphs using training-fitted scaler
+        scaled_graphs = []
+        for graph in graphs:
+            features = graph.x.numpy()
+            features = np.nan_to_num(features, nan=0.0, posinf=1e6, neginf=-1e6)
+            features = np.clip(features, -1e6, 1e6)
+            scaled_x = self.scaler.transform(features)
+
+            scaled_graph = Data(
+                x=torch.tensor(scaled_x, dtype=torch.float),
+                edge_index=graph.edge_index,
+                edge_attr=graph.edge_attr,
+                num_nodes=graph.num_nodes
+            )
+            scaled_graph.timestamp = graph.timestamp
+            scaled_graph.corr_matrix = graph.corr_matrix
+            if hasattr(graph, 'time_idx'):
+                scaled_graph.time_idx = graph.time_idx
+            scaled_graphs.append(scaled_graph)
+
+        return scaled_graphs
     
     def _create_sequence_loader(self, dataset: List, batch_size: int = 16, shuffle: bool = True):
         """Create a DataLoader for sequences of graphs."""
@@ -1453,24 +1598,56 @@ class ResearchTrainer:
             yield sequences, labels, vols
         
     def _augment_crisis_samples(
-        self, 
-        sequences: List, 
-        labels: List, 
-        volatilities: List, 
-        augment_factor: int = 2
+        self,
+        sequences: List,
+        labels: List,
+        volatilities: List,
+        augment_factor: int = 2,
+        noise_std: float = 0.02
     ) -> Tuple[List, List, List]:
-        """Duplicate crisis samples for better learning."""
+        """
+        Augment crisis samples with small noise to prevent overfitting.
+
+        Instead of exact duplication, adds small Gaussian noise to node features
+        of augmented samples to improve generalization.
+        """
         augmented_seqs = list(sequences)
         augmented_labels = list(labels)
         augmented_vols = list(volatilities)
-        
+
         for i, label in enumerate(labels):
-            if label == 2:
-                for _ in range(augment_factor):
-                    augmented_seqs.append(sequences[i])
+            if label == 2:  # Crisis sample
+                for aug_idx in range(augment_factor):
+                    # Create noisy copy of the sequence
+                    noisy_seq = []
+                    for graph in sequences[i]:
+                        # Add small Gaussian noise to node features
+                        noise = torch.randn_like(graph.x) * noise_std
+                        noisy_x = graph.x + noise
+
+                        noisy_graph = Data(
+                            x=noisy_x,
+                            edge_index=graph.edge_index,
+                            edge_attr=graph.edge_attr,
+                            num_nodes=graph.num_nodes
+                        )
+                        if hasattr(graph, 'timestamp'):
+                            noisy_graph.timestamp = graph.timestamp
+                        if hasattr(graph, 'corr_matrix'):
+                            noisy_graph.corr_matrix = graph.corr_matrix
+                        if hasattr(graph, 'time_idx'):
+                            noisy_graph.time_idx = graph.time_idx
+                        noisy_seq.append(noisy_graph)
+
+                    augmented_seqs.append(noisy_seq)
                     augmented_labels.append(label)
                     augmented_vols.append(volatilities[i])
-        
+
+        n_original_crisis = sum(1 for l in labels if l == 2)
+        n_augmented = len(augmented_labels) - len(labels)
+        logger.info(f"Crisis augmentation: {n_original_crisis} original -> "
+                   f"{n_original_crisis + n_augmented} total (noise_std={noise_std})")
+
         return augmented_seqs, augmented_labels, augmented_vols
         
     def _compute_edge_regularization(self, model: nn.Module) -> torch.Tensor:
@@ -1547,6 +1724,24 @@ class ResearchTrainer:
         """
         regime_df['date'] = pd.to_datetime(regime_df['date'])
 
+        # ==========================================
+        # STEP 0: Scale graphs BEFORE creating sequences
+        # Fit scaler ONLY on training period graphs to prevent leakage
+        # ==========================================
+        n_graphs = len(graphs)
+        test_ratio = 0.20
+        purge_gap = self.config.purge_gap
+
+        # Estimate where training graphs end (approximate, conservative)
+        # Training sequences use graphs 0 to ~80% of total
+        n_train_graphs = int(n_graphs * (1 - test_ratio))
+
+        # Fit scaler only on training period graphs
+        train_graph_indices = list(range(n_train_graphs))
+        graphs = self._scale_graphs(graphs, train_graph_indices)
+        logger.info(f"Scaled {n_graphs} graphs (scaler fit on first {n_train_graphs} only)")
+
+        # Now create sequences from scaled graphs
         sequences = []
         labels = []
         volatilities = []
@@ -1577,13 +1772,11 @@ class ResearchTrainer:
         # STEP 1: Reserve held-out test set (final 20%)
         # This data is NEVER seen during training or validation
         # ==========================================
-        test_ratio = 0.20
         n_total = len(sequences)
         n_test = int(n_total * test_ratio)
         n_train_val = n_total - n_test
 
         # Apply purge gap between train/val and test to prevent lookahead
-        purge_gap = self.config.purge_gap
         test_start_idx = n_train_val + purge_gap
 
         train_val_sequences = sequences[:n_train_val]
@@ -1606,6 +1799,14 @@ class ResearchTrainer:
 
         test_regime_dist = np.bincount(test_labels_array, minlength=3)
         logger.info(f"Test set regimes: Bull={test_regime_dist[0]}, Normal={test_regime_dist[1]}, Crisis={test_regime_dist[2]}")
+
+        # Validate test set has enough samples of each class
+        if test_regime_dist[2] < 3:
+            logger.warning(f"WARNING: Test set has only {test_regime_dist[2]} crisis samples. "
+                          "Crisis recall metrics may be unreliable!")
+        if len(test_sequences) < 50:
+            logger.warning(f"WARNING: Test set has only {len(test_sequences)} samples. "
+                          "Results may have high variance!")
 
         # ==========================================
         # STEP 2: Walk-Forward Validation
@@ -1859,8 +2060,11 @@ class ResearchTrainer:
             optimizer, T_0=10, T_mult=2, eta_min=1e-6
         )
 
-        # Initialize mixed precision scaler
-        scaler = GradScaler() if self.config.use_mixed_precision else None
+        # Initialize mixed precision scaler (only on GPU)
+        use_amp = self.config.use_mixed_precision and torch.cuda.is_available()
+        scaler = GradScaler() if use_amp else None
+        if use_amp:
+            logger.info("Mixed precision training enabled (GPU detected)")
 
         class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
 
@@ -2077,7 +2281,9 @@ class ResearchTrainer:
             optimizer, T_max=epochs, eta_min=1e-6
         )
 
-        scaler = GradScaler() if self.config.use_mixed_precision else None
+        # Mixed precision only on GPU
+        use_amp = self.config.use_mixed_precision and torch.cuda.is_available()
+        scaler = GradScaler() if use_amp else None
 
         class_weights = torch.tensor([1.0, 1.5, self.config.crisis_weight_multiplier], dtype=torch.float, device=DEVICE)
         criterion_regime = FocalLoss(
