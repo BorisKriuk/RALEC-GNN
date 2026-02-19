@@ -1,0 +1,451 @@
+{
+  "Large UP move 3d (>3%)": {
+    "top_30_features": [
+      {
+        "name": "cross_dispersion",
+        "mean_abs_shap": 0.03580009324964156,
+        "group": "Momentum",
+        "direction": 0.4820311016569471,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_20d",
+        "mean_abs_shap": 0.03477902934913534,
+        "group": "Drawdown",
+        "direction": -0.7446990398937039,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_60d",
+        "mean_abs_shap": 0.03203144708363652,
+        "group": "Drawdown",
+        "direction": -0.753862240717699,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "price_to_sma_20",
+        "mean_abs_shap": 0.02774875319626665,
+        "group": "Momentum",
+        "direction": -0.65948924250822,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "downside_vol_20d",
+        "mean_abs_shap": 0.023438922275042403,
+        "group": "TailRisk",
+        "direction": 0.5658137589452464,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "max_loss_5d",
+        "mean_abs_shap": 0.022010491411595487,
+        "group": "TailRisk",
+        "direction": -0.6360725374817408,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "return_10d",
+        "mean_abs_shap": 0.02178442332867965,
+        "group": "Returns",
+        "direction": -0.522453520377839,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "garch_vol",
+        "mean_abs_shap": 0.021419621044606527,
+        "group": "Volatility",
+        "direction": 0.46309724331574403,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "price_to_sma_50",
+        "mean_abs_shap": 0.02057882792821432,
+        "group": "Momentum",
+        "direction": -0.7760511150846235,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "flight_to_safety_5d",
+        "mean_abs_shap": 0.018367195877775067,
+        "group": "CrossAsset",
+        "direction": 0.6382561426338186,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "max_loss_20d",
+        "mean_abs_shap": 0.017322732768575932,
+        "group": "TailRisk",
+        "direction": -0.48388151383203404,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "return_5d",
+        "mean_abs_shap": 0.015430546830923028,
+        "group": "Returns",
+        "direction": -0.774021335080698,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "volatility_20d",
+        "mean_abs_shap": 0.014120532564042087,
+        "group": "Volatility",
+        "direction": 0.5238885504339196,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "return_60d",
+        "mean_abs_shap": 0.013529705066529845,
+        "group": "Returns",
+        "direction": -0.748510433288049,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "volatility_10d",
+        "mean_abs_shap": 0.013065539138988235,
+        "group": "Volatility",
+        "direction": 0.5561667301337742,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "return_20d",
+        "mean_abs_shap": 0.01283724998719602,
+        "group": "Returns",
+        "direction": -0.7143156122233074,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_speed_5d",
+        "mean_abs_shap": 0.011644513696077389,
+        "group": "Drawdown",
+        "direction": -0.5610194067481641,
+        "selection_freq": 0.8571428571428571
+      },
+      {
+        "name": "rsi_14",
+        "mean_abs_shap": 0.011527498526521901,
+        "group": "Momentum",
+        "direction": -0.4744541132438081,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "volatility_1d",
+        "mean_abs_shap": 0.011062321050161507,
+        "group": "Volatility",
+        "direction": 0.58776117696336,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "credit_spread_5d",
+        "mean_abs_shap": 0.010284734273224867,
+        "group": "CrossAsset",
+        "direction": -0.3877955130342496,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "return_1d",
+        "mean_abs_shap": 0.009864797948623267,
+        "group": "Returns",
+        "direction": -0.6606349244907266,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "cross_dispersion_zscore",
+        "mean_abs_shap": 0.009373111466719068,
+        "group": "Momentum",
+        "direction": 0.4823143325072,
+        "selection_freq": 0.7857142857142857
+      },
+      {
+        "name": "breadth_below_sma20",
+        "mean_abs_shap": 0.007380701632358119,
+        "group": "Momentum",
+        "direction": 0.719366995603491,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "volatility_5d",
+        "mean_abs_shap": 0.005846403783807423,
+        "group": "Volatility",
+        "direction": 0.5217341977593186,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "median_corr",
+        "mean_abs_shap": 0.005622290410409148,
+        "group": "Correlation",
+        "direction": 0.7424870532557122,
+        "selection_freq": 0.7857142857142857
+      },
+      {
+        "name": "volatility_60d",
+        "mean_abs_shap": 0.005496706188438183,
+        "group": "Volatility",
+        "direction": 0.7054797065429521,
+        "selection_freq": 0.7142857142857143
+      },
+      {
+        "name": "lambda_2",
+        "mean_abs_shap": 0.005211118984076036,
+        "group": "Eigenvalue",
+        "direction": -0.4936993290702936,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "absorption_ratio_5",
+        "mean_abs_shap": 0.004115008621863718,
+        "group": "Eigenvalue",
+        "direction": 0.48536347220317577,
+        "selection_freq": 0.8571428571428571
+      },
+      {
+        "name": "neg_days_10d",
+        "mean_abs_shap": 0.004083865512738075,
+        "group": "TailRisk",
+        "direction": 0.6790072987091214,
+        "selection_freq": 0.7142857142857143
+      },
+      {
+        "name": "down_up_vol_ratio",
+        "mean_abs_shap": 0.004046237413577908,
+        "group": "Volatility",
+        "direction": 0.47129807745298086,
+        "selection_freq": 1.0
+      }
+    ],
+    "alpha_mean": 0.0,
+    "alpha_max": 0.0,
+    "rf_auc_mean": 0.9105872827236422,
+    "vol_lr_auc_mean": 0.8220856787503763,
+    "folds_with_vol_lr": 0,
+    "optimal_k": 15,
+    "optimal_k_auc": 0.9919354838709677,
+    "best_group_combo": {
+      "groups": "Correlation + CrossAsset + Drawdown + Momentum + Returns + Volatility",
+      "n_groups": 6,
+      "n_features": 40,
+      "auc": 1.0
+    }
+  },
+  "Large DOWN move 3d (>3%)": {
+    "top_30_features": [
+      {
+        "name": "volatility_20d",
+        "mean_abs_shap": 0.034883890533432514,
+        "group": "Volatility",
+        "direction": 0.5226958480015284,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_20d",
+        "mean_abs_shap": 0.030083734076429638,
+        "group": "Drawdown",
+        "direction": -0.578656263832363,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "lambda_2",
+        "mean_abs_shap": 0.028871320711979693,
+        "group": "Eigenvalue",
+        "direction": -0.6986292752801143,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_60d",
+        "mean_abs_shap": 0.02815521393770971,
+        "group": "Drawdown",
+        "direction": -0.6202924926844033,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "downside_vol_20d",
+        "mean_abs_shap": 0.023043243663545262,
+        "group": "TailRisk",
+        "direction": 0.6195990516913978,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "price_to_sma_50",
+        "mean_abs_shap": 0.017772539246823253,
+        "group": "Momentum",
+        "direction": -0.5852832909719096,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "garch_vol",
+        "mean_abs_shap": 0.014220144098888023,
+        "group": "Volatility",
+        "direction": 0.3665240292518354,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "max_loss_20d",
+        "mean_abs_shap": 0.013762812851416128,
+        "group": "TailRisk",
+        "direction": -0.5692513034439887,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "volatility_5d",
+        "mean_abs_shap": 0.010789470198948506,
+        "group": "Volatility",
+        "direction": 0.020408417431181512,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "cross_dispersion",
+        "mean_abs_shap": 0.010775637799198389,
+        "group": "Momentum",
+        "direction": 0.6216969662124269,
+        "selection_freq": 0.6428571428571429
+      },
+      {
+        "name": "lambda_3",
+        "mean_abs_shap": 0.010031307089892796,
+        "group": "Eigenvalue",
+        "direction": 0.6796175942045469,
+        "selection_freq": 0.7857142857142857
+      },
+      {
+        "name": "volatility_10d",
+        "mean_abs_shap": 0.009311688097862675,
+        "group": "Volatility",
+        "direction": 0.3511920719176741,
+        "selection_freq": 0.8571428571428571
+      },
+      {
+        "name": "down_up_vol_ratio",
+        "mean_abs_shap": 0.00921452123584448,
+        "group": "Volatility",
+        "direction": 0.4891047240901258,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "vol_of_vol",
+        "mean_abs_shap": 0.008970055610825426,
+        "group": "Volatility",
+        "direction": -0.34556889612261177,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "return_20d",
+        "mean_abs_shap": 0.00800014667749949,
+        "group": "Returns",
+        "direction": -0.6000686414486247,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "lambda_1_roc_20d",
+        "mean_abs_shap": 0.007941597725036654,
+        "group": "Dynamics",
+        "direction": 0.40939718123936997,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "absorption_ratio_1_roc_20d",
+        "mean_abs_shap": 0.007697284018465946,
+        "group": "Dynamics",
+        "direction": 0.4306943818525242,
+        "selection_freq": 1.0
+      },
+      {
+        "name": "drawdown_speed_5d",
+        "mean_abs_shap": 0.00745591671961209,
+        "group": "Drawdown",
+        "direction": -0.3121984103751344,
+        "selection_freq": 0.35714285714285715
+      },
+      {
+        "name": "return_10d",
+        "mean_abs_shap": 0.007449744012879821,
+        "group": "Returns",
+        "direction": -0.587593669649061,
+        "selection_freq": 0.7857142857142857
+      },
+      {
+        "name": "max_loss_5d",
+        "mean_abs_shap": 0.0065518948169768125,
+        "group": "TailRisk",
+        "direction": -0.19953005976507482,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "return_60d",
+        "mean_abs_shap": 0.00644645677718341,
+        "group": "Returns",
+        "direction": -0.4038381911209741,
+        "selection_freq": 0.7142857142857143
+      },
+      {
+        "name": "cross_dispersion_zscore",
+        "mean_abs_shap": 0.005855685499783467,
+        "group": "Momentum",
+        "direction": 0.6190216104894563,
+        "selection_freq": 0.2857142857142857
+      },
+      {
+        "name": "mean_abs_corr_roc_20d",
+        "mean_abs_shap": 0.005825220694653998,
+        "group": "Dynamics",
+        "direction": 0.4814999870479648,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "volatility_60d",
+        "mean_abs_shap": 0.005561818533894389,
+        "group": "Volatility",
+        "direction": 0.7156273772014877,
+        "selection_freq": 0.5
+      },
+      {
+        "name": "effective_rank",
+        "mean_abs_shap": 0.005338280438379893,
+        "group": "Eigenvalue",
+        "direction": -0.03793325140930003,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "eigenvalue_entropy",
+        "mean_abs_shap": 0.005333852160441533,
+        "group": "Eigenvalue",
+        "direction": 0.027741449258614943,
+        "selection_freq": 0.9285714285714286
+      },
+      {
+        "name": "kurtosis_20d",
+        "mean_abs_shap": 0.005217119341509422,
+        "group": "TailRisk",
+        "direction": -0.7859188269332912,
+        "selection_freq": 0.21428571428571427
+      },
+      {
+        "name": "absorption_ratio_5",
+        "mean_abs_shap": 0.0048755572976655025,
+        "group": "Eigenvalue",
+        "direction": 0.10381010094724868,
+        "selection_freq": 0.8571428571428571
+      },
+      {
+        "name": "corr_dispersion",
+        "mean_abs_shap": 0.004489978631338572,
+        "group": "Correlation",
+        "direction": -0.9215916009767326,
+        "selection_freq": 0.14285714285714285
+      },
+      {
+        "name": "effective_rank_roc_20d",
+        "mean_abs_shap": 0.004399633379632284,
+        "group": "Dynamics",
+        "direction": -0.5592273093346234,
+        "selection_freq": 0.7142857142857143
+      }
+    ],
+    "alpha_mean": 0.0,
+    "alpha_max": 0.0,
+    "rf_auc_mean": 0.8555273303429498,
+    "vol_lr_auc_mean": 0.5903209542057919,
+    "folds_with_vol_lr": 0,
+    "optimal_k": null,
+    "optimal_k_auc": null,
+    "best_group_combo": null
+  }
+}
