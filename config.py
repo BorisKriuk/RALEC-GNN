@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Configuration for CGECD Experiment v4"""
+"""Configuration for CGECD Experiment v9b — Surgical Vol-LR fix"""
 
 import os
 from pathlib import Path
@@ -26,13 +26,19 @@ class Config:
     cache_dir: Path = Path("cache")
     output_dir: Path = Path("results")
 
-    # Random Forest
+    # ── Random Forest (primary model) ───────────────────────────
     rf_n_estimators: int = 500
-    rf_max_depth: int = 6
-    rf_min_samples_leaf: int = 20
+    rf_max_depth: int = 5
+    rf_min_samples_leaf: int = 25
     rf_min_samples_split: int = 50
 
-    # XGBoost (kept for benchmarks / future use)
+    # ── ExtraTrees (ablation / investigate.py) ──────────────────
+    et_n_estimators: int = 500
+    et_max_depth: int = 6
+    et_min_samples_leaf: int = 20
+    et_min_samples_split: int = 40
+
+    # ── XGBoost (benchmarks) ────────────────────────────────────
     xgb_n_estimators: int = 400
     xgb_max_depth: int = 5
     xgb_learning_rate: float = 0.05
@@ -55,18 +61,19 @@ class Config:
     dynamics_lookbacks: tuple = (10, 20)
 
     # Feature selection
-    feature_selection_k: int = 40
-
-    # Adaptive ensemble — RF + Vol-LR correction
-    vol_correction_scale: float = 15.0
-    vol_correction_threshold: float = 0.01
-    vol_correction_max: float = 0.85
+    feature_selection_k: int = 20
+    corr_filter_threshold: float = 0.98
 
     # Walk-forward validation (expanding window)
     n_splits: int = 20
     train_years: float = 3.0
     test_months: int = 6
     gap_days: int = 5
+
+    # ── Vol-LR adaptive ensemble  (3 lines changed from v9) ────
+    vol_correction_threshold: float = -0.01   # was 0.0
+    vol_correction_scale: float = 3.5         # was 2.5
+    vol_correction_max: float = 0.22          # was 0.15
 
     # Asset universe
     symbols: Dict[str, str] = field(

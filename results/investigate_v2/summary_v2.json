@@ -1,0 +1,1114 @@
+{
+  "Large UP move 3d (>3%)": {
+    "base_rate": 0.03896604938271605,
+    "top_30_features": [
+      {
+        "name": "drawdown_60d",
+        "group": "Drawdown",
+        "shap_importance": 0.036538972016757765,
+        "perm_importance": 0.011797072829940962
+      },
+      {
+        "name": "garch_vol",
+        "group": "Volatility",
+        "shap_importance": 0.03012299450010783,
+        "perm_importance": -0.0030551888351032512
+      },
+      {
+        "name": "drawdown_20d",
+        "group": "Drawdown",
+        "shap_importance": 0.027708465217994263,
+        "perm_importance": -0.002670863948934754
+      },
+      {
+        "name": "downside_vol_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.026489473603041016,
+        "perm_importance": 0.004868118311673345
+      },
+      {
+        "name": "cross_dispersion",
+        "group": "Momentum",
+        "shap_importance": 0.023127838688698516,
+        "perm_importance": 0.0008317330986322216
+      },
+      {
+        "name": "volatility_10d",
+        "group": "Volatility",
+        "shap_importance": 0.022137040368898898,
+        "perm_importance": -0.013870722644259448
+      },
+      {
+        "name": "price_to_sma_50",
+        "group": "Momentum",
+        "shap_importance": 0.022119687285274053,
+        "perm_importance": -0.0040025839592276085
+      },
+      {
+        "name": "max_loss_5d",
+        "group": "TailRisk",
+        "shap_importance": 0.020939253409400338,
+        "perm_importance": -0.0012794654327079118
+      },
+      {
+        "name": "volatility_20d",
+        "group": "Volatility",
+        "shap_importance": 0.02033481605373312,
+        "perm_importance": -0.002338994287063349
+      },
+      {
+        "name": "return_60d",
+        "group": "Returns",
+        "shap_importance": 0.01718327083202997,
+        "perm_importance": -0.00016679298148915742
+      },
+      {
+        "name": "price_to_sma_20",
+        "group": "Momentum",
+        "shap_importance": 0.017020931290003,
+        "perm_importance": 0.006095131606956658
+      },
+      {
+        "name": "max_loss_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.011921883280282658,
+        "perm_importance": -0.0020427749156296158
+      },
+      {
+        "name": "volatility_5d",
+        "group": "Volatility",
+        "shap_importance": 0.010603207607289306,
+        "perm_importance": 0.001766277572562477
+      },
+      {
+        "name": "return_5d",
+        "group": "Returns",
+        "shap_importance": 0.010485093449368106,
+        "perm_importance": -0.0012615399641330404
+      },
+      {
+        "name": "return_10d",
+        "group": "Returns",
+        "shap_importance": 0.010042902456955861,
+        "perm_importance": 0.0005191039130183333
+      },
+      {
+        "name": "volatility_60d",
+        "group": "Volatility",
+        "shap_importance": 0.008965022422671878,
+        "perm_importance": -0.0013843295782147047
+      },
+      {
+        "name": "cross_dispersion_zscore",
+        "group": "Momentum",
+        "shap_importance": 0.00856691177570786,
+        "perm_importance": -0.0025343562734880362
+      },
+      {
+        "name": "return_20d",
+        "group": "Returns",
+        "shap_importance": 0.008132390051888693,
+        "perm_importance": -0.0016917820786555013
+      },
+      {
+        "name": "rsi_14",
+        "group": "Momentum",
+        "shap_importance": 0.007615812325094044,
+        "perm_importance": 0.0003212353861282307
+      },
+      {
+        "name": "flight_to_safety_5d",
+        "group": "CrossAsset",
+        "shap_importance": 0.006879953173440434,
+        "perm_importance": -0.005281039984629854
+      },
+      {
+        "name": "absorption_ratio_5",
+        "group": "Eigenvalue",
+        "shap_importance": 0.006186707668079228,
+        "perm_importance": -0.0014593436667007709
+      },
+      {
+        "name": "volatility_1d",
+        "group": "Volatility",
+        "shap_importance": 0.005922539333449603,
+        "perm_importance": -0.0009890493815636373
+      },
+      {
+        "name": "frac_corr_above_70",
+        "group": "Correlation",
+        "shap_importance": 0.00570875366938686,
+        "perm_importance": -0.0012312762661980741
+      },
+      {
+        "name": "median_corr",
+        "group": "Correlation",
+        "shap_importance": 0.005186580213462459,
+        "perm_importance": -0.00041801192569973863
+      },
+      {
+        "name": "effective_rank",
+        "group": "Eigenvalue",
+        "shap_importance": 0.004710922849318137,
+        "perm_importance": -0.0016479145336377992
+      },
+      {
+        "name": "breadth_below_sma20",
+        "group": "Momentum",
+        "shap_importance": 0.00460717619482708,
+        "perm_importance": 0.002447923843645209
+      },
+      {
+        "name": "neg_days_10d",
+        "group": "TailRisk",
+        "shap_importance": 0.004595551112470298,
+        "perm_importance": -0.001224719749020005
+      },
+      {
+        "name": "down_up_vol_ratio",
+        "group": "Volatility",
+        "shap_importance": 0.00442248757431754,
+        "perm_importance": 0.00024326716066503206
+      },
+      {
+        "name": "absorption_ratio_3",
+        "group": "Eigenvalue",
+        "shap_importance": 0.004377091423844614,
+        "perm_importance": -0.001178182059294634
+      },
+      {
+        "name": "lambda_2",
+        "group": "Eigenvalue",
+        "shap_importance": 0.0043680434459006205,
+        "perm_importance": 0.000721812655979659
+      }
+    ],
+    "event_fingerprint_top10": [
+      {
+        "feature": "drawdown_60d",
+        "group": "Drawdown",
+        "event_mean": -0.10605479822925346,
+        "non_event_mean": -0.02562756534409431,
+        "z_score": -1.8526791833090936,
+        "ks_stat": 0.6005818968087093,
+        "ks_pval": 7.036932753267049e-34,
+        "Q1_pct": 75.24752475247524,
+        "Q2_pct": 15.841584158415841,
+        "Q3_pct": 3.9603960396039604,
+        "Q4_pct": 0.9900990099009901,
+        "Q5_pct": 3.9603960396039604,
+        "peak_quintile": 1,
+        "peak_concentration": 75.24752475247524
+      },
+      {
+        "feature": "downside_vol_20d",
+        "group": "TailRisk",
+        "event_mean": 0.21890971489850364,
+        "non_event_mean": 0.09370906160494996,
+        "z_score": 1.5682352960966957,
+        "ks_stat": 0.575418039596011,
+        "ks_pval": 7.345644698563523e-31,
+        "Q1_pct": 0.0,
+        "Q2_pct": 0.9900990099009901,
+        "Q3_pct": 6.9306930693069315,
+        "Q4_pct": 28.71287128712871,
+        "Q5_pct": 63.366336633663366,
+        "peak_quintile": 5,
+        "peak_concentration": 63.366336633663366
+      },
+      {
+        "feature": "drawdown_20d",
+        "group": "Drawdown",
+        "event_mean": -0.06598882862049119,
+        "non_event_mean": -0.01673845801146711,
+        "z_score": -1.6279869565798013,
+        "ks_stat": 0.5683390900310424,
+        "ks_pval": 4.6492026818238494e-30,
+        "Q1_pct": 71.28712871287128,
+        "Q2_pct": 17.82178217821782,
+        "Q3_pct": 4.9504950495049505,
+        "Q4_pct": 1.9801980198019802,
+        "Q5_pct": 3.9603960396039604,
+        "peak_quintile": 1,
+        "peak_concentration": 71.28712871287128
+      },
+      {
+        "feature": "garch_vol",
+        "group": "Volatility",
+        "event_mean": 0.2606072152942035,
+        "non_event_mean": 0.16000971676669917,
+        "z_score": 1.3921219969822238,
+        "ks_stat": 0.5398205818173146,
+        "ks_pval": 6.471604824583981e-27,
+        "Q1_pct": 0.9900990099009901,
+        "Q2_pct": 0.9900990099009901,
+        "Q3_pct": 6.9306930693069315,
+        "Q4_pct": 29.7029702970297,
+        "Q5_pct": 61.386138613861384,
+        "peak_quintile": 5,
+        "peak_concentration": 61.386138613861384
+      },
+      {
+        "feature": "max_loss_20d",
+        "group": "TailRisk",
+        "event_mean": -0.03774154135837541,
+        "non_event_mean": -0.017560195303643656,
+        "z_score": -1.4624645189733787,
+        "ks_stat": 0.526175419629478,
+        "ks_pval": 1.7043269385719044e-25,
+        "Q1_pct": 57.42574257425742,
+        "Q2_pct": 31.683168316831683,
+        "Q3_pct": 8.91089108910891,
+        "Q4_pct": 1.9801980198019802,
+        "Q5_pct": 0.0,
+        "peak_quintile": 1,
+        "peak_concentration": 57.42574257425742
+      },
+      {
+        "feature": "max_loss_5d",
+        "group": "TailRisk",
+        "event_mean": -0.024370347157778107,
+        "non_event_mean": -0.009658600184415838,
+        "z_score": -1.338162644699812,
+        "ks_stat": 0.52564280916249,
+        "ks_pval": 1.929672111806889e-25,
+        "Q1_pct": 63.366336633663366,
+        "Q2_pct": 23.762376237623762,
+        "Q3_pct": 8.91089108910891,
+        "Q4_pct": 1.9801980198019802,
+        "Q5_pct": 1.9801980198019802,
+        "peak_quintile": 1,
+        "peak_concentration": 63.366336633663366
+      },
+      {
+        "feature": "price_to_sma_20",
+        "group": "Momentum",
+        "event_mean": -0.024307315443633997,
+        "non_event_mean": 0.006401062348118471,
+        "z_score": -1.2364901050567643,
+        "ks_stat": 0.521517065395821,
+        "ks_pval": 4.95102740262561e-25,
+        "Q1_pct": 69.3069306930693,
+        "Q2_pct": 9.900990099009901,
+        "Q3_pct": 2.9702970297029703,
+        "Q4_pct": 4.9504950495049505,
+        "Q5_pct": 12.871287128712872,
+        "peak_quintile": 1,
+        "peak_concentration": 69.3069306930693
+      },
+      {
+        "feature": "price_to_sma_50",
+        "group": "Momentum",
+        "event_mean": -0.04181640382111907,
+        "non_event_mean": 0.015567916623389366,
+        "z_score": -1.5309376419742489,
+        "ks_stat": 0.5148117380987396,
+        "ks_pval": 2.3546842772224298e-24,
+        "Q1_pct": 67.32673267326733,
+        "Q2_pct": 19.801980198019802,
+        "Q3_pct": 5.9405940594059405,
+        "Q4_pct": 0.9900990099009901,
+        "Q5_pct": 5.9405940594059405,
+        "peak_quintile": 1,
+        "peak_concentration": 67.32673267326733
+      },
+      {
+        "feature": "volatility_5d",
+        "group": "Volatility",
+        "event_mean": 0.2722966363136,
+        "non_event_mean": 0.13388871770283803,
+        "z_score": 1.171889129599547,
+        "ks_stat": 0.5069139993084013,
+        "ks_pval": 1.4184482156426468e-23,
+        "Q1_pct": 0.9900990099009901,
+        "Q2_pct": 2.9702970297029703,
+        "Q3_pct": 9.900990099009901,
+        "Q4_pct": 27.722772277227726,
+        "Q5_pct": 58.415841584158414,
+        "peak_quintile": 5,
+        "peak_concentration": 58.415841584158414
+      },
+      {
+        "feature": "volatility_20d",
+        "group": "Volatility",
+        "event_mean": 0.2917004212941854,
+        "non_event_mean": 0.1420276727731369,
+        "z_score": 1.464833836970351,
+        "ks_stat": 0.5034281830431137,
+        "ks_pval": 3.107900016293286e-23,
+        "Q1_pct": 0.9900990099009901,
+        "Q2_pct": 0.9900990099009901,
+        "Q3_pct": 9.900990099009901,
+        "Q4_pct": 23.762376237623762,
+        "Q5_pct": 64.35643564356435,
+        "peak_quintile": 5,
+        "peak_concentration": 64.35643564356435
+      }
+    ],
+    "thresholds_top10": [
+      {
+        "feature": "drawdown_60d",
+        "group": "Drawdown",
+        "threshold": -0.02315977681428194,
+        "direction": "<",
+        "threshold_percentile": 35.380116959064324,
+        "precision": 0.11214953271028037,
+        "recall": 0.9230769230769231,
+        "events_captured": 12,
+        "total_events": 13,
+        "total_signals": 107,
+        "importance": 0.036538972016757765
+      },
+      {
+        "feature": "garch_vol",
+        "group": "Volatility",
+        "threshold": 0.1540965810418129,
+        "direction": ">",
+        "threshold_percentile": 58.7719298245614,
+        "precision": 0.07142857142857142,
+        "recall": 0.7692307692307693,
+        "events_captured": 10,
+        "total_events": 13,
+        "total_signals": 140,
+        "importance": 0.03012299450010783
+      },
+      {
+        "feature": "drawdown_20d",
+        "group": "Drawdown",
+        "threshold": -0.023101436905562878,
+        "direction": "<",
+        "threshold_percentile": 26.81704260651629,
+        "precision": 0.10112359550561797,
+        "recall": 0.6923076923076923,
+        "events_captured": 9,
+        "total_events": 13,
+        "total_signals": 89,
+        "importance": 0.027708465217994263
+      },
+      {
+        "feature": "downside_vol_20d",
+        "group": "TailRisk",
+        "threshold": 0.08305786922574043,
+        "direction": ">",
+        "threshold_percentile": 53.00751879699248,
+        "precision": 0.07303370786516854,
+        "recall": 1.0,
+        "events_captured": 13,
+        "total_events": 13,
+        "total_signals": 178,
+        "importance": 0.026489473603041016
+      },
+      {
+        "feature": "cross_dispersion",
+        "group": "Momentum",
+        "threshold": 0.007126013049855828,
+        "direction": ">",
+        "threshold_percentile": 48.03675856307435,
+        "precision": 0.05128205128205128,
+        "recall": 0.7692307692307693,
+        "events_captured": 10,
+        "total_events": 13,
+        "total_signals": 195,
+        "importance": 0.023127838688698516
+      },
+      {
+        "feature": "volatility_10d",
+        "group": "Volatility",
+        "threshold": 0.11306276544928551,
+        "direction": ">",
+        "threshold_percentile": 46.82539682539682,
+        "precision": 0.05365853658536585,
+        "recall": 0.8461538461538461,
+        "events_captured": 11,
+        "total_events": 13,
+        "total_signals": 205,
+        "importance": 0.022137040368898898
+      },
+      {
+        "feature": "price_to_sma_50",
+        "group": "Momentum",
+        "threshold": 0.015159581322222948,
+        "direction": "<",
+        "threshold_percentile": 43.984962406015036,
+        "precision": 0.0873015873015873,
+        "recall": 0.8461538461538461,
+        "events_captured": 11,
+        "total_events": 13,
+        "total_signals": 126,
+        "importance": 0.022119687285274053
+      },
+      {
+        "feature": "max_loss_5d",
+        "group": "TailRisk",
+        "threshold": -0.01036948012188077,
+        "direction": "<",
+        "threshold_percentile": 37.134502923976605,
+        "precision": 0.07086614173228346,
+        "recall": 0.6923076923076923,
+        "events_captured": 9,
+        "total_events": 13,
+        "total_signals": 127,
+        "importance": 0.020939253409400338
+      },
+      {
+        "feature": "volatility_20d",
+        "group": "Volatility",
+        "threshold": 0.13282515853643417,
+        "direction": ">",
+        "threshold_percentile": 53.884711779448615,
+        "precision": 0.05714285714285714,
+        "recall": 0.7692307692307693,
+        "events_captured": 10,
+        "total_events": 13,
+        "total_signals": 175,
+        "importance": 0.02033481605373312
+      },
+      {
+        "feature": "return_60d",
+        "group": "Returns",
+        "threshold": -0.03975474461913109,
+        "direction": "<",
+        "threshold_percentile": 13.24143692564745,
+        "precision": 0.18181818181818182,
+        "recall": 0.6153846153846154,
+        "events_captured": 8,
+        "total_events": 13,
+        "total_signals": 44,
+        "importance": 0.01718327083202997
+      }
+    ],
+    "joint_thresholds_top5": [
+      {
+        "feature_A": "price_to_sma_50",
+        "feature_B": "return_60d",
+        "thresh_A": 0.019204101718129474,
+        "dir_A": ">",
+        "pctile_A": 50,
+        "thresh_B": -0.05495139940630131,
+        "dir_B": "<",
+        "pctile_B": 10,
+        "precision": 0.6666666666666666,
+        "recall": 0.15384615384615385,
+        "lift": 19.384615384615383,
+        "n_signals": 3,
+        "n_hits": 2
+      },
+      {
+        "feature_A": "volatility_10d",
+        "feature_B": "return_60d",
+        "thresh_A": 0.18087822992768596,
+        "dir_A": "<",
+        "pctile_A": 75,
+        "thresh_B": -0.05495139940630131,
+        "dir_B": "<",
+        "pctile_B": 10,
+        "precision": 0.6,
+        "recall": 0.23076923076923078,
+        "lift": 17.446153846153848,
+        "n_signals": 5,
+        "n_hits": 3
+      },
+      {
+        "feature_A": "downside_vol_20d",
+        "feature_B": "volatility_10d",
+        "thresh_A": 0.18136178901011293,
+        "dir_A": ">",
+        "pctile_A": 90,
+        "thresh_B": 0.18087822992768596,
+        "dir_B": "<",
+        "pctile_B": 75,
+        "precision": 0.5,
+        "recall": 0.15384615384615385,
+        "lift": 14.53846153846154,
+        "n_signals": 4,
+        "n_hits": 2
+      },
+      {
+        "feature_A": "drawdown_60d",
+        "feature_B": "price_to_sma_50",
+        "thresh_A": -0.0415792094440338,
+        "dir_A": "<",
+        "pctile_A": 25,
+        "thresh_B": 0.019204101718129474,
+        "dir_B": ">",
+        "pctile_B": 50,
+        "precision": 0.5,
+        "recall": 0.15384615384615385,
+        "lift": 14.53846153846154,
+        "n_signals": 4,
+        "n_hits": 2
+      },
+      {
+        "feature_A": "volatility_10d",
+        "feature_B": "return_60d",
+        "thresh_A": 0.11948500638722337,
+        "dir_A": "<",
+        "pctile_A": 50,
+        "thresh_B": 0.0,
+        "dir_B": "<",
+        "pctile_B": 25,
+        "precision": 0.5,
+        "recall": 0.15384615384615385,
+        "lift": 14.53846153846154,
+        "n_signals": 4,
+        "n_hits": 2
+      }
+    ]
+  },
+  "Large DOWN move 3d (>3%)": {
+    "base_rate": 0.04282407407407408,
+    "top_30_features": [
+      {
+        "name": "volatility_20d",
+        "group": "Volatility",
+        "shap_importance": 0.036810172987682604,
+        "perm_importance": 0.03000956806998357
+      },
+      {
+        "name": "lambda_2",
+        "group": "Eigenvalue",
+        "shap_importance": 0.03411588774122148,
+        "perm_importance": 0.02853847731000546
+      },
+      {
+        "name": "drawdown_20d",
+        "group": "Drawdown",
+        "shap_importance": 0.020832451519655935,
+        "perm_importance": 0.0006287588846363992
+      },
+      {
+        "name": "drawdown_60d",
+        "group": "Drawdown",
+        "shap_importance": 0.02080561121383222,
+        "perm_importance": -0.010470202296336805
+      },
+      {
+        "name": "downside_vol_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.020047220525804012,
+        "perm_importance": -0.0060808501913614315
+      },
+      {
+        "name": "volatility_10d",
+        "group": "Volatility",
+        "shap_importance": 0.019470237535126236,
+        "perm_importance": 0.016404114270092935
+      },
+      {
+        "name": "garch_vol",
+        "group": "Volatility",
+        "shap_importance": 0.017753891927994758,
+        "perm_importance": 0.004442318206670303
+      },
+      {
+        "name": "volatility_5d",
+        "group": "Volatility",
+        "shap_importance": 0.016014911454059127,
+        "perm_importance": 0.0029148441771459756
+      },
+      {
+        "name": "max_loss_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.01514161952574541,
+        "perm_importance": 0.001698332422088572
+      },
+      {
+        "name": "volatility_60d",
+        "group": "Volatility",
+        "shap_importance": 0.01150607202136343,
+        "perm_importance": -0.01357128212137782
+      },
+      {
+        "name": "price_to_sma_50",
+        "group": "Momentum",
+        "shap_importance": 0.01040898798804817,
+        "perm_importance": 0.003259978130125746
+      },
+      {
+        "name": "return_60d",
+        "group": "Returns",
+        "shap_importance": 0.009295531202404457,
+        "perm_importance": -0.01940097047566978
+      },
+      {
+        "name": "cross_dispersion",
+        "group": "Momentum",
+        "shap_importance": 0.00879477406361157,
+        "perm_importance": 0.0006475533078184769
+      },
+      {
+        "name": "spectral_gap",
+        "group": "Eigenvalue",
+        "shap_importance": 0.007218617717533089,
+        "perm_importance": -0.002154524330235108
+      },
+      {
+        "name": "max_loss_5d",
+        "group": "TailRisk",
+        "shap_importance": 0.007198982127165895,
+        "perm_importance": 0.005305153089119724
+      },
+      {
+        "name": "skewness_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.006565049000837397,
+        "perm_importance": 0.0036717468562055605
+      },
+      {
+        "name": "kurtosis_20d",
+        "group": "TailRisk",
+        "shap_importance": 0.006353953286164434,
+        "perm_importance": 0.00429879715691634
+      },
+      {
+        "name": "return_10d",
+        "group": "Returns",
+        "shap_importance": 0.006050573290796962,
+        "perm_importance": -0.00029729360306178786
+      },
+      {
+        "name": "down_up_vol_ratio",
+        "group": "Volatility",
+        "shap_importance": 0.005491073312832463,
+        "perm_importance": -0.003142085839256431
+      },
+      {
+        "name": "return_20d",
+        "group": "Returns",
+        "shap_importance": 0.0053807496166708305,
+        "perm_importance": 0.0001794013121924398
+      },
+      {
+        "name": "absorption_ratio_5",
+        "group": "Eigenvalue",
+        "shap_importance": 0.005072879271303094,
+        "perm_importance": -0.0007449425915801
+      },
+      {
+        "name": "price_to_sma_20",
+        "group": "Momentum",
+        "shap_importance": 0.004881052657283342,
+        "perm_importance": -0.001582148715144904
+      },
+      {
+        "name": "momentum_reversal",
+        "group": "Momentum",
+        "shap_importance": 0.004320414731918744,
+        "perm_importance": -0.0027371514488791606
+      },
+      {
+        "name": "effective_rank",
+        "group": "Eigenvalue",
+        "shap_importance": 0.004173463296854028,
+        "perm_importance": 0.0017444641880809352
+      },
+      {
+        "name": "eigenvalue_entropy",
+        "group": "Eigenvalue",
+        "shap_importance": 0.004146667150765834,
+        "perm_importance": -0.0015001366867140376
+      },
+      {
+        "name": "vol_of_vol",
+        "group": "Volatility",
+        "shap_importance": 0.0038335956184673975,
+        "perm_importance": -0.0004373974849644635
+      },
+      {
+        "name": "frac_corr_above_70",
+        "group": "Correlation",
+        "shap_importance": 0.00376169833166397,
+        "perm_importance": -0.0004698605795516728
+      },
+      {
+        "name": "rsi_14",
+        "group": "Momentum",
+        "shap_importance": 0.0037544616653864275,
+        "perm_importance": -0.0017188354291962581
+      },
+      {
+        "name": "corr_dispersion",
+        "group": "Correlation",
+        "shap_importance": 0.0032637456289954674,
+        "perm_importance": 0.0003707627118644197
+      },
+      {
+        "name": "lambda_1_roc_20d",
+        "group": "Dynamics",
+        "shap_importance": 0.0031059205863411695,
+        "perm_importance": -0.007023988518316016
+      }
+    ],
+    "event_fingerprint_top10": [
+      {
+        "feature": "volatility_20d",
+        "group": "Volatility",
+        "event_mean": 0.2366484583238629,
+        "non_event_mean": 0.14388742303693997,
+        "z_score": 0.9078439768317391,
+        "ks_stat": 0.4827390873340087,
+        "ks_pval": 2.967957366252253e-23,
+        "Q1_pct": 5.405405405405405,
+        "Q2_pct": 5.405405405405405,
+        "Q3_pct": 4.504504504504505,
+        "Q4_pct": 29.72972972972973,
+        "Q5_pct": 54.95495495495496,
+        "peak_quintile": 5,
+        "peak_concentration": 54.95495495495496
+      },
+      {
+        "feature": "downside_vol_20d",
+        "group": "TailRisk",
+        "event_mean": 0.17389966214762304,
+        "non_event_mean": 0.09521817459262114,
+        "z_score": 0.9855466619957328,
+        "ks_stat": 0.43894680654051876,
+        "ks_pval": 4.068561811315706e-19,
+        "Q1_pct": 4.504504504504505,
+        "Q2_pct": 6.306306306306306,
+        "Q3_pct": 9.90990990990991,
+        "Q4_pct": 25.225225225225223,
+        "Q5_pct": 54.054054054054056,
+        "peak_quintile": 5,
+        "peak_concentration": 54.054054054054056
+      },
+      {
+        "feature": "garch_vol",
+        "group": "Volatility",
+        "event_mean": 0.23014170257986846,
+        "non_event_mean": 0.16096727296420668,
+        "z_score": 0.9572727603195046,
+        "ks_stat": 0.4331405165746157,
+        "ks_pval": 1.3257486863780524e-18,
+        "Q1_pct": 6.306306306306306,
+        "Q2_pct": 5.405405405405405,
+        "Q3_pct": 7.207207207207207,
+        "Q4_pct": 31.53153153153153,
+        "Q5_pct": 49.549549549549546,
+        "peak_quintile": 5,
+        "peak_concentration": 49.549549549549546
+      },
+      {
+        "feature": "drawdown_60d",
+        "group": "Drawdown",
+        "event_mean": -0.06801785503625604,
+        "non_event_mean": -0.02700516645879448,
+        "z_score": -0.944746594570737,
+        "ks_stat": 0.43198579474274756,
+        "ks_pval": 1.6740172025017094e-18,
+        "Q1_pct": 52.25225225225225,
+        "Q2_pct": 24.324324324324326,
+        "Q3_pct": 13.513513513513514,
+        "Q4_pct": 5.405405405405405,
+        "Q5_pct": 4.504504504504505,
+        "peak_quintile": 1,
+        "peak_concentration": 52.25225225225225
+      },
+      {
+        "feature": "max_loss_20d",
+        "group": "TailRisk",
+        "event_mean": -0.03072245786564298,
+        "non_event_mean": -0.017792885673311526,
+        "z_score": -0.9369563618555634,
+        "ks_stat": 0.42723618418902576,
+        "ks_pval": 4.31730317955655e-18,
+        "Q1_pct": 46.846846846846844,
+        "Q2_pct": 31.53153153153153,
+        "Q3_pct": 8.108108108108109,
+        "Q4_pct": 9.90990990990991,
+        "Q5_pct": 3.6036036036036037,
+        "peak_quintile": 1,
+        "peak_concentration": 46.846846846846844
+      },
+      {
+        "feature": "volatility_10d",
+        "group": "Volatility",
+        "event_mean": 0.2473363264334834,
+        "non_event_mean": 0.13978473003155623,
+        "z_score": 0.9870066523832509,
+        "ks_stat": 0.4242513371896685,
+        "ks_pval": 7.799165929751766e-18,
+        "Q1_pct": 4.504504504504505,
+        "Q2_pct": 9.00900900900901,
+        "Q3_pct": 8.108108108108109,
+        "Q4_pct": 30.630630630630627,
+        "Q5_pct": 47.74774774774775,
+        "peak_quintile": 5,
+        "peak_concentration": 47.74774774774775
+      },
+      {
+        "feature": "drawdown_20d",
+        "group": "Drawdown",
+        "event_mean": -0.04674791379143736,
+        "non_event_mean": -0.01740078684658792,
+        "z_score": -0.970078789022401,
+        "ks_stat": 0.4206019804568777,
+        "ks_pval": 1.5948121629558488e-17,
+        "Q1_pct": 49.549549549549546,
+        "Q2_pct": 27.927927927927925,
+        "Q3_pct": 9.90990990990991,
+        "Q4_pct": 6.306306306306306,
+        "Q5_pct": 6.306306306306306,
+        "peak_quintile": 1,
+        "peak_concentration": 49.549549549549546
+      },
+      {
+        "feature": "volatility_5d",
+        "group": "Volatility",
+        "event_mean": 0.2565845007732095,
+        "non_event_mean": 0.13403380752906768,
+        "z_score": 1.0376272302857352,
+        "ks_stat": 0.41929474819438545,
+        "ks_pval": 2.0520264911278786e-17,
+        "Q1_pct": 3.6036036036036037,
+        "Q2_pct": 7.207207207207207,
+        "Q3_pct": 9.90990990990991,
+        "Q4_pct": 36.03603603603604,
+        "Q5_pct": 43.24324324324324,
+        "peak_quintile": 5,
+        "peak_concentration": 43.24324324324324
+      },
+      {
+        "feature": "volatility_60d",
+        "group": "Volatility",
+        "event_mean": 0.20827397492120356,
+        "non_event_mean": 0.15025592526406664,
+        "z_score": 0.6266559736826319,
+        "ks_stat": 0.37136289856967003,
+        "ks_pval": 1.2135927372158927e-13,
+        "Q1_pct": 7.207207207207207,
+        "Q2_pct": 8.108108108108109,
+        "Q3_pct": 13.513513513513514,
+        "Q4_pct": 27.927927927927925,
+        "Q5_pct": 43.24324324324324,
+        "peak_quintile": 5,
+        "peak_concentration": 43.24324324324324
+      },
+      {
+        "feature": "return_60d",
+        "group": "Returns",
+        "event_mean": -0.004381825577441955,
+        "non_event_mean": 0.03622318011859029,
+        "z_score": -0.5926564971159686,
+        "ks_stat": 0.36445635478283606,
+        "ks_pval": 3.8412809013189474e-13,
+        "Q1_pct": 48.64864864864865,
+        "Q2_pct": 23.423423423423422,
+        "Q3_pct": 6.306306306306306,
+        "Q4_pct": 9.00900900900901,
+        "Q5_pct": 12.612612612612612,
+        "peak_quintile": 1,
+        "peak_concentration": 48.64864864864865
+      }
+    ],
+    "thresholds_top10": [
+      {
+        "feature": "volatility_20d",
+        "group": "Volatility",
+        "threshold": 0.14550838619470596,
+        "direction": ">",
+        "threshold_percentile": 61.361737677527145,
+        "precision": 0.07758620689655173,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 116,
+        "importance": 0.036810172987682604
+      },
+      {
+        "feature": "lambda_2",
+        "group": "Eigenvalue",
+        "threshold": 3.764607310295105,
+        "direction": "<",
+        "threshold_percentile": 54.469507101086045,
+        "precision": 0.023529411764705882,
+        "recall": 0.4,
+        "events_captured": 4,
+        "total_events": 10,
+        "total_signals": 170,
+        "importance": 0.03411588774122148
+      },
+      {
+        "feature": "drawdown_20d",
+        "group": "Drawdown",
+        "threshold": -0.014003862626850605,
+        "direction": "<",
+        "threshold_percentile": 36.716791979949875,
+        "precision": 0.07258064516129033,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 124,
+        "importance": 0.020832451519655935
+      },
+      {
+        "feature": "drawdown_60d",
+        "group": "Drawdown",
+        "threshold": -0.013993394561111927,
+        "direction": "<",
+        "threshold_percentile": 45.27986633249791,
+        "precision": 0.06569343065693431,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 137,
+        "importance": 0.02080561121383222
+      },
+      {
+        "feature": "downside_vol_20d",
+        "group": "TailRisk",
+        "threshold": 0.08980865031480789,
+        "direction": ">",
+        "threshold_percentile": 56.39097744360902,
+        "precision": 0.05806451612903226,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 155,
+        "importance": 0.020047220525804012
+      },
+      {
+        "feature": "volatility_10d",
+        "group": "Volatility",
+        "threshold": 0.13327688723802567,
+        "direction": ">",
+        "threshold_percentile": 57.35171261487051,
+        "precision": 0.05521472392638037,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 163,
+        "importance": 0.019470237535126236
+      },
+      {
+        "feature": "garch_vol",
+        "group": "Volatility",
+        "threshold": 0.15482033789157867,
+        "direction": ">",
+        "threshold_percentile": 59.231411862990804,
+        "precision": 0.06569343065693431,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 137,
+        "importance": 0.017753891927994758
+      },
+      {
+        "feature": "volatility_5d",
+        "group": "Volatility",
+        "threshold": 0.13218563050031662,
+        "direction": ">",
+        "threshold_percentile": 58.939014202172096,
+        "precision": 0.06521739130434782,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 138,
+        "importance": 0.016014911454059127
+      },
+      {
+        "feature": "max_loss_20d",
+        "group": "TailRisk",
+        "threshold": -0.016422772780060768,
+        "direction": "<",
+        "threshold_percentile": 44.15204678362573,
+        "precision": 0.05,
+        "recall": 0.9,
+        "events_captured": 9,
+        "total_events": 10,
+        "total_signals": 180,
+        "importance": 0.01514161952574541
+      },
+      {
+        "feature": "volatility_60d",
+        "group": "Volatility",
+        "threshold": 0.161351278424263,
+        "direction": ">",
+        "threshold_percentile": 67.66917293233082,
+        "precision": 0.05952380952380952,
+        "recall": 0.5,
+        "events_captured": 5,
+        "total_events": 10,
+        "total_signals": 84,
+        "importance": 0.01150607202136343
+      }
+    ],
+    "joint_thresholds_top5": [
+      {
+        "feature_A": "drawdown_20d",
+        "feature_B": "garch_vol",
+        "thresh_A": -0.05645476630394014,
+        "dir_A": "<",
+        "pctile_A": 10,
+        "thresh_B": 0.18170133250214177,
+        "dir_B": "<",
+        "pctile_B": 75,
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "lift": 12.6,
+        "n_signals": 3,
+        "n_hits": 1
+      },
+      {
+        "feature_A": "lambda_2",
+        "feature_B": "volatility_60d",
+        "thresh_A": 3.6724371242904024,
+        "dir_A": ">",
+        "pctile_A": 50,
+        "thresh_B": 0.17775349896028103,
+        "dir_B": ">",
+        "pctile_B": 75,
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "lift": 12.6,
+        "n_signals": 3,
+        "n_hits": 1
+      },
+      {
+        "feature_A": "volatility_20d",
+        "feature_B": "volatility_5d",
+        "thresh_A": 0.06728381270918227,
+        "dir_A": "<",
+        "pctile_A": 10,
+        "thresh_B": 0.07094367967022082,
+        "dir_B": ">",
+        "pctile_B": 25,
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "lift": 12.6,
+        "n_signals": 3,
+        "n_hits": 1
+      },
+      {
+        "feature_A": "lambda_2",
+        "feature_B": "downside_vol_20d",
+        "thresh_A": 3.6724371242904024,
+        "dir_A": ">",
+        "pctile_A": 50,
+        "thresh_B": 0.18136178901011293,
+        "dir_B": ">",
+        "pctile_B": 90,
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "lift": 12.6,
+        "n_signals": 3,
+        "n_hits": 1
+      },
+      {
+        "feature_A": "volatility_20d",
+        "feature_B": "lambda_2",
+        "thresh_A": 0.24567781385223014,
+        "dir_A": ">",
+        "pctile_A": 90,
+        "thresh_B": 3.6724371242904024,
+        "dir_B": ">",
+        "pctile_B": 50,
+        "precision": 0.3333333333333333,
+        "recall": 0.1,
+        "lift": 12.6,
+        "n_signals": 3,
+        "n_hits": 1
+      }
+    ]
+  }
+}

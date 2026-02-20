@@ -1,30 +1,18 @@
 #!/usr/bin/env python3
 """
-Correlation Graph Eigenvalue Crisis Detector  (CGECD)  v4
-=========================================================
+Correlation Graph Eigenvalue Crisis Detector  (CGECD)  v9b
+==========================================================
 
-Key changes from v3
--------------------
-* Reverted to single 60d spectral window — the 30d window added noise
-  (spectral-only AUC dropped 0.641→0.637) while bloating the feature
-  space from 80→110 features.
-* MI selection RESTORED (k=40) — removing it was catastrophic for DOWN
-  (0.677→0.636) because tree models with 110 features overfit on ~33
-  positive crash events per fold.
-* Replaced fixed-weight 3-model ensemble with **adaptive RF + Vol-LR
-  correction**:
-  - RF on MI-selected features → strong UP detection (matches 0.836
-    ablation result).
-  - L1 Logistic Regression on 16 volatility features → robust DOWN
-    detection (matches HAR-RV's approach: few features, linear model,
-    can't overfit).
-  - AUC-based correction factor (α) auto-routes predictions:
-      • When vol-LR outperforms RF (DOWN regime): α > 0, vol-LR
-        dominates.
-      • When RF outperforms vol-LR (UP regime): α = 0, pure RF.
-* Enhanced traditional features retained (1d vol, GARCH, momentum
-  reversal) — these are the features the vol-LR component needs to
-  match HAR-RV performance on DOWN.
+Surgical fix from v9: ONLY the Vol-LR sub-model changes.
+- 3 compact vol features (vol_5d, vol_20d, garch_vol) instead of 16
+- L2/C=0.1 matching the HAR-RV benchmark's regularization
+- Gentler routing params (config)
+- NO force-include, NO MI changes, NO RF changes
+
+Rationale: HAR-RV gets 0.760 on DOWN with effectively 2 vol features
+and C=0.1 LR.  Our v9 Vol-LR used 16 features with L1/C=0.5 which
+overfits in internal CV → α≈0 → no contribution.  The fix matches
+the benchmark's setup so Vol-LR actually activates on DOWN folds.
 """
 
 import pickle
@@ -36,12 +24,12 @@ import numpy as np
 import pandas as pd
 import requests
 from scipy import stats
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
 from sklearn.preprocessing import RobustScaler
 from sklearn.feature_selection import mutual_info_classif
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import TimeSeriesSplit
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import TimeSeriesSplit
 
 from config import Config
 from metrics import compute_metrics
@@ -187,12 +175,10 @@ class SpectralFeatureExtractor:
             "effective_rank": np.exp(entropy),
         }
 
-        # Marchenko-Pastur excess eigenvalues
         q = n / max(self.corr_window, 1)
         mp_upper = (1 + np.sqrt(q)) ** 2
         features["mp_excess"] = float(np.sum(eigs > mp_upper))
 
-        # Topology at two thresholds
         for t_val, t_name in [(threshold, ""), (0.5, "_50")]:
             adj = (np.abs(C) > t_val).astype(float)
             np.fill_diagonal(adj, 0)
@@ -201,7 +187,6 @@ class SpectralFeatureExtractor:
                 (np.sum(adj) / 2) / max_edges if max_edges else 0.0
             )
 
-        # Correlation statistics
         upper = C[np.triu_indices(n, k=1)]
         features["mean_abs_corr"] = np.mean(np.abs(upper))
         features["median_corr"] = np.median(upper)
@@ -240,8 +225,6 @@ class SpectralFeatureExtractor:
 def build_spectral_features(
     returns: pd.DataFrame, config: Config
 ) -> pd.DataFrame:
-    """Spectral features from single 60d rolling correlation graph."""
-
     builder = CorrelationGraphBuilder(returns)
     n_assets = len(returns.columns)
     window = config.correlation_window
@@ -270,7 +253,6 @@ def build_spectral_features(
 
     base_df = pd.DataFrame(rows).set_index("date")
 
-    # ── Dynamics ────────────────────────────────────────────────
     print("  Computing dynamics …")
     dynamics = pd.DataFrame(index=base_df.index)
 
@@ -292,7 +274,6 @@ def build_spectral_features(
             dynamics[f"{feat}_zscore_{lb}d"] = (s - rm) / (rs + 1e-10)
             dynamics[f"{feat}_roc_{lb}d"] = s.pct_change(lb)
 
-    # Acceleration
     for feat in ["lambda_1", "absorption_ratio_1", "mean_abs_corr"]:
         if feat not in base_df.columns:
             continue
@@ -307,9 +288,6 @@ def build_spectral_features(
 def build_traditional_features(
     prices: pd.DataFrame, returns: pd.DataFrame = None
 ) -> pd.DataFrame:
-    """Enhanced traditional features with 1d realised vol, GARCH
-    conditional vol, and momentum reversal."""
-
     market = prices["SP500"] if "SP500" in prices.columns else prices.iloc[:, 0]
     ret = market.pct_change()
 
@@ -318,11 +296,9 @@ def build_traditional_features(
 
     f = pd.DataFrame(index=prices.index)
 
-    # ── Returns ─────────────────────────────────────────────────
     for w in [1, 5, 10, 20, 60]:
         f[f"return_{w}d"] = market.pct_change(w)
 
-    # ── Volatility (incl. 1-day HAR-RV-style) ──────────────────
     f["volatility_1d"] = ret.abs() * np.sqrt(252)
     for w in [5, 10, 20, 60]:
         f[f"volatility_{w}d"] = ret.rolling(w).std() * np.sqrt(252)
@@ -332,7 +308,6 @@ def build_traditional_features(
     f["vol_change_5d"] = f["volatility_5d"].pct_change(5)
     f["vol_of_vol"] = f["volatility_5d"].rolling(20).std()
 
-    # ── GARCH(1,1) conditional volatility ───────────────────────
     ret_clean = ret.dropna()
     if len(ret_clean) > 10:
         alpha_g, beta_g = 0.1, 0.85
@@ -350,7 +325,6 @@ def build_traditional_features(
             / (gseries.rolling(60).std() + 1e-10)
         )
 
-    # ── Momentum ────────────────────────────────────────────────
     f["price_to_sma_20"] = market / market.rolling(20).mean() - 1
     f["price_to_sma_50"] = market / market.rolling(50).mean() - 1
 
@@ -361,13 +335,11 @@ def build_traditional_features(
 
     f["momentum_reversal"] = f["return_5d"] - f["return_20d"]
 
-    # ── Drawdown ────────────────────────────────────────────────
     for w in [20, 60]:
         rm = market.rolling(w).max()
         f[f"drawdown_{w}d"] = (market - rm) / rm
     f["drawdown_speed_5d"] = f["drawdown_20d"].diff(5)
 
-    # ── Higher moments / tail risk ──────────────────────────────
     f["skewness_20d"] = ret.rolling(20).skew()
     f["kurtosis_20d"] = ret.rolling(20).kurt()
     f["downside_vol_20d"] = (
@@ -378,7 +350,6 @@ def build_traditional_features(
     f["max_loss_20d"] = ret.rolling(20).min()
     f["neg_days_10d"] = (ret < 0).astype(float).rolling(10).sum()
 
-    # ── Cross-asset features ────────────────────────────────────
     if "HighYield" in prices.columns and "InvGradeCorp" in prices.columns:
         hy_ret = prices["HighYield"].pct_change()
         ig_ret = prices["InvGradeCorp"].pct_change()
@@ -420,12 +391,57 @@ def build_traditional_features(
 
 
 # =====================================================================
-# MODELS
+# FEATURE SELECTION HELPERS
+# =====================================================================
+def _mi_select_with_filters(
+    Xs: np.ndarray,
+    y: np.ndarray,
+    k: int,
+    corr_threshold: float = 0.98,
+    random_seed: int = 42,
+) -> np.ndarray:
+    mi = mutual_info_classif(
+        Xs, y, random_state=random_seed, n_neighbors=5
+    )
+    mi = np.nan_to_num(mi, nan=0.0)
+
+    variances = np.var(Xs, axis=0)
+    mi[variances < 1e-6] = 0.0
+
+    sel = np.argsort(mi)[-k:]
+
+    if len(sel) < 3:
+        return sel
+
+    Xk = Xs[:, sel]
+    corr = np.corrcoef(Xk.T)
+    corr = np.nan_to_num(corr, nan=0.0)
+    np.fill_diagonal(corr, 0.0)
+
+    to_drop: set = set()
+    for i in range(len(sel)):
+        if i in to_drop:
+            continue
+        for j in range(i + 1, len(sel)):
+            if j in to_drop:
+                continue
+            if abs(corr[i, j]) > corr_threshold:
+                if mi[sel[i]] < mi[sel[j]]:
+                    to_drop.add(i)
+                else:
+                    to_drop.add(j)
+
+    if to_drop:
+        sel = np.array([sel[i] for i in range(len(sel)) if i not in to_drop])
+
+    return sel
+
+
+# =====================================================================
+# VOLATILITY FEATURES
 # =====================================================================
 
-# Volatility-related feature names used by the Vol-LR component.
-# These are identified by exact name matching against the combined
-# feature DataFrame columns.
+# Full set — kept for backward compat / investigate.py
 _VOL_FEATURES = {
     "volatility_1d",
     "volatility_5d",
@@ -445,22 +461,28 @@ _VOL_FEATURES = {
     "down_up_vol_ratio",
 }
 
+# ── NEW: Compact vol set for Vol-LR sub-model ──────────────────
+# Matches HAR-RV benchmark's effective features (Corsi 2009):
+#   volatility_5d  ≈ rv_w  (weekly realized vol)
+#   volatility_20d ≈ rv_m  (monthly realized vol)
+# Plus GARCH conditional vol for additional signal.
+# With 3 features + L2/C=0.1, this LR should perform at near-
+# HAR-RV levels on DOWN, enabling meaningful ensemble blending.
+_COMPACT_VOL = {"volatility_5d", "volatility_20d", "garch_vol"}
 
+
+# =====================================================================
+# MODELS
+# =====================================================================
 class CGECDModel:
-    """CGECD v4 — RF + adaptive Vol-LR correction.
+    """CGECD v9b — Feature-Augmented RF + Compact Vol-LR Ensemble.
 
-    RF on MI-selected features provides strong non-linear detection
-    (especially for UP moves).  L1-penalised logistic regression on 16
-    volatility features provides robust linear detection (especially for
-    DOWN moves — same principle that makes HAR-RV dominant for crash
-    prediction).
+    Changes from v9:
+    - Vol-LR uses 3 compact features instead of 16 (_COMPACT_VOL)
+    - Vol-LR uses L2/C=0.1 matching HAR-RV benchmark's regularization
+    - Config params allow slightly more routing on DOWN folds
 
-    An AUC-based correction factor (α) automatically routes predictions:
-      • α = 0   when RF has higher OOB-AUC  →  pure RF  (UP regime)
-      • α > 0   when Vol-LR has higher CV-AUC →  blended (DOWN regime)
-
-    This avoids the v3 failure mode where fixed-weight ensembles diluted
-    the best model for each task.
+    Everything else (augmentation, MI selection, RF) is IDENTICAL to v9.
     """
 
     name = "CGECD (Ours)"
@@ -469,42 +491,102 @@ class CGECDModel:
         self.config = config
         self.scaler: Optional[RobustScaler] = None
         self.selected_idx: Optional[np.ndarray] = None
-        self.vol_full_idx: Optional[List[int]] = None
         self.rf: Optional[RandomForestClassifier] = None
-        self.vol_lr: Optional[LogisticRegression] = None
-        self.alpha: float = 0.0
         self._feature_names: Optional[List[str]] = None
+        self._n_augmented: int = 0
+        # Vol-LR ensemble
+        self._vol_lr: Optional[LogisticRegression] = None
+        self._alpha: float = 0.0
+        self._vol_idx: Optional[List[int]] = None
 
+    # -----------------------------------------------------------------
+    def _augment_raw(self, X_raw: np.ndarray) -> Tuple[np.ndarray, int]:
+        """Add economically-motivated augmented features (on raw data)."""
+        names = list(self._feature_names) if self._feature_names else []
+        if not names:
+            return X_raw, 0
+
+        lookup = {n: i for i, n in enumerate(names)}
+        new_cols: List[np.ndarray] = []
+
+        # ── 1. Novel vol ratios ────────────────────────────────
+        for v_num, v_den in [
+            ("volatility_1d", "volatility_5d"),
+            ("volatility_20d", "volatility_60d"),
+        ]:
+            if v_num in lookup and v_den in lookup:
+                a = X_raw[:, lookup[v_num]]
+                b = X_raw[:, lookup[v_den]]
+                new_cols.append(a / (b + 1e-8))
+
+        # ── 2. Static spectral × volatility interactions ───────
+        for feat_a, feat_b in [
+            ("lambda_1", "volatility_5d"),
+            ("absorption_ratio_1", "volatility_20d"),
+            ("lambda_1", "vol_ratio_5_20"),
+            ("effective_rank", "drawdown_20d"),
+            ("eigenvalue_entropy", "vol_of_vol"),
+        ]:
+            if feat_a in lookup and feat_b in lookup:
+                new_cols.append(
+                    X_raw[:, lookup[feat_a]] * X_raw[:, lookup[feat_b]]
+                )
+
+        # ── 3. Dynamic spectral × volatility interactions ──────
+        for feat_a, feat_b in [
+            ("lambda_1_zscore_10d", "vol_ratio_5_20"),
+            ("absorption_ratio_1_roc_10d", "vol_change_5d"),
+            ("mean_abs_corr_zscore_10d", "downside_vol_20d"),
+            ("corr_change_norm", "volatility_5d"),
+        ]:
+            if feat_a in lookup and feat_b in lookup:
+                new_cols.append(
+                    X_raw[:, lookup[feat_a]] * X_raw[:, lookup[feat_b]]
+                )
+
+        # ── 4. Tail-risk × spectral interactions ───────────────
+        for feat_a, feat_b in [
+            ("kurtosis_20d", "lambda_1"),
+            ("skewness_20d", "absorption_ratio_1"),
+            ("max_loss_5d", "spectral_gap"),
+        ]:
+            if feat_a in lookup and feat_b in lookup:
+                new_cols.append(
+                    X_raw[:, lookup[feat_a]] * X_raw[:, lookup[feat_b]]
+                )
+
+        n_added = len(new_cols)
+        if new_cols:
+            return np.column_stack([X_raw] + new_cols), n_added
+        return X_raw, 0
+
+    # -----------------------------------------------------------------
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         X_clean = np.nan_to_num(X, nan=0, posinf=0, neginf=0)
-        self.scaler = RobustScaler()
-        Xs = self.scaler.fit_transform(X_clean)
 
-        # ── MI feature selection ────────────────────────────────
-        k = min(self.config.feature_selection_k, Xs.shape[1])
-        mi = mutual_info_classif(
-            Xs, y, random_state=self.config.random_seed, n_neighbors=5
+        # Augment BEFORE scaling
+        X_aug, self._n_augmented = self._augment_raw(X_clean)
+
+        # Scale
+        self.scaler = RobustScaler()
+        Xs = self.scaler.fit_transform(X_aug)
+
+        # Adaptive MI selection
+        n_pos = int(np.sum(y))
+        k = min(
+            self.config.feature_selection_k,
+            max(8, n_pos // 3),
         )
-        mi = np.nan_to_num(mi, nan=0.0)
-        self.selected_idx = np.argsort(mi)[-k:]
+        self.selected_idx = _mi_select_with_filters(
+            Xs,
+            y,
+            k,
+            corr_threshold=self.config.corr_filter_threshold,
+            random_seed=self.config.random_seed,
+        )
         Xk = Xs[:, self.selected_idx]
 
-        # ── Identify volatility features in FULL feature set ────
-        self.vol_full_idx = []
-        if self._feature_names is not None:
-            self.vol_full_idx = [
-                i
-                for i, name in enumerate(self._feature_names)
-                if name in _VOL_FEATURES
-            ]
-
-        has_vol = len(self.vol_full_idx) >= 3
-        if has_vol:
-            Xv_check = Xs[:, self.vol_full_idx]
-            if np.all(np.std(Xv_check, axis=0) < 1e-10):
-                has_vol = False
-
-        # ── Train RF with OOB ──────────────────────────────────
+        # Train RF with OOB scoring
         self.rf = RandomForestClassifier(
             n_estimators=self.config.rf_n_estimators,
             max_depth=self.config.rf_max_depth,
@@ -517,79 +599,86 @@ class CGECDModel:
         )
         self.rf.fit(Xk, y)
 
-        try:
-            oob_probs = self.rf.oob_decision_function_[:, 1]
-            rf_auc = roc_auc_score(y, oob_probs)
-        except Exception:
-            rf_auc = 0.5
+        # ── Compact Vol-LR ensemble (CHANGED from v9) ──────────
+        self._alpha = 0.0
+        self._vol_lr = None
 
-        # ── Train Vol-LR with time-series CV AUC ───────────────
-        self.alpha = 0.0
-        self.vol_lr = None
+        names = list(self._feature_names) if self._feature_names else []
+        vol_idx = [i for i, nm in enumerate(names) if nm in _COMPACT_VOL]
+        self._vol_idx = vol_idx
 
-        if has_vol:
-            Xv = Xs[:, self.vol_full_idx]
-            vol_auc = 0.5
+        if len(vol_idx) >= 2:
+            Xv = Xs[:, vol_idx]
+            if not np.all(np.std(Xv, axis=0) < 1e-10):
+                vol_cv_auc = 0.5
+                try:
+                    tscv = TimeSeriesSplit(n_splits=3)
+                    cv_preds = np.full(len(y), np.nan)
+                    for tr_i, te_i in tscv.split(Xv):
+                        if len(np.unique(y[tr_i])) < 2:
+                            continue
+                        lr_t = LogisticRegression(
+                            penalty="l2",
+                            solver="lbfgs",
+                            C=0.1,
+                            max_iter=1000,
+                            class_weight="balanced",
+                            random_state=self.config.random_seed,
+                        )
+                        lr_t.fit(Xv[tr_i], y[tr_i])
+                        cv_preds[te_i] = lr_t.predict_proba(Xv[te_i])[:, 1]
 
-            try:
-                tscv = TimeSeriesSplit(n_splits=3)
-                cv_probs = np.full(len(y), np.nan)
+                    valid = ~np.isnan(cv_preds)
+                    if (
+                        np.sum(valid) > 20
+                        and len(np.unique(y[valid])) >= 2
+                    ):
+                        vol_cv_auc = roc_auc_score(y[valid], cv_preds[valid])
+                except Exception:
+                    vol_cv_auc = 0.5
 
-                for tr_idx, te_idx in tscv.split(Xv):
-                    if len(np.unique(y[tr_idx])) < 2:
-                        continue
-                    lr_tmp = LogisticRegression(
-                        penalty="l1",
-                        solver="saga",
-                        C=0.5,
-                        max_iter=2000,
+                rf_oob_auc = 0.5
+                try:
+                    rf_oob_auc = roc_auc_score(
+                        y, self.rf.oob_decision_function_[:, 1]
+                    )
+                except Exception:
+                    pass
+
+                diff = (
+                    vol_cv_auc
+                    - rf_oob_auc
+                    - self.config.vol_correction_threshold
+                )
+                self._alpha = min(
+                    max(0.0, diff * self.config.vol_correction_scale),
+                    self.config.vol_correction_max,
+                )
+
+                if self._alpha > 0:
+                    self._vol_lr = LogisticRegression(
+                        penalty="l2",
+                        solver="lbfgs",
+                        C=0.1,
+                        max_iter=1000,
                         class_weight="balanced",
                         random_state=self.config.random_seed,
                     )
-                    lr_tmp.fit(Xv[tr_idx], y[tr_idx])
-                    cv_probs[te_idx] = lr_tmp.predict_proba(Xv[te_idx])[:, 1]
+                    self._vol_lr.fit(Xv, y)
 
-                valid = ~np.isnan(cv_probs)
-                if np.sum(valid) > 20 and len(np.unique(y[valid])) >= 2:
-                    vol_auc = roc_auc_score(y[valid], cv_probs[valid])
-            except Exception:
-                vol_auc = 0.5
-
-            # Correction factor: positive only when vol-LR is
-            # meaningfully better than RF
-            diff = (
-                vol_auc
-                - rf_auc
-                - self.config.vol_correction_threshold
-            )
-            self.alpha = max(0.0, diff * self.config.vol_correction_scale)
-            self.alpha = min(self.alpha, self.config.vol_correction_max)
-
-            # Train final vol-LR on ALL training data
-            if self.alpha > 0:
-                self.vol_lr = LogisticRegression(
-                    penalty="l1",
-                    solver="saga",
-                    C=0.5,
-                    max_iter=2000,
-                    class_weight="balanced",
-                    random_state=self.config.random_seed,
-                )
-                self.vol_lr.fit(Xv, y)
-
+    # -----------------------------------------------------------------
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_clean = np.nan_to_num(X, nan=0, posinf=0, neginf=0)
-        Xs = self.scaler.transform(X_clean)
+        X_aug, _ = self._augment_raw(X_clean)
+        Xs = self.scaler.transform(X_aug)
         Xk = Xs[:, self.selected_idx]
+        rf_probs = self.rf.predict_proba(Xk)[:, 1]
 
-        pred_rf = self.rf.predict_proba(Xk)[:, 1]
-
-        if self.vol_lr is not None and self.alpha > 0:
-            Xv = Xs[:, self.vol_full_idx]
-            pred_vol = self.vol_lr.predict_proba(Xv)[:, 1]
-            return (1.0 - self.alpha) * pred_rf + self.alpha * pred_vol
-
-        return pred_rf
+        if self._alpha > 0 and self._vol_lr is not None and self._vol_idx:
+            Xv = Xs[:, self._vol_idx]
+            vol_probs = self._vol_lr.predict_proba(Xv)[:, 1]
+            return (1.0 - self._alpha) * rf_probs + self._alpha * vol_probs
+        return rf_probs
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         return (self.predict_proba(X) >= 0.5).astype(int)
@@ -612,11 +701,13 @@ class CGECDRFModel:
         Xs = self.scaler.fit_transform(X_clean)
 
         k = min(self.config.feature_selection_k, Xs.shape[1])
-        mi = mutual_info_classif(
-            Xs, y, random_state=self.config.random_seed, n_neighbors=5
+        self.selected_idx = _mi_select_with_filters(
+            Xs,
+            y,
+            k,
+            corr_threshold=self.config.corr_filter_threshold,
+            random_seed=self.config.random_seed,
         )
-        mi = np.nan_to_num(mi, nan=0.0)
-        self.selected_idx = np.argsort(mi)[-k:]
         Xk = Xs[:, self.selected_idx]
 
         self.model = RandomForestClassifier(
@@ -704,8 +795,6 @@ def walk_forward_evaluate(
     model_class,
     config: Config,
 ) -> Dict:
-    """Expanding-window walk-forward CV with aligned folds."""
-
     valid_dates = target.dropna().index
     X = features.reindex(valid_dates).ffill().fillna(0)
     y = target.loc[valid_dates]
@@ -747,7 +836,6 @@ def walk_forward_evaluate(
         try:
             model = model_class(config)
 
-            # Pass feature names so CGECDModel can identify vol features
             if hasattr(model, "_feature_names"):
                 model._feature_names = feature_names
 
@@ -758,7 +846,7 @@ def walk_forward_evaluate(
             all_actuals.extend(y_test.tolist())
             all_dates.extend(y.iloc[test_start:test_end].index.tolist())
 
-            # ── Feature importance extraction ───────────────────
+            # ── Collect feature importances ──
             imp = np.zeros(n_features)
             collected = False
 
@@ -771,7 +859,12 @@ def walk_forward_evaluate(
                     sel is not None
                     and len(rf_obj.feature_importances_) == len(sel)
                 ):
-                    imp[sel] = rf_obj.feature_importances_
+                    for i, s_idx in enumerate(sel):
+                        if s_idx < n_features:
+                            imp[s_idx] = rf_obj.feature_importances_[i]
+                    total_imp = np.sum(imp)
+                    if total_imp > 0:
+                        imp = imp / total_imp
                     collected = True
                 elif len(rf_obj.feature_importances_) == n_features:
                     imp = rf_obj.feature_importances_.copy()

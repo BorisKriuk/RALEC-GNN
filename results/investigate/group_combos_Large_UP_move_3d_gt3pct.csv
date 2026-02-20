@@ -1,0 +1,1024 @@
+groups,n_groups,n_features,auc
+Correlation + Dynamics + Momentum + Topology,4,42,1.0
+Eigenvalue + Momentum + Returns + Volatility,4,35,1.0
+Correlation + CrossAsset + Drawdown + Momentum + Returns + Volatility,6,40,1.0
+Dynamics + Momentum + Returns + Volatility,4,52,1.0
+Correlation + Dynamics + Momentum + Returns + Volatility,5,58,1.0
+CrossAsset + Dynamics + Momentum + Returns + Volatility,5,58,1.0
+Correlation + CrossAsset + Dynamics + Momentum + Returns + Volatility,6,64,1.0
+Drawdown + Dynamics + Momentum + Returns + Volatility,5,55,1.0
+Correlation + Drawdown + Dynamics + Momentum + Returns + Volatility,6,61,1.0
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + Volatility,7,67,1.0
+Drawdown + Dynamics + Momentum + Topology + Volatility,5,52,1.0
+CrossAsset + Returns + Topology + Volatility,4,26,1.0
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + Volatility,6,44,1.0
+Drawdown + Dynamics + Eigenvalue + Returns + Topology + Volatility,6,60,1.0
+Dynamics + Momentum + Topology,3,36,1.0
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Volatility,6,68,1.0
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Volatility,6,65,1.0
+CrossAsset + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,7,66,1.0
+Correlation + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,7,66,1.0
+Correlation + Dynamics + Momentum + Topology + Volatility,5,55,1.0
+Drawdown + Dynamics + TailRisk,3,36,1.0
+Correlation + CrossAsset + Momentum + Returns + Volatility,5,37,1.0
+CrossAsset + Momentum + Returns + Volatility,4,31,1.0
+Correlation + Momentum + Returns + Volatility,4,31,1.0
+Dynamics + Eigenvalue + Momentum + Topology + Volatility,5,59,1.0
+CrossAsset + Dynamics + Momentum + Returns,4,45,1.0
+Correlation + Dynamics + Eigenvalue + Momentum + Topology + Volatility,6,65,1.0
+Drawdown + Returns + Volatility,3,21,1.0
+Correlation + Drawdown + Returns + Volatility,4,27,1.0
+CrossAsset + Drawdown + Returns + Volatility,4,27,1.0
+Dynamics + Returns + Volatility,3,45,1.0
+Correlation + Dynamics + Returns + Volatility,4,51,1.0
+Drawdown + Dynamics + Returns + Volatility,4,48,1.0
+CrossAsset + Drawdown + Dynamics + Returns + Volatility,5,54,1.0
+Correlation + Dynamics + Momentum + Volatility,4,53,1.0
+Correlation + Drawdown + Momentum + Volatility,4,29,1.0
+Drawdown + Momentum + Volatility,3,23,1.0
+Dynamics + Momentum + Returns + TailRisk + Volatility,5,58,1.0
+Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,7,63,1.0
+Momentum + Returns + Volatility,3,25,1.0
+Correlation + Drawdown + Dynamics + Momentum + TailRisk + Topology + Volatility,7,64,1.0
+CrossAsset + Drawdown + Dynamics + Momentum,4,43,1.0
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + Volatility,6,68,1.0
+CrossAsset + Drawdown + Dynamics + Momentum + Returns,5,48,1.0
+Drawdown + Dynamics + Returns + Topology + Volatility,5,50,1.0
+CrossAsset + Drawdown + Dynamics + Momentum + Topology,5,45,1.0
+Drawdown + Dynamics + Returns + TailRisk + Volatility,5,54,1.0
+CrossAsset + Momentum + Returns + Topology + Volatility,5,33,1.0
+Correlation + CrossAsset + Momentum + Returns + Topology + Volatility,6,39,1.0
+Correlation + CrossAsset + Dynamics + Returns + Topology + Volatility,6,59,1.0
+Dynamics + Momentum + TailRisk,3,40,1.0
+Correlation + Drawdown + Dynamics + Returns + Topology + Volatility,6,56,1.0
+Correlation + Momentum + Returns + Topology + Volatility,5,33,1.0
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,8,76,1.0
+Dynamics + Momentum + Returns + Topology + Volatility,5,54,1.0
+Correlation + Dynamics + Momentum + Returns + Topology + Volatility,6,60,1.0
+CrossAsset + Dynamics + Momentum + Returns + Topology + Volatility,6,60,1.0
+Correlation + CrossAsset + Dynamics + Momentum + Returns + Topology + Volatility,7,66,1.0
+CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Topology,6,51,1.0
+Dynamics + Returns + Topology + Volatility,4,47,1.0
+Correlation + Dynamics + Eigenvalue + Returns + Topology + Volatility,6,63,1.0
+Drawdown + Dynamics + Momentum + Returns + Topology + Volatility,6,57,1.0
+CrossAsset + Drawdown + Returns + Topology + Volatility,5,29,1.0
+Momentum + Returns + TailRisk + Volatility,4,31,1.0
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + Topology + Volatility,7,49,1.0
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + Topology + Volatility,7,63,1.0
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,7,70,1.0
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,7,70,1.0
+Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,6,60,1.0
+CrossAsset + Dynamics + Momentum,3,40,1.0
+Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,6,64,1.0
+Dynamics + Momentum + Topology + Volatility,4,49,1.0
+Correlation + Dynamics + Eigenvalue + Momentum + Volatility,5,63,0.9959677419354839
+Correlation + Drawdown + Dynamics + Topology + Volatility,5,51,0.9959677419354839
+CrossAsset + Dynamics + Momentum + Volatility,4,53,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Volatility,6,62,0.9959677419354839
+Dynamics + Momentum + Volatility,3,47,0.9959677419354839
+Drawdown + Dynamics + Topology + Volatility,4,45,0.9959677419354839
+Correlation + Drawdown + Momentum + Topology + Volatility,5,31,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Momentum + Volatility,5,59,0.9959677419354839
+Correlation + CrossAsset + Momentum + Topology + Volatility,5,34,0.9959677419354839
+CrossAsset + Momentum + Topology + Volatility,4,28,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + Volatility,5,56,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Topology + Volatility,6,57,0.9959677419354839
+Drawdown + Dynamics + Momentum + Volatility,4,50,0.9959677419354839
+Correlation + Drawdown + Dynamics + Momentum + Volatility,5,56,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Momentum + Volatility,5,35,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Topology + Volatility,5,51,0.9959677419354839
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,7,67,0.9959677419354839
+Correlation + Drawdown + Dynamics + Momentum + Returns + Topology + Volatility,7,63,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Volatility,7,67,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,9,75,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Volatility,5,55,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Volatility,4,49,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,8,73,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,9,79,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Volatility,6,69,0.9959677419354839
+CrossAsset + Dynamics + Momentum + Topology + Volatility,5,55,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Momentum + Topology + Volatility,6,61,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Volatility,4,28,0.9959677419354839
+CrossAsset + Momentum + Volatility,3,26,0.9959677419354839
+Correlation + Drawdown + Dynamics + Momentum + Topology + Volatility,6,58,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + Topology + Volatility,6,58,0.9959677419354839
+CrossAsset + Dynamics + Momentum + Returns + TailRisk + Volatility,6,64,0.9959677419354839
+Drawdown + Dynamics + Momentum + TailRisk,4,43,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + TailRisk,5,49,0.9959677419354839
+Drawdown + Dynamics + TailRisk + Topology + Volatility,5,51,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Topology + Volatility,7,64,0.9959677419354839
+CrossAsset + Drawdown + TailRisk,3,15,0.9959677419354839
+CrossAsset + Drawdown + Momentum + Returns + Topology + Volatility,6,36,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + Topology + Volatility,8,69,0.9959677419354839
+Drawdown + Returns + Topology + Volatility,4,23,0.9959677419354839
+Dynamics + Momentum + TailRisk + Volatility,4,53,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Momentum + TailRisk + Volatility,6,65,0.9959677419354839
+CrossAsset + Drawdown + Momentum + Returns + Volatility,5,34,0.9959677419354839
+CrossAsset + Drawdown + Returns,3,14,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Topology + Volatility,8,70,0.9959677419354839
+Correlation + Eigenvalue + Momentum + Returns + Volatility,5,41,0.9959677419354839
+CrossAsset + Eigenvalue + Momentum + Returns + Volatility,5,41,0.9959677419354839
+CrossAsset + Dynamics + Momentum + TailRisk + Volatility,5,59,0.9959677419354839
+Correlation + Dynamics + Momentum + TailRisk + Volatility,5,59,0.9959677419354839
+Dynamics + Eigenvalue + Momentum + Returns + Volatility,5,62,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Volatility,7,74,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Returns + Topology + Volatility,6,56,0.9959677419354839
+Dynamics + Momentum + Returns + Topology,4,41,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum,5,49,0.9959677419354839
+Drawdown + Dynamics + Eigenvalue + Momentum + Volatility,5,60,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Momentum,4,46,0.9959677419354839
+Correlation + Dynamics + Momentum,3,40,0.9959677419354839
+Dynamics + Momentum,2,34,0.9959677419354839
+Correlation + Drawdown + Returns + Topology + Volatility,5,29,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + TailRisk + Volatility,5,55,0.9959677419354839
+CrossAsset + Momentum,2,13,0.9959677419354839
+CrossAsset + Momentum + TailRisk + Volatility,4,32,0.9959677419354839
+Correlation + Dynamics + Returns + Topology + Volatility,5,53,0.9959677419354839
+CrossAsset + Drawdown + Momentum + Returns + Topology,5,23,0.9959677419354839
+Dynamics + Eigenvalue + Returns + Topology + Volatility,5,57,0.9959677419354839
+Dynamics + Eigenvalue + Momentum + Topology,4,46,0.9959677419354839
+CrossAsset + Dynamics + Eigenvalue + Momentum + Topology + Volatility,6,65,0.9959677419354839
+Drawdown + Dynamics + Momentum + Returns,4,42,0.9959677419354839
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,7,75,0.9959677419354839
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Topology,6,51,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + Topology,6,50,0.9959677419354839
+Eigenvalue + Momentum + Returns + Topology + Volatility,5,37,0.9959677419354839
+Dynamics + Eigenvalue + Returns + Volatility,4,55,0.9959677419354839
+CrossAsset + Dynamics + Momentum + Topology,4,42,0.9959677419354839
+CrossAsset + Drawdown + Dynamics,3,36,0.9959677419354839
+CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Volatility,6,62,0.9959677419354839
+Drawdown + Momentum + TailRisk + Topology,4,18,0.9919354838709677
+CrossAsset + Dynamics + Momentum + TailRisk + Topology,5,48,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,7,64,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Topology,5,48,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Topology,6,34,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Topology,6,58,0.9919354838709677
+CrossAsset + Drawdown + Momentum + Topology + Volatility,5,31,0.9919354838709677
+Drawdown + Dynamics + Momentum + Topology,4,39,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + Topology,5,45,0.9919354838709677
+Correlation + CrossAsset + Momentum + TailRisk + Topology,5,27,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Topology,7,57,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + TailRisk + Topology,6,54,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Topology,6,34,0.9919354838709677
+Correlation + Dynamics + Eigenvalue + Momentum + Topology,5,52,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Topology,5,52,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + TailRisk + Topology,6,51,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + Topology + Volatility,7,62,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + Topology + Volatility,6,41,0.9919354838709677
+CrossAsset + Dynamics + Returns + Topology + Volatility,5,53,0.9919354838709677
+CrossAsset + Momentum + TailRisk + Topology,4,21,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,9,78,0.9919354838709677
+Correlation + Drawdown + Eigenvalue + Momentum + Topology + Volatility,6,41,0.9919354838709677
+Drawdown + Dynamics + TailRisk + Topology,4,38,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Topology + Volatility,6,44,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + TailRisk + Topology,5,44,0.9919354838709677
+Momentum + Returns + TailRisk + Topology + Volatility,5,33,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Topology,6,57,0.9919354838709677
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + Topology,6,57,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Topology + Volatility,7,71,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + Topology,7,56,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + Returns + Topology,6,50,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Returns + Topology,6,53,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + TailRisk + Topology,6,50,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,8,72,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + Topology + Volatility,5,38,0.9919354838709677
+CrossAsset + Dynamics + Momentum + Returns + Topology,5,47,0.9919354838709677
+Correlation + Eigenvalue + Momentum + Topology + Volatility,5,38,0.9919354838709677
+Eigenvalue + Momentum + Topology + Volatility,4,32,0.9919354838709677
+Correlation + CrossAsset + Momentum + Returns + Topology,5,26,0.9919354838709677
+Drawdown + Returns + TailRisk + Volatility,4,27,0.9919354838709677
+Correlation + Momentum + Returns + Topology,4,20,0.9919354838709677
+Momentum + Returns + Topology,3,14,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Topology + Volatility,7,68,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Topology + Volatility,7,68,0.9919354838709677
+Returns + Topology + Volatility,3,20,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Returns + Topology + Volatility,6,35,0.9919354838709677
+Momentum + TailRisk + Topology,3,15,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology,7,60,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,10,85,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,6,55,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,7,70,0.9919354838709677
+Correlation + Momentum + Returns + TailRisk + Volatility,5,37,0.9919354838709677
+CrossAsset + Momentum + Returns + TailRisk + Volatility,5,37,0.9919354838709677
+Correlation + CrossAsset + Momentum + Returns + TailRisk + Volatility,6,43,0.9919354838709677
+Drawdown + Momentum + Returns + TailRisk + Volatility,5,34,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Volatility,8,77,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Volatility,7,71,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Volatility,7,71,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Volatility,7,50,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Volatility,6,44,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + Volatility,6,47,0.9919354838709677
+Correlation + Drawdown + Momentum + Returns + Volatility,5,34,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Volatility,7,70,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Volatility,6,64,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + Volatility,6,64,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Returns + Volatility,5,58,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Returns + Volatility,5,61,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + Volatility,6,43,0.9919354838709677
+Correlation + Drawdown + Eigenvalue + Returns + Volatility,5,37,0.9919354838709677
+CrossAsset + Drawdown + Momentum + Returns + TailRisk + Volatility,6,40,0.9919354838709677
+Correlation + Eigenvalue + Returns + Volatility,4,34,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + Volatility,6,60,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,8,76,0.9919354838709677
+Drawdown + Dynamics + TailRisk + Volatility,4,49,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,7,61,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + TailRisk + Volatility,6,61,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,7,72,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,7,72,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,6,69,0.9919354838709677
+Correlation + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,6,69,0.9919354838709677
+Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,5,63,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Volatility,7,51,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Volatility,6,45,0.9919354838709677
+Correlation + Drawdown + Eigenvalue + Momentum + TailRisk + Volatility,6,45,0.9919354838709677
+Correlation + Eigenvalue + Momentum + TailRisk + Volatility,5,42,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Volatility,7,68,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + TailRisk + Volatility,6,62,0.9919354838709677
+Drawdown + Dynamics + Momentum + TailRisk + Volatility,5,56,0.9919354838709677
+CrossAsset + Drawdown + Momentum + TailRisk + Volatility,5,35,0.9919354838709677
+Correlation + Drawdown + Momentum + TailRisk + Volatility,5,35,0.9919354838709677
+Drawdown + Momentum + TailRisk + Volatility,4,29,0.9919354838709677
+Dynamics + Returns + TailRisk + Volatility,4,51,0.9919354838709677
+Correlation + Dynamics + Returns + TailRisk + Volatility,5,57,0.9919354838709677
+Correlation + Drawdown + Dynamics + Returns + TailRisk + Topology + Volatility,7,62,0.9919354838709677
+Correlation + Drawdown + Dynamics + Returns + TailRisk + Volatility,6,60,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Volatility,7,66,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Topology + Volatility,8,68,0.9919354838709677
+Correlation + Drawdown + Dynamics + Returns + Volatility,5,54,0.9919354838709677
+CrossAsset + Dynamics + Returns + Volatility,4,51,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Returns + Volatility,5,33,0.9919354838709677
+Correlation + CrossAsset + Returns + Volatility,4,30,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,50,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Volatility,8,56,0.9919354838709677
+Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,6,68,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,74,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,8,80,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,71,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,8,77,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology,8,62,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,8,77,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Returns + TailRisk + Topology,7,59,0.9919354838709677
+CrossAsset + Dynamics + Momentum + Returns + TailRisk + Topology,6,53,0.9919354838709677
+CrossAsset + Drawdown + Momentum + Returns + TailRisk + Topology,6,29,0.9919354838709677
+Drawdown + Momentum + Returns + TailRisk + Topology,5,23,0.9919354838709677
+CrossAsset + Drawdown + Returns + TailRisk + Topology + Volatility,6,35,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,9,83,0.9919354838709677
+Drawdown + Dynamics + Returns + TailRisk + Topology + Volatility,6,56,0.9919354838709677
+CrossAsset + Dynamics + Returns + TailRisk + Topology + Volatility,6,59,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Topology,6,49,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Topology + Volatility,6,61,0.9919354838709677
+Momentum + Topology + Volatility,3,22,0.9919354838709677
+Correlation + Momentum + Topology + Volatility,4,28,0.9919354838709677
+Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Volatility,6,44,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,53,0.9919354838709677
+Correlation + Drawdown + Dynamics + Volatility,4,49,0.9919354838709677
+Correlation + CrossAsset + Momentum + Volatility,4,32,0.9919354838709677
+Returns + Volatility,2,18,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Volatility,7,72,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Volatility,6,66,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Volatility,5,63,0.9919354838709677
+Dynamics + Eigenvalue + Momentum + Volatility,4,57,0.9919354838709677
+Correlation + Drawdown + Eigenvalue + Momentum + Volatility,5,39,0.9919354838709677
+Drawdown + Eigenvalue + Momentum + Volatility,4,33,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Volatility,5,42,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + Volatility,4,36,0.9919354838709677
+Correlation + Momentum + Volatility,3,26,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Volatility,6,47,0.9919354838709677
+Momentum + Volatility,2,20,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Volatility,5,59,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum + Returns + TailRisk + Volatility,7,46,0.9919354838709677
+Correlation + Dynamics + Momentum + Returns + TailRisk + Volatility,6,64,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Returns + TailRisk + Volatility,7,70,0.9919354838709677
+Drawdown + Dynamics + Momentum + Returns + TailRisk + Volatility,6,61,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + Returns + TailRisk + Volatility,7,67,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Volatility,8,73,0.9919354838709677
+Eigenvalue + Momentum + Returns + TailRisk + Volatility,5,41,0.9919354838709677
+Correlation + Eigenvalue + Momentum + Returns + TailRisk + Volatility,6,47,0.9919354838709677
+CrossAsset + Momentum + Returns + Topology,4,20,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum + Topology,5,24,0.9919354838709677
+CrossAsset + Momentum + TailRisk + Topology + Volatility,5,34,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Returns,5,51,0.9919354838709677
+Correlation + Dynamics + Momentum + Returns,4,45,0.9919354838709677
+Dynamics + Momentum + Returns,3,39,0.9919354838709677
+CrossAsset + Momentum + Returns + TailRisk,4,24,0.9919354838709677
+Drawdown + Momentum + Returns + TailRisk,4,21,0.9919354838709677
+Correlation + CrossAsset + Momentum + Returns,4,24,0.9919354838709677
+CrossAsset + Momentum + Returns,3,18,0.9919354838709677
+Dynamics + Momentum + Returns + TailRisk,4,45,0.9919354838709677
+Correlation + CrossAsset + Momentum + TailRisk + Topology + Volatility,6,40,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + Returns + TailRisk,6,54,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk,6,54,0.9919354838709677
+CrossAsset + Drawdown + Momentum + TailRisk + Topology + Volatility,6,37,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum + TailRisk + Topology + Volatility,7,43,0.9919354838709677
+Dynamics + Momentum + TailRisk + Topology + Volatility,5,55,0.9919354838709677
+Correlation + Dynamics + Momentum + TailRisk + Topology + Volatility,6,61,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + TailRisk + Topology + Volatility,7,67,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk,5,32,0.9919354838709677
+Drawdown + Dynamics + Momentum + TailRisk + Topology + Volatility,6,58,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Returns,4,41,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Momentum + TailRisk + Topology + Volatility,7,64,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Topology + Volatility,7,66,0.9919354838709677
+Eigenvalue + Momentum + TailRisk + Topology + Volatility,5,38,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + TailRisk + Topology + Volatility,6,44,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,50,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum,5,53,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum,4,47,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum,5,56,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,6,58,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum,4,50,0.9919354838709677
+Drawdown + Momentum + Returns + Topology + Volatility,5,30,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns,5,34,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,7,64,0.9919354838709677
+Momentum + TailRisk + Topology + Volatility,4,28,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + TailRisk,6,55,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk,6,38,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + TailRisk,5,49,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + TailRisk,5,52,0.9919354838709677
+CrossAsset + Dynamics + Momentum + TailRisk,4,46,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk,6,62,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk,5,53,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum + TailRisk,5,28,0.9919354838709677
+CrossAsset + Drawdown + Momentum + TailRisk,4,22,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Topology + Volatility,7,46,0.9919354838709677
+Correlation + CrossAsset + Momentum + TailRisk,4,25,0.9919354838709677
+CrossAsset + Momentum + TailRisk,3,19,0.9919354838709677
+Momentum + TailRisk,2,13,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk,7,65,0.9919354838709677
+Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,6,43,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,7,49,0.9919354838709677
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,55,0.9919354838709677
+CrossAsset + Eigenvalue + Momentum + Returns + Topology + Volatility,6,43,0.9919354838709677
+Correlation + Eigenvalue + Momentum + Returns + Topology + Volatility,6,43,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + TailRisk,4,42,0.9919354838709677
+Correlation + Drawdown + Dynamics + TailRisk,4,42,0.9919354838709677
+Correlation + Drawdown + Dynamics + TailRisk + Topology + Volatility,6,57,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + TailRisk + Topology + Volatility,6,57,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,6,61,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns,6,58,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns,5,55,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Returns + TailRisk,5,47,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum + Returns + Topology + Volatility,7,42,0.9919354838709677
+Correlation + Drawdown + Momentum + Returns + Topology + Volatility,6,36,0.9919354838709677
+Correlation + Dynamics + Eigenvalue + Momentum,4,50,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Topology + Volatility,8,72,0.9919354838709677
+Dynamics + Eigenvalue + Momentum,3,44,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,9,79,0.9919354838709677
+Correlation + CrossAsset + Momentum,3,19,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Returns + Topology + Volatility,6,63,0.9919354838709677
+Correlation + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,71,0.9919354838709677
+Drawdown + Dynamics + Topology,3,32,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,8,74,0.9919354838709677
+Correlation + Drawdown + Dynamics + Topology,4,38,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Dynamics,4,42,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,9,82,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,76,0.9919354838709677
+Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,7,70,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Topology + Volatility,8,53,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,68,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,8,77,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue,3,40,0.9919354838709677
+Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,6,65,0.9919354838709677
+Correlation + CrossAsset + Momentum + Returns + TailRisk + Topology + Volatility,7,45,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,52,0.9919354838709677
+CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,71,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Returns + Topology + Volatility,6,39,0.9919354838709677
+CrossAsset + Drawdown + Momentum + Returns + TailRisk + Topology + Volatility,7,42,0.9919354838709677
+Correlation + Drawdown + Momentum + Returns + TailRisk + Topology + Volatility,7,42,0.9919354838709677
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,73,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,8,74,0.9919354838709677
+Drawdown + Returns + TailRisk + Topology + Volatility,5,29,0.9919354838709677
+CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,47,0.9919354838709677
+CrossAsset + Drawdown + Momentum,3,16,0.9919354838709677
+Correlation + Drawdown + Eigenvalue + Momentum + TailRisk + Topology + Volatility,7,47,0.9919354838709677
+Correlation + CrossAsset + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,8,72,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,8,69,0.9919354838709677
+CrossAsset + Drawdown,2,9,0.9919354838709677
+Correlation + CrossAsset + Drawdown + Momentum,4,22,0.9919354838709677
+Correlation + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology + Volatility,8,69,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + Topology + Volatility,7,66,0.9919354838709677
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,9,79,0.9919354838709677
+CrossAsset + Momentum + Topology,3,15,0.9919354838709677
+Drawdown + Dynamics + Momentum,3,37,0.9919354838709677
+Correlation + Drawdown + Dynamics + Eigenvalue + Volatility,5,59,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,9,72,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,7,67,0.9879032258064516
+CrossAsset + Drawdown + Momentum + Volatility,4,29,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns,7,64,0.9879032258064516
+CrossAsset + Drawdown + Returns + TailRisk + Volatility,5,33,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns,5,52,0.9879032258064516
+Correlation + Dynamics + Momentum + Returns + TailRisk + Topology,6,53,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + Returns,5,55,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,8,78,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,76,0.9879032258064516
+CrossAsset + Drawdown + Momentum + Topology,4,18,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,74,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + TailRisk,5,48,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Volatility,6,66,0.9879032258064516
+Correlation + Dynamics + Momentum + TailRisk,4,46,0.9879032258064516
+Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,6,57,0.9879032258064516
+CrossAsset + Drawdown + TailRisk + Topology + Volatility,5,30,0.9879032258064516
+Eigenvalue + Momentum + TailRisk + Volatility,4,36,0.9879032258064516
+Drawdown + Dynamics,2,30,0.9879032258064516
+CrossAsset + Eigenvalue + Momentum + TailRisk + Volatility,5,42,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,63,0.9879032258064516
+Drawdown + Eigenvalue + Momentum + TailRisk + Volatility,5,39,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,8,66,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology + Volatility,9,80,0.9879032258064516
+CrossAsset + Drawdown + Volatility,3,22,0.9879032258064516
+Dynamics + Eigenvalue + Momentum + Returns,4,49,0.9879032258064516
+Correlation + Momentum + TailRisk + Volatility,4,32,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns,6,37,0.9879032258064516
+Drawdown + Momentum + Returns + Volatility,4,28,0.9879032258064516
+Correlation + Drawdown + Momentum + TailRisk + Topology + Volatility,6,37,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Returns + Volatility,5,61,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + Volatility,6,67,0.9879032258064516
+Correlation + Drawdown + Dynamics + TailRisk + Volatility,5,55,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,6,64,0.9879032258064516
+CrossAsset + Dynamics + Momentum + TailRisk + Topology + Volatility,6,61,0.9879032258064516
+Correlation + Drawdown + Momentum,3,16,0.9879032258064516
+CrossAsset + Drawdown + TailRisk + Volatility,4,28,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Returns,5,47,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Returns,4,44,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,9,58,0.9879032258064516
+Dynamics + Returns,2,32,0.9879032258064516
+Correlation + Drawdown + Dynamics + Momentum,4,43,0.9879032258064516
+Correlation + Eigenvalue + Momentum + TailRisk + Topology + Volatility,6,44,0.9879032258064516
+CrossAsset + Returns,2,11,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + Volatility,6,61,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum,6,59,0.9879032258064516
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum,5,53,0.9879032258064516
+Drawdown + Eigenvalue + Momentum + Returns + Volatility,5,38,0.9879032258064516
+Correlation + Drawdown + Momentum + Returns + TailRisk + Volatility,6,40,0.9879032258064516
+Correlation + Momentum,2,13,0.9879032258064516
+CrossAsset + Eigenvalue + Returns + Volatility,4,34,0.9879032258064516
+Drawdown + Momentum + TailRisk + Topology + Volatility,5,31,0.9879032258064516
+Eigenvalue + Returns + Volatility,3,28,0.9879032258064516
+Eigenvalue + Momentum + Volatility,3,30,0.9879032258064516
+Correlation + CrossAsset + Momentum + TailRisk + Volatility,5,38,0.9879032258064516
+CrossAsset + Drawdown + Eigenvalue + Momentum + Volatility,5,39,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Volatility,6,45,0.9879032258064516
+Drawdown + Eigenvalue + Momentum + TailRisk + Topology + Volatility,6,41,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns,6,54,0.9879032258064516
+Correlation + Drawdown + Dynamics + Momentum + Returns,5,48,0.9879032258064516
+Momentum + TailRisk + Volatility,3,26,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Volatility,6,66,0.9879032258064516
+CrossAsset + Returns + Volatility,3,24,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + Returns,5,27,0.9879032258064516
+CrossAsset + Drawdown + Momentum + Returns,4,21,0.9879032258064516
+Drawdown + Momentum + Returns,3,15,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Eigenvalue,4,46,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Volatility,6,60,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Topology + Volatility,7,62,0.9879032258064516
+Correlation + Momentum + Returns,3,18,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Returns + Volatility,5,57,0.9879032258064516
+Momentum,1,7,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Topology + Volatility,8,52,0.9879032258064516
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,39,0.9879032258064516
+Dynamics + Momentum + TailRisk + Topology,4,42,0.9879032258064516
+Correlation + CrossAsset + Eigenvalue + Momentum + Topology,5,31,0.9879032258064516
+Momentum + Returns + Topology + Volatility,4,27,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + Topology,6,49,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Momentum + Topology,5,49,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Topology,4,42,0.9879032258064516
+Dynamics + Eigenvalue + Momentum + TailRisk + Topology,5,52,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,6,58,0.9879032258064516
+CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,6,58,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Topology + Volatility,7,47,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,8,67,0.9879032258064516
+Drawdown + Momentum + Topology + Volatility,4,25,0.9879032258064516
+CrossAsset + Eigenvalue + Momentum + Returns + TailRisk,5,34,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Topology,4,38,0.9879032258064516
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + Topology + Volatility,7,46,0.9879032258064516
+Correlation + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology,6,54,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk,6,59,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Topology + Volatility,7,67,0.9879032258064516
+Eigenvalue + Returns + Topology + Volatility,4,30,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk,7,60,0.9879032258064516
+CrossAsset + Dynamics + Returns + TailRisk,4,44,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Topology,7,61,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,66,0.9879032258064516
+Correlation + CrossAsset + Momentum + Returns + TailRisk,5,30,0.9879032258064516
+CrossAsset + Drawdown + Momentum + Returns + TailRisk,5,27,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + Returns + TailRisk,6,33,0.9879032258064516
+Correlation + Drawdown + Momentum + TailRisk + Topology,5,24,0.9879032258064516
+CrossAsset + Drawdown + Momentum + TailRisk + Topology,5,24,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + TailRisk + Topology,6,30,0.9879032258064516
+Correlation + Dynamics + Momentum + Returns + TailRisk,5,51,0.9879032258064516
+Correlation + Dynamics + Momentum + TailRisk + Topology,5,48,0.9879032258064516
+Drawdown + Eigenvalue + Momentum + TailRisk + Topology,5,28,0.9879032258064516
+Drawdown + Dynamics + Momentum + TailRisk + Topology,5,45,0.9879032258064516
+Drawdown + Dynamics + Returns + TailRisk,4,41,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + Topology + Volatility,6,37,0.9879032258064516
+CrossAsset + Dynamics + Momentum + Returns + TailRisk,5,51,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Momentum + Returns + TailRisk,6,57,0.9879032258064516
+CrossAsset + Eigenvalue + Momentum + TailRisk + Topology,5,31,0.9879032258064516
+CrossAsset + Drawdown + Dynamics + Returns + Topology,5,43,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + Topology,7,63,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + Returns + TailRisk + Topology + Volatility,8,48,0.9879032258064516
+Dynamics + Eigenvalue + Momentum + Returns + TailRisk,5,55,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Eigenvalue + Topology + Volatility,6,40,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Topology,4,17,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + Topology + Volatility,7,69,0.9879032258064516
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + Topology,6,53,0.9879032258064516
+Correlation + Drawdown + Topology + Volatility,4,24,0.9879032258064516
+Correlation + Drawdown + Momentum + Topology,4,18,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Momentum + Returns + Topology,6,29,0.9879032258064516
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,8,70,0.9879032258064516
+Correlation + Dynamics + Momentum + Returns + Topology,5,47,0.9879032258064516
+Correlation + Drawdown + Dynamics + Eigenvalue + Topology + Volatility,6,61,0.9879032258064516
+Correlation + CrossAsset + Momentum + Topology,4,21,0.9879032258064516
+Drawdown + Eigenvalue + Returns + Topology + Volatility,5,33,0.9879032258064516
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,7,67,0.9879032258064516
+CrossAsset + Dynamics + Eigenvalue + Momentum + TailRisk,5,56,0.9879032258064516
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,6,61,0.9879032258064516
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,7,64,0.9879032258064516
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Topology,6,33,0.9879032258064516
+Dynamics + Eigenvalue + Momentum + Returns + Topology,5,51,0.9879032258064516
+Correlation + Eigenvalue + Momentum + Topology,4,25,0.9879032258064516
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + Topology,6,36,0.9879032258064516
+Drawdown + Dynamics + Eigenvalue + Momentum + Topology + Volatility,6,62,0.9879032258064516
+Correlation + Dynamics + Eigenvalue + Momentum + Returns + TailRisk,6,61,0.9879032258064516
+CrossAsset + Eigenvalue + Momentum + Topology,4,25,0.9879032258064516
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk,6,37,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns,5,51,0.9838709677419355
+Eigenvalue + Momentum,2,17,0.9838709677419355
+CrossAsset + Drawdown + Topology,3,11,0.9838709677419355
+Momentum + Returns,2,12,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Topology + Volatility,8,74,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Topology,6,53,0.9838709677419355
+CrossAsset + Eigenvalue + Momentum + Returns + Topology,5,30,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology,7,60,0.9838709677419355
+CrossAsset + Dynamics + Returns + TailRisk + Volatility,5,57,0.9838709677419355
+CrossAsset + Dynamics + Returns,3,38,0.9838709677419355
+Correlation + Drawdown + Momentum + Returns + TailRisk,5,27,0.9838709677419355
+Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,6,63,0.9838709677419355
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,8,52,0.9838709677419355
+Correlation + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,6,67,0.9838709677419355
+Correlation + Returns + Volatility,3,24,0.9838709677419355
+Drawdown + Momentum + Returns + Topology,4,17,0.9838709677419355
+Correlation + CrossAsset + Eigenvalue + Momentum,4,29,0.9838709677419355
+Correlation + Drawdown + Momentum + Returns + Topology,5,23,0.9838709677419355
+Drawdown + Eigenvalue + Momentum + Topology + Volatility,5,35,0.9838709677419355
+Eigenvalue + Momentum + Returns + Topology,4,24,0.9838709677419355
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + TailRisk,6,40,0.9838709677419355
+Correlation + Momentum + Returns + TailRisk + Topology + Volatility,6,39,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,8,72,0.9838709677419355
+Drawdown + Dynamics + Momentum + Returns + Topology,5,44,0.9838709677419355
+CrossAsset + Drawdown + Eigenvalue + Returns + Volatility,5,37,0.9838709677419355
+Drawdown + Eigenvalue + Returns + Volatility,4,31,0.9838709677419355
+CrossAsset + Eigenvalue + Momentum,3,23,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum,5,32,0.9838709677419355
+Correlation + Returns + Topology + Volatility,4,26,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + Topology,7,39,0.9838709677419355
+Drawdown + Dynamics + Momentum + Returns + TailRisk,5,48,0.9838709677419355
+Correlation + Drawdown + Dynamics + Returns,4,41,0.9838709677419355
+CrossAsset + Drawdown + TailRisk + Topology,4,17,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology,8,66,0.9838709677419355
+Correlation + Drawdown + Returns + TailRisk + Volatility,5,33,0.9838709677419355
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Volatility,7,50,0.9838709677419355
+Correlation + CrossAsset + Eigenvalue + Returns + Topology + Volatility,6,42,0.9838709677419355
+Correlation + Momentum + TailRisk,3,19,0.9838709677419355
+Correlation + CrossAsset + Eigenvalue + Momentum + TailRisk + Volatility,6,48,0.9838709677419355
+Drawdown + Momentum + TailRisk,3,16,0.9838709677419355
+Correlation + Eigenvalue + Returns + Topology + Volatility,5,36,0.9838709677419355
+Correlation + Drawdown + Momentum + TailRisk,4,22,0.9838709677419355
+CrossAsset + Dynamics + Returns + TailRisk + Topology,5,46,0.9838709677419355
+Drawdown + Dynamics + Eigenvalue + Topology + Volatility,5,55,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,8,66,0.9838709677419355
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,60,0.9838709677419355
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,8,69,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + TailRisk + Topology,7,55,0.9838709677419355
+Eigenvalue + Momentum + Topology,3,19,0.9838709677419355
+Correlation + Dynamics + Eigenvalue + Momentum + TailRisk,5,56,0.9838709677419355
+Correlation + Eigenvalue + Momentum + Returns + TailRisk + Topology,6,36,0.9838709677419355
+Dynamics + Eigenvalue + Momentum + TailRisk,4,50,0.9838709677419355
+Momentum + Topology,2,9,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology,7,56,0.9838709677419355
+Correlation + Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology,7,56,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Topology + Volatility,5,30,0.9838709677419355
+Eigenvalue + Momentum + TailRisk,3,23,0.9838709677419355
+Correlation + Eigenvalue + Momentum + TailRisk,4,29,0.9838709677419355
+CrossAsset + Drawdown + Topology + Volatility,4,24,0.9838709677419355
+Dynamics + Momentum + Returns + TailRisk + Topology,5,47,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Momentum + Returns + TailRisk + Topology,7,35,0.9838709677419355
+Correlation + Drawdown + Momentum + Returns + TailRisk + Topology,6,29,0.9838709677419355
+Correlation + CrossAsset + Eigenvalue + Momentum + TailRisk,5,35,0.9838709677419355
+Drawdown + Eigenvalue + Momentum + TailRisk,4,26,0.9838709677419355
+Momentum + Returns + TailRisk + Topology,4,20,0.9838709677419355
+Drawdown + Topology + Volatility,3,18,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology,7,59,0.9838709677419355
+Drawdown + Dynamics + Volatility,3,43,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,7,70,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology + Volatility,8,73,0.9838709677419355
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Momentum + Topology,6,55,0.9838709677419355
+Correlation + Momentum + TailRisk + Topology,4,21,0.9838709677419355
+Drawdown + Dynamics + Eigenvalue + Returns + TailRisk,5,51,0.9838709677419355
+CrossAsset + Drawdown + Returns + Topology,4,16,0.9838709677419355
+CrossAsset + Eigenvalue + Momentum + Returns,4,28,0.9838709677419355
+Drawdown + Momentum + Returns + TailRisk + Topology + Volatility,6,36,0.9838709677419355
+CrossAsset + Drawdown + Eigenvalue + Momentum + Returns,5,31,0.9838709677419355
+Correlation + Eigenvalue + Momentum + Volatility,4,36,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Momentum + TailRisk + Volatility,6,41,0.9838709677419355
+Correlation + CrossAsset + Dynamics + Eigenvalue + Momentum + Returns,6,61,0.9838709677419355
+CrossAsset + Momentum + Returns + TailRisk + Topology + Volatility,6,39,0.9838709677419355
+Correlation + Drawdown + Eigenvalue + Returns + Topology + Volatility,6,39,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Topology,6,54,0.9838709677419355
+Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,7,46,0.9838709677419355
+Correlation + CrossAsset + Dynamics + Returns + TailRisk,5,50,0.9838709677419355
+Drawdown + TailRisk,2,9,0.9838709677419355
+Dynamics + Returns + TailRisk,3,38,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Topology,6,55,0.9838709677419355
+Dynamics + Returns + TailRisk + Topology + Volatility,5,53,0.9838709677419355
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + TailRisk + Topology,7,40,0.9838709677419355
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk + Topology,7,61,0.9838709677419355
+Correlation + Eigenvalue + Momentum + Returns + TailRisk + Topology + Volatility,7,49,0.9838709677419355
+CrossAsset + Eigenvalue + Returns + Topology,4,23,0.9798387096774194
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Topology,5,48,0.9798387096774194
+Correlation + Drawdown + Dynamics + Returns + Topology,5,43,0.9798387096774194
+Drawdown + Momentum,2,10,0.9798387096774194
+Correlation + Dynamics + Returns + Topology,4,40,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue,5,52,0.9798387096774194
+Correlation + Returns + TailRisk + Volatility,4,30,0.9798387096774194
+Drawdown + Dynamics + Returns + Topology,4,37,0.9798387096774194
+CrossAsset + Dynamics + Eigenvalue + Returns + Topology,5,50,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + Topology + Volatility,7,45,0.9798387096774194
+Drawdown + Eigenvalue + Returns + TailRisk + Volatility,5,37,0.9798387096774194
+Returns + TailRisk + Topology + Volatility,4,26,0.9798387096774194
+Correlation + Drawdown + Dynamics + Eigenvalue + Topology,5,48,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + TailRisk + Volatility,5,59,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + Topology,5,44,0.9798387096774194
+Correlation + CrossAsset + Drawdown,3,15,0.9798387096774194
+CrossAsset + Dynamics + Returns + Topology,4,40,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology,6,53,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + Returns + Topology,5,47,0.9798387096774194
+Dynamics + Returns + TailRisk + Topology,4,40,0.9798387096774194
+Correlation + Eigenvalue + Momentum + TailRisk + Topology,5,31,0.9798387096774194
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + Returns,6,58,0.9798387096774194
+CrossAsset + TailRisk,2,12,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Volatility,6,65,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + Volatility,4,53,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + TailRisk + Topology + Volatility,7,63,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Returns + TailRisk,5,26,0.9798387096774194
+Correlation + Dynamics + Returns + TailRisk + Topology + Volatility,6,59,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + TailRisk,4,46,0.9798387096774194
+CrossAsset + Drawdown + Returns + TailRisk + Topology,5,22,0.9798387096774194
+Correlation + Drawdown + Volatility,3,22,0.9798387096774194
+Correlation + Momentum + TailRisk + Topology + Volatility,5,34,0.9798387096774194
+Drawdown + Volatility,2,16,0.9798387096774194
+Drawdown + Dynamics + Returns + TailRisk + Topology,5,43,0.9798387096774194
+Correlation + Drawdown + Dynamics + Returns + TailRisk + Topology,6,49,0.9798387096774194
+CrossAsset + Dynamics + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,63,0.9798387096774194
+Correlation + CrossAsset + Dynamics + Returns + TailRisk + Topology + Volatility,7,65,0.9798387096774194
+Correlation + CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,42,0.9798387096774194
+CrossAsset + Eigenvalue + Momentum + Returns + TailRisk + Topology,6,36,0.9798387096774194
+Eigenvalue + Momentum + Returns + TailRisk + Topology,5,30,0.9798387096774194
+CrossAsset + Eigenvalue + Momentum + TailRisk,4,29,0.9798387096774194
+CrossAsset + Momentum + Returns + TailRisk + Topology,5,26,0.9798387096774194
+Correlation + CrossAsset + Drawdown + TailRisk + Volatility,5,34,0.9798387096774194
+Correlation + Drawdown + Dynamics + Returns + TailRisk,5,47,0.9798387096774194
+Correlation + Eigenvalue + Momentum + Returns,4,28,0.9798387096774194
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology,7,59,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + Topology,7,59,0.9798387096774194
+CrossAsset + Drawdown + Eigenvalue + Momentum,4,26,0.9798387096774194
+Correlation + Eigenvalue + Momentum + Returns + Topology,5,30,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + Momentum + Returns + Topology,6,54,0.9798387096774194
+Correlation + Dynamics + Returns,3,38,0.9798387096774194
+Drawdown + Dynamics + Returns,3,35,0.9798387096774194
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + TailRisk,6,37,0.9798387096774194
+Correlation + Eigenvalue + Momentum + Returns + TailRisk,5,34,0.9798387096774194
+CrossAsset + Drawdown + Eigenvalue + Returns,4,24,0.9798387096774194
+Dynamics + Eigenvalue + Returns + TailRisk,4,48,0.9798387096774194
+CrossAsset + Dynamics + Eigenvalue + Returns,4,48,0.9798387096774194
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns,5,51,0.9798387096774194
+Correlation + Drawdown + Momentum + Returns,4,21,0.9798387096774194
+Correlation + Momentum + Returns + TailRisk,4,24,0.9798387096774194
+Momentum + Returns + TailRisk,3,18,0.9798387096774194
+CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology,6,54,0.9798387096774194
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk,7,63,0.9798387096774194
+Correlation + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk,6,57,0.9798387096774194
+Drawdown + Dynamics + Eigenvalue + Returns,4,45,0.9798387096774194
+Correlation + CrossAsset + Dynamics + Returns + TailRisk + Volatility,6,63,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Returns + Topology + Volatility,6,40,0.9758064516129032
+CrossAsset + Eigenvalue + Returns + Topology + Volatility,5,36,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Returns + TailRisk + Volatility,6,39,0.9758064516129032
+Correlation + Drawdown + Eigenvalue + Topology + Volatility,5,34,0.9758064516129032
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,7,73,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,8,73,0.9758064516129032
+Correlation + CrossAsset + Returns + Topology + Volatility,5,32,0.9758064516129032
+Correlation + CrossAsset + Momentum + Returns + TailRisk + Topology,6,32,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk,7,43,0.9758064516129032
+Correlation + Drawdown + Eigenvalue + Momentum + Topology,5,28,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Dynamics + Returns + TailRisk,6,53,0.9758064516129032
+CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk,6,57,0.9758064516129032
+Eigenvalue + Momentum + Returns + TailRisk,4,28,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Returns + TailRisk,5,31,0.9758064516129032
+Drawdown + TailRisk + Topology,3,11,0.9758064516129032
+CrossAsset + Drawdown + Eigenvalue + Topology,4,21,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Eigenvalue + Volatility,5,38,0.9758064516129032
+CrossAsset + Drawdown + Eigenvalue + Volatility,4,32,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Eigenvalue + Topology,5,27,0.9758064516129032
+Drawdown + Eigenvalue + Volatility,3,26,0.9758064516129032
+Correlation + Momentum + Topology,3,15,0.9758064516129032
+Drawdown + Momentum + Topology,3,12,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Topology,4,22,0.9758064516129032
+CrossAsset + Drawdown + Eigenvalue + Momentum + Topology,5,28,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Returns + Topology,5,27,0.9758064516129032
+Returns + Topology,2,7,0.9758064516129032
+Correlation + Returns + Topology,3,13,0.9758064516129032
+Correlation + CrossAsset + Returns + Topology,4,19,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Returns + Topology,5,22,0.9758064516129032
+Dynamics + Returns + Topology,3,34,0.9758064516129032
+Correlation + CrossAsset + Dynamics + Returns + Topology,5,46,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology,8,45,0.9758064516129032
+CrossAsset + Drawdown + Eigenvalue + Returns + Topology,5,26,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology,6,33,0.9758064516129032
+Drawdown + Dynamics + Momentum + Returns + TailRisk + Topology,6,50,0.9758064516129032
+Dynamics + Eigenvalue + Returns + Topology,4,44,0.9758064516129032
+Correlation + Dynamics + Eigenvalue + Returns + Topology,5,50,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns + TailRisk + Topology,8,65,0.9758064516129032
+Correlation + Dynamics + Returns + TailRisk,4,44,0.9758064516129032
+CrossAsset + Drawdown + Returns + TailRisk,4,20,0.9758064516129032
+Correlation + Drawdown + Dynamics + TailRisk + Topology,5,44,0.9758064516129032
+Dynamics + Eigenvalue + Returns,3,42,0.9758064516129032
+Correlation + Drawdown + Dynamics,3,36,0.9758064516129032
+CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Volatility,6,65,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Eigenvalue,4,25,0.9758064516129032
+Correlation + Eigenvalue + Momentum,3,23,0.9758064516129032
+Drawdown + Eigenvalue + Momentum,3,20,0.9758064516129032
+Correlation + Drawdown + Eigenvalue + Momentum,4,26,0.9758064516129032
+Correlation + Returns,2,11,0.9758064516129032
+Eigenvalue + Momentum + TailRisk + Topology,4,25,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Returns,4,20,0.9758064516129032
+Eigenvalue + Returns,2,15,0.9758064516129032
+Correlation + Drawdown + Dynamics + Eigenvalue + Momentum + TailRisk,6,59,0.9758064516129032
+Correlation + Eigenvalue + Returns,3,21,0.9758064516129032
+Correlation + Drawdown + Eigenvalue + Momentum + Returns,5,31,0.9758064516129032
+Drawdown + Eigenvalue + Momentum + Returns,4,25,0.9758064516129032
+Dynamics + Eigenvalue + Returns + TailRisk + Topology,5,50,0.9758064516129032
+CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk,5,52,0.9758064516129032
+CrossAsset + Dynamics + TailRisk,3,39,0.9758064516129032
+Correlation + Dynamics + Eigenvalue + Returns,4,48,0.9758064516129032
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + Topology,6,56,0.9758064516129032
+Eigenvalue + Momentum + Returns,3,22,0.9758064516129032
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + Returns,6,57,0.9758064516129032
+Returns,1,5,0.9758064516129031
+CrossAsset + Drawdown + Eigenvalue + TailRisk + Topology + Volatility,6,40,0.9758064516129031
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + Topology,6,33,0.9717741935483871
+Correlation + CrossAsset + Eigenvalue + Momentum + TailRisk + Topology,6,37,0.9717741935483871
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,8,75,0.9717741935483871
+Correlation + Drawdown + Eigenvalue + Momentum + TailRisk + Topology,6,34,0.9717741935483871
+CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,69,0.9717741935483871
+Drawdown + Dynamics + Eigenvalue + TailRisk + Topology,5,48,0.9717741935483871
+Correlation + CrossAsset + Returns + TailRisk + Volatility,5,36,0.9717741935483871
+CrossAsset + Returns + Topology,3,13,0.9717741935483871
+CrossAsset + Drawdown + Eigenvalue + Topology + Volatility,5,34,0.9717741935483871
+Drawdown + Returns + TailRisk,3,14,0.9717741935483871
+Correlation + Drawdown + Eigenvalue + Momentum + TailRisk,5,32,0.9717741935483871
+Correlation + CrossAsset + Dynamics + TailRisk + Topology + Volatility,6,60,0.9717741935483871
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns,5,54,0.9717741935483871
+Correlation + CrossAsset + Eigenvalue + Returns,4,27,0.9717741935483871
+Correlation + CrossAsset + Returns,3,17,0.9717741935483871
+Correlation + Drawdown + Dynamics + Eigenvalue,4,46,0.9717741935483871
+CrossAsset + Drawdown + Eigenvalue,3,19,0.9717741935483871
+CrossAsset + Returns + TailRisk + Topology,4,19,0.9717741935483871
+Correlation + Eigenvalue + Returns + Topology,4,23,0.9717741935483871
+Correlation + Momentum + Returns + TailRisk + Topology,5,26,0.9717741935483871
+Drawdown + TailRisk + Volatility,3,22,0.9717741935483871
+Correlation + Drawdown + Eigenvalue + Momentum + Returns + TailRisk + Topology,7,39,0.9717741935483871
+Correlation + CrossAsset + Eigenvalue + Returns + Volatility,5,40,0.9717741935483871
+CrossAsset + Drawdown + Eigenvalue + TailRisk + Volatility,5,38,0.9717741935483871
+Drawdown + Returns + TailRisk + Topology,4,16,0.967741935483871
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk,6,58,0.967741935483871
+Correlation + Drawdown + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,45,0.967741935483871
+Correlation + Dynamics + Eigenvalue + Returns + TailRisk + Topology,6,56,0.967741935483871
+Dynamics + Eigenvalue + Returns + TailRisk + Volatility,5,61,0.967741935483871
+Correlation + Dynamics + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,69,0.967741935483871
+CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Volatility,6,67,0.967741935483871
+Correlation + Drawdown + Eigenvalue + Volatility,4,32,0.967741935483871
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + Topology,6,32,0.967741935483871
+CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Topology,6,32,0.967741935483871
+Correlation + CrossAsset + Returns + TailRisk + Topology,5,25,0.967741935483871
+Correlation + Drawdown + Returns + TailRisk + Topology + Volatility,6,35,0.967741935483871
+Drawdown + TailRisk + Topology + Volatility,4,24,0.967741935483871
+Correlation + CrossAsset + Drawdown + TailRisk + Topology + Volatility,6,36,0.967741935483871
+CrossAsset + Returns + TailRisk + Topology + Volatility,5,32,0.967741935483871
+Correlation + Returns + TailRisk + Topology + Volatility,5,32,0.967741935483871
+Returns + TailRisk,2,11,0.967741935483871
+Correlation + CrossAsset + Drawdown + TailRisk,4,21,0.967741935483871
+Correlation + Drawdown + Topology,3,11,0.967741935483871
+CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,45,0.9677419354838709
+Correlation + CrossAsset + Drawdown + Returns + TailRisk + Topology + Volatility,7,41,0.9677419354838709
+Eigenvalue + Returns + Topology,3,17,0.9677419354838709
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Volatility,7,49,0.9677419354838709
+Correlation + Drawdown + Returns + TailRisk + Topology,5,22,0.9637096774193549
+Correlation + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,7,67,0.9637096774193549
+CrossAsset + Eigenvalue + Returns,3,21,0.9637096774193549
+CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Topology,6,56,0.9637096774193549
+CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk,5,54,0.9637096774193549
+Correlation + Dynamics + Eigenvalue + Returns + TailRisk,5,54,0.9637096774193549
+Correlation + Drawdown + Eigenvalue + Returns + TailRisk + Volatility,6,43,0.9637096774193549
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns,5,30,0.9637096774193549
+Correlation + Dynamics + Returns + TailRisk + Topology,5,46,0.9637096774193549
+Drawdown + Eigenvalue + Topology + Volatility,4,28,0.9637096774193549
+Correlation + CrossAsset + Dynamics + Returns + TailRisk + Topology,6,52,0.9637096774193549
+Eigenvalue + Returns + TailRisk + Topology + Volatility,5,36,0.9637096774193549
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Volatility,7,71,0.9637096774193549
+Drawdown + Returns,2,8,0.9637096774193549
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Topology + Volatility,8,51,0.9637096774193549
+CrossAsset + Returns + TailRisk + Volatility,4,30,0.9637096774193549
+CrossAsset + Dynamics + TailRisk + Topology + Volatility,5,54,0.9637096774193548
+Drawdown + Eigenvalue + Returns + TailRisk + Topology + Volatility,6,39,0.9637096774193548
+CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Volatility,6,43,0.9637096774193548
+CrossAsset + Dynamics + Volatility,3,46,0.9637096774193548
+Correlation + Drawdown + TailRisk + Volatility,4,28,0.9637096774193548
+Correlation + CrossAsset + Eigenvalue + Returns + Topology,5,29,0.9596774193548387
+CrossAsset + TailRisk + Topology + Volatility,4,27,0.9596774193548387
+Correlation + Drawdown + Eigenvalue + Returns + Topology,5,26,0.9596774193548387
+CrossAsset + Eigenvalue + Returns + TailRisk + Topology + Volatility,6,42,0.9596774193548387
+Returns + TailRisk + Topology,3,13,0.9596774193548387
+CrossAsset + Eigenvalue + Returns + TailRisk + Volatility,5,40,0.9596774193548387
+Correlation + CrossAsset + Dynamics + TailRisk + Topology,5,47,0.9596774193548387
+Correlation + Drawdown + Eigenvalue + Topology,4,21,0.9596774193548387
+Correlation + CrossAsset + Drawdown + Eigenvalue + TailRisk + Volatility,6,44,0.9596774193548387
+CrossAsset + Returns + TailRisk,3,17,0.9596774193548387
+Correlation + CrossAsset + Eigenvalue + Returns + TailRisk + Volatility,6,46,0.9596774193548387
+Drawdown + Eigenvalue + Returns,3,18,0.9596774193548387
+Correlation + Drawdown + Eigenvalue + Returns,4,24,0.9596774193548387
+Correlation + CrossAsset + Returns + TailRisk + Topology + Volatility,6,38,0.9596774193548387
+CrossAsset + Drawdown + Eigenvalue + TailRisk + Topology,5,27,0.9596774193548387
+Correlation + Drawdown + Dynamics + Eigenvalue + TailRisk + Volatility,6,65,0.9596774193548386
+CrossAsset + Dynamics + TailRisk + Volatility,4,52,0.9596774193548386
+Correlation + CrossAsset + Drawdown + Returns + TailRisk + Topology,6,28,0.9596774193548386
+Correlation + Drawdown + TailRisk + Topology,4,17,0.9596774193548386
+CrossAsset + Dynamics + Topology + Volatility,4,48,0.9596774193548386
+Correlation + Returns + TailRisk + Topology,4,19,0.9556451612903226
+Correlation + CrossAsset + Drawdown + Dynamics + Eigenvalue + TailRisk + Topology,7,60,0.9556451612903226
+CrossAsset + Dynamics + TailRisk + Topology,4,41,0.9556451612903226
+Drawdown + Eigenvalue + Returns + Topology,4,20,0.9556451612903226
+Drawdown + Returns + Topology,3,10,0.9556451612903226
+Eigenvalue + Returns + TailRisk + Volatility,4,34,0.9556451612903226
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk,6,60,0.9556451612903225
+Correlation + CrossAsset + Drawdown + TailRisk + Topology,5,23,0.9556451612903225
+TailRisk + Topology + Volatility,3,21,0.9556451612903225
+Returns + TailRisk + Volatility,3,24,0.9556451612903225
+CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk,5,30,0.9556451612903225
+Dynamics + Volatility,2,40,0.9556451612903225
+Correlation + Dynamics + Volatility,3,46,0.9556451612903225
+CrossAsset + Topology + Volatility,3,21,0.9556451612903225
+Correlation + Drawdown + Returns,3,14,0.9556451612903225
+Correlation + CrossAsset + Drawdown + Eigenvalue + TailRisk + Topology + Volatility,7,46,0.9556451612903225
+Correlation + CrossAsset + Eigenvalue + Returns + TailRisk + Topology + Volatility,7,48,0.9516129032258065
+Correlation + Drawdown + Eigenvalue,3,19,0.9516129032258065
+Correlation + Drawdown + Dynamics + Eigenvalue + TailRisk,5,52,0.9516129032258065
+Correlation + CrossAsset + Returns + TailRisk,4,23,0.9516129032258065
+Correlation + CrossAsset + TailRisk,3,18,0.9516129032258065
+Correlation + Drawdown + Eigenvalue + TailRisk + Topology + Volatility,6,40,0.9516129032258065
+CrossAsset + Eigenvalue + Returns + TailRisk,4,27,0.9516129032258064
+Dynamics + TailRisk + Topology + Volatility,4,48,0.9516129032258064
+Correlation + Drawdown + Returns + Topology,4,16,0.9516129032258064
+Correlation + Dynamics + TailRisk + Topology + Volatility,5,54,0.9516129032258064
+CrossAsset + Volatility,2,19,0.9516129032258064
+Correlation + CrossAsset + Dynamics + TailRisk + Volatility,5,58,0.9516129032258064
+Correlation + Drawdown + TailRisk,3,15,0.9516129032258064
+Drawdown + Eigenvalue + TailRisk + Topology + Volatility,5,34,0.9516129032258064
+Drawdown + Eigenvalue + Returns + TailRisk + Topology,5,26,0.9516129032258064
+Correlation + CrossAsset + Dynamics + Topology + Volatility,5,54,0.9516129032258064
+Correlation + Drawdown + TailRisk + Topology + Volatility,5,30,0.9516129032258064
+Correlation + Drawdown + Eigenvalue + TailRisk + Volatility,5,38,0.9475806451612904
+Correlation + Eigenvalue + Returns + TailRisk + Volatility,5,40,0.9475806451612904
+Correlation + CrossAsset + Eigenvalue + Returns + TailRisk + Topology,6,35,0.9475806451612904
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk,6,36,0.9475806451612904
+Correlation + Returns + TailRisk,3,17,0.9475806451612904
+TailRisk + Volatility,2,19,0.9475806451612903
+Correlation + CrossAsset + Volatility,3,25,0.9475806451612903
+Correlation + CrossAsset + Drawdown + Eigenvalue + TailRisk,5,31,0.9475806451612903
+Correlation + Drawdown,2,9,0.9475806451612903
+CrossAsset + Dynamics + Eigenvalue + Volatility,4,56,0.9475806451612903
+Correlation + Dynamics + TailRisk,3,39,0.9435483870967742
+Correlation + CrossAsset + Dynamics + TailRisk,4,45,0.9435483870967742
+Correlation + Eigenvalue + Returns + TailRisk + Topology + Volatility,6,42,0.9435483870967742
+Drawdown + Eigenvalue + TailRisk + Volatility,4,32,0.9435483870967742
+CrossAsset + TailRisk + Topology,3,14,0.9435483870967742
+Drawdown + Eigenvalue + TailRisk,3,19,0.9435483870967742
+CrossAsset + Drawdown + Eigenvalue + TailRisk,4,25,0.9435483870967742
+CrossAsset + TailRisk + Volatility,3,25,0.9435483870967741
+Correlation + CrossAsset + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,7,70,0.9435483870967741
+Dynamics + Eigenvalue + Topology + Volatility,4,52,0.9435483870967741
+Correlation + CrossAsset + Dynamics + Volatility,4,52,0.9435483870967741
+Correlation + Drawdown + Eigenvalue + Returns + TailRisk + Topology,6,32,0.9435483870967741
+CrossAsset + Dynamics + Eigenvalue + Topology + Volatility,5,58,0.9435483870967741
+Correlation + CrossAsset + Topology + Volatility,4,27,0.9435483870967741
+CrossAsset + Eigenvalue + Returns + TailRisk + Topology,5,29,0.9435483870967741
+Drawdown + Eigenvalue,2,13,0.9395161290322581
+Correlation + Drawdown + Eigenvalue + Returns + TailRisk,5,30,0.9395161290322581
+CrossAsset + Dynamics + Eigenvalue + TailRisk,4,49,0.9395161290322581
+Dynamics + TailRisk + Volatility,3,46,0.939516129032258
+Dynamics + Eigenvalue + Volatility,3,50,0.939516129032258
+Drawdown + Eigenvalue + TailRisk + Topology,4,21,0.939516129032258
+Correlation + Dynamics + Topology + Volatility,4,48,0.939516129032258
+Correlation + CrossAsset + Drawdown + Eigenvalue + Returns + TailRisk + Topology,7,38,0.939516129032258
+Correlation + CrossAsset + Dynamics + Eigenvalue + Returns + TailRisk + Topology,7,62,0.939516129032258
+Correlation + Dynamics + TailRisk + Volatility,4,52,0.939516129032258
+Dynamics + Eigenvalue + TailRisk + Volatility,4,56,0.939516129032258
+Drawdown + Topology,2,5,0.935483870967742
+Eigenvalue + Returns + TailRisk,3,21,0.935483870967742
+Correlation + CrossAsset + Eigenvalue + TailRisk,4,28,0.935483870967742
+Correlation + Drawdown + Returns + TailRisk,4,20,0.9354838709677419
+Correlation + CrossAsset + Eigenvalue + TailRisk + Topology + Volatility,6,43,0.9354838709677419
+CrossAsset + Dynamics + Eigenvalue + TailRisk + Topology,5,51,0.9354838709677419
+Correlation + CrossAsset + Eigenvalue + Topology + Volatility,5,37,0.9354838709677419
+Correlation + CrossAsset + Dynamics + Eigenvalue + Volatility,5,62,0.9354838709677419
+Correlation + Dynamics + Eigenvalue + Topology + Volatility,5,58,0.9354838709677419
+CrossAsset + Eigenvalue + TailRisk + Volatility,4,35,0.9354838709677419
+Drawdown + Eigenvalue + Returns + TailRisk,4,24,0.9354838709677419
+Correlation + CrossAsset + Eigenvalue + Returns + TailRisk,5,33,0.9354838709677419
+Dynamics + Topology + Volatility,3,42,0.9314516129032259
+Correlation + CrossAsset + Dynamics + Eigenvalue + Topology + Volatility,6,64,0.9314516129032258
+Drawdown + Eigenvalue + Topology,3,15,0.9314516129032258
+Correlation + Eigenvalue + TailRisk + Topology + Volatility,5,37,0.9314516129032258
+TailRisk,1,6,0.9274193548387097
+CrossAsset + Dynamics + Eigenvalue + TailRisk + Volatility,5,62,0.9274193548387096
+Eigenvalue + Returns + TailRisk + Topology,4,23,0.9274193548387096
+Correlation + CrossAsset + TailRisk + Volatility,4,31,0.9274193548387096
+Correlation + CrossAsset + Dynamics + Eigenvalue + Topology,5,51,0.9274193548387096
+Correlation + CrossAsset + TailRisk + Topology + Volatility,5,33,0.9274193548387096
+CrossAsset + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,6,64,0.9274193548387096
+Correlation + Dynamics + Eigenvalue + TailRisk + Topology + Volatility,6,64,0.9274193548387096
+CrossAsset + Dynamics + Eigenvalue,3,43,0.9233870967741935
+Dynamics + TailRisk,2,33,0.9233870967741935
+Correlation + Eigenvalue + Returns + TailRisk + Topology,5,29,0.9233870967741935
+CrossAsset + Dynamics + Topology,3,35,0.9233870967741935
+CrossAsset + Dynamics,2,33,0.9233870967741935
+Correlation + CrossAsset + Dynamics + Topology,4,41,0.9233870967741935
+Correlation + CrossAsset + Drawdown + Eigenvalue + TailRisk + Topology,6,33,0.9233870967741935
+Correlation + CrossAsset + Eigenvalue + TailRisk + Volatility,5,41,0.9233870967741935
+Correlation + CrossAsset + Dynamics,3,39,0.9233870967741935
+Correlation + Drawdown + Eigenvalue + TailRisk,4,25,0.9193548387096775
+Correlation + CrossAsset + Dynamics + Eigenvalue + TailRisk,5,55,0.9193548387096774
+CrossAsset + Eigenvalue + Topology + Volatility,4,31,0.9193548387096774
+Drawdown,1,3,0.9193548387096774
+Correlation + Eigenvalue + Returns + TailRisk,4,27,0.9193548387096774
+Correlation + Dynamics + Eigenvalue + Volatility,4,56,0.9193548387096774
+Correlation + CrossAsset + TailRisk + Topology,4,20,0.9193548387096774
+Correlation + CrossAsset + Dynamics + Eigenvalue + TailRisk + Volatility,6,68,0.9193548387096774
+Dynamics + Eigenvalue + TailRisk + Topology + Volatility,5,58,0.9193548387096774
+CrossAsset + Eigenvalue + Volatility,3,29,0.9193548387096774
+Topology + Volatility,2,15,0.9153225806451614
+Volatility,1,13,0.9153225806451613
+Correlation + TailRisk + Volatility,3,25,0.9153225806451613
+Correlation + TailRisk + Topology + Volatility,4,27,0.9153225806451613
+CrossAsset + Eigenvalue + Topology,3,18,0.9153225806451613
+Eigenvalue + TailRisk + Topology + Volatility,4,31,0.9153225806451613
+Dynamics + TailRisk + Topology,3,35,0.9153225806451613
+Correlation + Dynamics + TailRisk + Topology,4,41,0.9153225806451613
+Correlation + CrossAsset + Dynamics + Eigenvalue,4,49,0.9153225806451613
+CrossAsset + Eigenvalue + TailRisk + Topology + Volatility,5,37,0.9112903225806451
+CrossAsset + Dynamics + Eigenvalue + Topology,4,45,0.9112903225806451
+Correlation + Drawdown + Eigenvalue + TailRisk + Topology,5,27,0.9112903225806451
+Correlation + Dynamics + Eigenvalue + TailRisk + Volatility,5,62,0.9112903225806451
+CrossAsset + Eigenvalue,2,16,0.907258064516129
+Correlation + CrossAsset,2,12,0.907258064516129
+Correlation + CrossAsset + Topology,3,14,0.907258064516129
+CrossAsset + Topology,2,8,0.907258064516129
+Correlation + Dynamics + Eigenvalue + TailRisk + Topology,5,51,0.9032258064516129
+Eigenvalue + Volatility,2,23,0.8991935483870969
+Correlation + CrossAsset + Dynamics + Eigenvalue + TailRisk + Topology,6,57,0.8991935483870968
+CrossAsset + Eigenvalue + TailRisk + Topology,4,24,0.8991935483870968
+Correlation + TailRisk,2,12,0.8991935483870968
+TailRisk + Topology,2,8,0.8951612903225806
+Correlation + Volatility,2,19,0.8951612903225806
+Eigenvalue + TailRisk + Volatility,3,29,0.8951612903225806
+Correlation + Topology + Volatility,3,21,0.8951612903225806
+Correlation + CrossAsset + Eigenvalue + Volatility,4,35,0.8911290322580645
+Correlation + CrossAsset + Eigenvalue + Topology,4,24,0.8911290322580645
+Correlation + CrossAsset + Eigenvalue,3,22,0.8911290322580645
+Correlation + TailRisk + Topology,3,14,0.8870967741935484
+CrossAsset + Eigenvalue + TailRisk,3,22,0.8870967741935484
+Correlation + Eigenvalue + Topology + Volatility,4,31,0.8830645161290323
+Correlation + Eigenvalue + TailRisk + Volatility,4,35,0.8830645161290323
+Eigenvalue + Topology + Volatility,3,25,0.8790322580645161
+Correlation + Eigenvalue + Volatility,3,29,0.8790322580645161
+CrossAsset,1,6,0.8669354838709676
+Dynamics + Eigenvalue + TailRisk,3,43,0.8629032258064516
+Dynamics + Eigenvalue + TailRisk + Topology,4,45,0.8508064516129031
+Correlation + Dynamics + Eigenvalue + TailRisk,4,49,0.8387096774193549
+Correlation + CrossAsset + Eigenvalue + TailRisk + Topology,5,30,0.8306451612903226
+Correlation + Eigenvalue + TailRisk + Topology,4,24,0.8225806451612903
+Eigenvalue + TailRisk,2,16,0.8185483870967741
+Eigenvalue + TailRisk + Topology,3,18,0.7983870967741935
+Correlation + Eigenvalue + TailRisk,3,22,0.7862903225806451
+Correlation + Dynamics + Topology,3,35,0.7338709677419355
+Dynamics + Eigenvalue + Topology,3,39,0.6612903225806452
+Dynamics + Eigenvalue,2,37,0.6209677419354839
+Correlation + Dynamics + Eigenvalue + Topology,4,45,0.564516129032258
+Dynamics,1,27,0.5564516129032258
+Correlation + Dynamics,2,33,0.5362903225806452
+Dynamics + Topology,2,29,0.5201612903225807
+Correlation + Eigenvalue,2,16,0.43951612903225806
+Correlation + Topology,2,8,0.3870967741935484
+Correlation + Dynamics + Eigenvalue,3,43,0.3709677419354839
+Correlation + Eigenvalue + Topology,3,18,0.31854838709677424
+Eigenvalue,1,10,0.3084677419354839
+Correlation,1,6,0.2903225806451613
+Eigenvalue + Topology,2,12,0.10685483870967744
+Topology,1,2,0.03830645161290319
