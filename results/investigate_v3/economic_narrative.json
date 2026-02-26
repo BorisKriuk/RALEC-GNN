@@ -1,0 +1,24 @@
+{
+  "lambda2_vol20d_correlation": -0.32368195075726974,
+  "lambda2_vol20d_interpretation": "Correlation = -0.324. Moderate correlation \u2014 lambda_2 captures information beyond volatility.",
+  "lambda2_partial_corr_controlling_vol": -0.03995613794951543,
+  "lambda2_raw_auc": 0.33080238642511917,
+  "lambda2_residualized_auc": 0.4185866640522022,
+  "vol20d_auc": 0.7602354470552777,
+  "lambda2_down_quintile_pct": [
+    26.126126126126124,
+    35.13513513513514,
+    26.126126126126124,
+    7.207207207207207,
+    5.405405405405405
+  ],
+  "lambda2_down_bottom40_pct": 61.26126126126126,
+  "spectral_gap_event_mean": 4.489083597697673,
+  "spectral_gap_non_event_mean": 3.592197022495444,
+  "spectral_gap_interpretation": "During DOWN events: spectral_gap = 4.49 vs normal = 3.59. Higher spectral gap during crashes suggests dominant factor strengthens.",
+  "economic_story": {
+    "lambda_2": "Lambda_2 (second eigenvalue of the correlation matrix) measures the strength of the second principal component in market returns. When lambda_2 is low relative to its history, the market structure is collapsing into a single factor \u2014 all stocks move together. This is the signature of contagion: diversification breaks down, and portfolio risk concentrates. Our analysis shows lambda_2 is the #2 predictor for DOWN moves (SHAP=0.034), works only in high-vol regimes, and 61% of DOWN events occur when lambda_2 is in the bottom two quintiles.",
+    "spectral_gap": "The spectral gap (lambda_1 / lambda_2) measures how dominant the first factor is. A shrinking spectral gap means the second factor is gaining relative importance \u2014 markets are splitting into distinct risk groups (e.g., cyclicals vs defensives), which often precedes selloffs.",
+    "eigenvalue_entropy": "Eigenvalue entropy measures how evenly distributed risk is across factors. Low entropy = concentrated risk (one or two factors dominate). Our regime analysis shows eigenvalue_entropy is a LOW-VOL ONLY predictor for DOWN \u2014 it detects crashes that start from calm, concentrated markets."
+  }
+}

@@ -1,0 +1,20 @@
+UP: Oversold bounce
+  Direction: LONG
+  Conditions: drawdown_60d < P25 AND volatility_10d < P75
+  Min RF prob: 0.3
+
+UP: Deep drawdown + low momentum
+  Direction: LONG
+  Conditions: drawdown_60d < P25 AND return_60d < P10
+  Min RF prob: 0.3
+
+DOWN: Vol spike + spectral
+  Direction: SHORT
+  Conditions: volatility_20d > P75 AND lambda_2 > P50
+  Min RF prob: 0.3
+
+DOWN: Drawdown + vol cluster
+  Direction: SHORT
+  Conditions: drawdown_60d < P25 AND volatility_10d < P75
+  Min RF prob: 0.3
+

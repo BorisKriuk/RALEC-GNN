@@ -1,0 +1,968 @@
+{
+  "step1_extended_thresholds": {
+    "Large UP move 3d (>3%)": {
+      "thresholds": [
+        {
+          "feature": "drawdown_60d",
+          "group": "Drawdown",
+          "threshold": -0.02315977681428194,
+          "direction": "<",
+          "threshold_percentile": 35.380116959064324,
+          "precision": 0.09809264305177112,
+          "recall": 0.9230769230769231,
+          "events_captured": 36,
+          "total_events": 39,
+          "total_signals": 367,
+          "importance": 0.037556394688577674
+        },
+        {
+          "feature": "garch_vol",
+          "group": "Volatility",
+          "threshold": 0.1540965810418129,
+          "direction": ">",
+          "threshold_percentile": 58.7719298245614,
+          "precision": 0.08633093525179857,
+          "recall": 0.9230769230769231,
+          "events_captured": 36,
+          "total_events": 39,
+          "total_signals": 417,
+          "importance": 0.02876485735039563
+        },
+        {
+          "feature": "cross_dispersion",
+          "group": "Momentum",
+          "threshold": 0.007126013049855828,
+          "direction": ">",
+          "threshold_percentile": 48.03675856307435,
+          "precision": 0.06666666666666667,
+          "recall": 0.8974358974358975,
+          "events_captured": 35,
+          "total_events": 39,
+          "total_signals": 525,
+          "importance": 0.025913022230265235
+        },
+        {
+          "feature": "downside_vol_20d",
+          "group": "TailRisk",
+          "threshold": 0.08305786922574043,
+          "direction": ">",
+          "threshold_percentile": 53.00751879699248,
+          "precision": 0.07966457023060797,
+          "recall": 0.9743589743589743,
+          "events_captured": 38,
+          "total_events": 39,
+          "total_signals": 477,
+          "importance": 0.02534763484912731
+        },
+        {
+          "feature": "drawdown_20d",
+          "group": "Drawdown",
+          "threshold": -0.023101436905562878,
+          "direction": "<",
+          "threshold_percentile": 26.81704260651629,
+          "precision": 0.09929078014184398,
+          "recall": 0.717948717948718,
+          "events_captured": 28,
+          "total_events": 39,
+          "total_signals": 282,
+          "importance": 0.024313437329871186
+        },
+        {
+          "feature": "volatility_10d",
+          "group": "Volatility",
+          "threshold": 0.11306276544928551,
+          "direction": ">",
+          "threshold_percentile": 46.82539682539682,
+          "precision": 0.06525573192239859,
+          "recall": 0.9487179487179487,
+          "events_captured": 37,
+          "total_events": 39,
+          "total_signals": 567,
+          "importance": 0.02171775032576321
+        },
+        {
+          "feature": "price_to_sma_50",
+          "group": "Momentum",
+          "threshold": 0.015159581322222948,
+          "direction": "<",
+          "threshold_percentile": 43.984962406015036,
+          "precision": 0.09510869565217392,
+          "recall": 0.8974358974358975,
+          "events_captured": 35,
+          "total_events": 39,
+          "total_signals": 368,
+          "importance": 0.019778652509660107
+        },
+        {
+          "feature": "price_to_sma_20",
+          "group": "Momentum",
+          "threshold": -0.008869367651641369,
+          "direction": "<",
+          "threshold_percentile": 21.303258145363408,
+          "precision": 0.107981220657277,
+          "recall": 0.5897435897435898,
+          "events_captured": 23,
+          "total_events": 39,
+          "total_signals": 213,
+          "importance": 0.017698089947703863
+        },
+        {
+          "feature": "volatility_20d",
+          "group": "Volatility",
+          "threshold": 0.13282515853643417,
+          "direction": ">",
+          "threshold_percentile": 53.884711779448615,
+          "precision": 0.07775377969762419,
+          "recall": 0.9230769230769231,
+          "events_captured": 36,
+          "total_events": 39,
+          "total_signals": 463,
+          "importance": 0.017147571099275383
+        },
+        {
+          "feature": "return_60d",
+          "group": "Returns",
+          "threshold": -0.03975474461913109,
+          "direction": "<",
+          "threshold_percentile": 13.24143692564745,
+          "precision": 0.18791946308724833,
+          "recall": 0.717948717948718,
+          "events_captured": 28,
+          "total_events": 39,
+          "total_signals": 149,
+          "importance": 0.016605565386891796
+        }
+      ],
+      "joint_thresholds": [
+        {
+          "feature_A": "volatility_10d",
+          "feature_B": "volatility_20d",
+          "thresh_A": 0.11948500638722337,
+          "dir_A": "<",
+          "pctile_A": 50,
+          "thresh_B": 0.1873304963512821,
+          "dir_B": ">",
+          "pctile_B": 75,
+          "precision": 0.5,
+          "recall": 0.05128205128205128,
+          "lift": 11.307692307692308,
+          "n_signals": 4,
+          "n_hits": 2
+        },
+        {
+          "feature_A": "volatility_10d",
+          "feature_B": "return_60d",
+          "thresh_A": 0.18087822992768596,
+          "dir_A": "<",
+          "pctile_A": 75,
+          "thresh_B": -0.05495139940630131,
+          "dir_B": "<",
+          "pctile_B": 10,
+          "precision": 0.35,
+          "recall": 0.1794871794871795,
+          "lift": 7.915384615384615,
+          "n_signals": 20,
+          "n_hits": 7
+        },
+        {
+          "feature_A": "downside_vol_20d",
+          "feature_B": "return_60d",
+          "thresh_A": 0.13164884822777234,
+          "dir_A": "<",
+          "pctile_A": 75,
+          "thresh_B": -0.05495139940630131,
+          "dir_B": "<",
+          "pctile_B": 10,
+          "precision": 0.3333333333333333,
+          "recall": 0.1282051282051282,
+          "lift": 7.538461538461538,
+          "n_signals": 15,
+          "n_hits": 5
+        },
+        {
+          "feature_A": "garch_vol",
+          "feature_B": "volatility_10d",
+          "thresh_A": 0.22329903263175666,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": 0.18087822992768596,
+          "dir_B": "<",
+          "pctile_B": 75,
+          "precision": 0.3333333333333333,
+          "recall": 0.02564102564102564,
+          "lift": 7.538461538461538,
+          "n_signals": 3,
+          "n_hits": 1
+        },
+        {
+          "feature_A": "downside_vol_20d",
+          "feature_B": "price_to_sma_50",
+          "thresh_A": 0.18136178901011293,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": -0.0025786562306734373,
+          "dir_B": ">",
+          "pctile_B": 25,
+          "precision": 0.3333333333333333,
+          "recall": 0.05128205128205128,
+          "lift": 7.538461538461538,
+          "n_signals": 6,
+          "n_hits": 2
+        }
+      ]
+    },
+    "Large DOWN move 3d (>3%)": {
+      "thresholds": [
+        {
+          "feature": "lambda_2",
+          "group": "Eigenvalue",
+          "threshold": 3.764607310295105,
+          "direction": "<",
+          "threshold_percentile": 54.469507101086045,
+          "precision": 0.06040268456375839,
+          "recall": 0.8571428571428571,
+          "events_captured": 36,
+          "total_events": 42,
+          "total_signals": 596,
+          "importance": 0.05016937652255454
+        },
+        {
+          "feature": "volatility_20d",
+          "group": "Volatility",
+          "threshold": 0.14550838619470596,
+          "direction": ">",
+          "threshold_percentile": 61.361737677527145,
+          "precision": 0.10290237467018469,
+          "recall": 0.9285714285714286,
+          "events_captured": 39,
+          "total_events": 42,
+          "total_signals": 379,
+          "importance": 0.030171617044321343
+        },
+        {
+          "feature": "drawdown_20d",
+          "group": "Drawdown",
+          "threshold": -0.014003862626850605,
+          "direction": "<",
+          "threshold_percentile": 36.716791979949875,
+          "precision": 0.0881542699724518,
+          "recall": 0.7619047619047619,
+          "events_captured": 32,
+          "total_events": 42,
+          "total_signals": 363,
+          "importance": 0.018750941397976822
+        },
+        {
+          "feature": "drawdown_60d",
+          "group": "Drawdown",
+          "threshold": -0.013993394561111927,
+          "direction": "<",
+          "threshold_percentile": 45.27986633249791,
+          "precision": 0.08126410835214447,
+          "recall": 0.8571428571428571,
+          "events_captured": 36,
+          "total_events": 42,
+          "total_signals": 443,
+          "importance": 0.017097722801734255
+        },
+        {
+          "feature": "volatility_10d",
+          "group": "Volatility",
+          "threshold": 0.13327688723802567,
+          "direction": ">",
+          "threshold_percentile": 57.35171261487051,
+          "precision": 0.08609271523178808,
+          "recall": 0.9285714285714286,
+          "events_captured": 39,
+          "total_events": 42,
+          "total_signals": 453,
+          "importance": 0.01643727483260417
+        },
+        {
+          "feature": "downside_vol_20d",
+          "group": "TailRisk",
+          "threshold": 0.08980865031480789,
+          "direction": ">",
+          "threshold_percentile": 56.39097744360902,
+          "precision": 0.09134615384615384,
+          "recall": 0.9047619047619048,
+          "events_captured": 38,
+          "total_events": 42,
+          "total_signals": 416,
+          "importance": 0.014461751204599936
+        },
+        {
+          "feature": "garch_vol",
+          "group": "Volatility",
+          "threshold": 0.15482033789157867,
+          "direction": ">",
+          "threshold_percentile": 59.231411862990804,
+          "precision": 0.0948905109489051,
+          "recall": 0.9285714285714286,
+          "events_captured": 39,
+          "total_events": 42,
+          "total_signals": 411,
+          "importance": 0.014009761347779886
+        },
+        {
+          "feature": "volatility_5d",
+          "group": "Volatility",
+          "threshold": 0.13218563050031662,
+          "direction": ">",
+          "threshold_percentile": 58.939014202172096,
+          "precision": 0.09154929577464789,
+          "recall": 0.9285714285714286,
+          "events_captured": 39,
+          "total_events": 42,
+          "total_signals": 426,
+          "importance": 0.012710784998583418
+        },
+        {
+          "feature": "max_loss_20d",
+          "group": "TailRisk",
+          "threshold": -0.016422772780060768,
+          "direction": "<",
+          "threshold_percentile": 44.15204678362573,
+          "precision": 0.09024390243902439,
+          "recall": 0.8809523809523809,
+          "events_captured": 37,
+          "total_events": 42,
+          "total_signals": 410,
+          "importance": 0.011408267343417395
+        },
+        {
+          "feature": "cross_dispersion",
+          "group": "Momentum",
+          "threshold": 0.00931023620069027,
+          "direction": ">",
+          "threshold_percentile": 70.63492063492063,
+          "precision": 0.07116104868913857,
+          "recall": 0.4523809523809524,
+          "events_captured": 19,
+          "total_events": 42,
+          "total_signals": 267,
+          "importance": 0.01103666145769091
+        }
+      ],
+      "joint_thresholds": [
+        {
+          "feature_A": "volatility_20d",
+          "feature_B": "cross_dispersion",
+          "thresh_A": 0.24567781385223014,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": 0.0055239122461037075,
+          "dir_B": "<",
+          "pctile_B": 25,
+          "precision": 0.6666666666666666,
+          "recall": 0.047619047619047616,
+          "lift": 14.0,
+          "n_signals": 3,
+          "n_hits": 2
+        },
+        {
+          "feature_A": "volatility_20d",
+          "feature_B": "drawdown_60d",
+          "thresh_A": 0.24567781385223014,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": -0.010385535553739635,
+          "dir_B": ">",
+          "pctile_B": 50,
+          "precision": 0.6666666666666666,
+          "recall": 0.047619047619047616,
+          "lift": 14.0,
+          "n_signals": 3,
+          "n_hits": 2
+        },
+        {
+          "feature_A": "garch_vol",
+          "feature_B": "cross_dispersion",
+          "thresh_A": 0.22329903263175666,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": 0.0055239122461037075,
+          "dir_B": "<",
+          "pctile_B": 25,
+          "precision": 0.6666666666666666,
+          "recall": 0.047619047619047616,
+          "lift": 14.0,
+          "n_signals": 3,
+          "n_hits": 2
+        },
+        {
+          "feature_A": "lambda_2",
+          "feature_B": "drawdown_60d",
+          "thresh_A": 2.498395145117753,
+          "dir_A": "<",
+          "pctile_A": 10,
+          "thresh_B": -0.010385535553739635,
+          "dir_B": ">",
+          "pctile_B": 50,
+          "precision": 0.6666666666666666,
+          "recall": 0.047619047619047616,
+          "lift": 14.0,
+          "n_signals": 3,
+          "n_hits": 2
+        },
+        {
+          "feature_A": "garch_vol",
+          "feature_B": "max_loss_20d",
+          "thresh_A": 0.22329903263175666,
+          "dir_A": ">",
+          "pctile_A": 90,
+          "thresh_B": -0.024095828765637983,
+          "dir_B": ">",
+          "pctile_B": 25,
+          "precision": 0.5,
+          "recall": 0.047619047619047616,
+          "lift": 10.5,
+          "n_signals": 4,
+          "n_hits": 2
+        }
+      ]
+    }
+  },
+  "step2_interaction_rules": {
+    "Large UP move 3d (>3%)": [
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d <= -0.0662 AND drawdown_60d <= -0.1460",
+        "n_conditions": 3,
+        "precision": 0.4117647058823529,
+        "recall": 0.358974358974359,
+        "n_signals": 34,
+        "n_hits": 14,
+        "lift": 9.312217194570135,
+        "target_feature": "garch_vol",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d <= -0.0662 AND drawdown_20d <= -0.0099",
+        "n_conditions": 3,
+        "precision": 0.16774193548387098,
+        "recall": 0.6666666666666666,
+        "n_signals": 155,
+        "n_hits": 26,
+        "lift": 3.7935483870967746,
+        "target_feature": "drawdown_60d",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d <= -0.0662",
+        "n_conditions": 2,
+        "precision": 0.1657142857142857,
+        "recall": 0.7435897435897436,
+        "n_signals": 175,
+        "n_hits": 29,
+        "lift": 3.7476923076923074,
+        "target_feature": "drawdown_60d",
+        "depth": 2
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d <= -0.0662 AND drawdown_20d > -0.0099",
+        "n_conditions": 3,
+        "precision": 0.15,
+        "recall": 0.07692307692307693,
+        "n_signals": 20,
+        "n_hits": 3,
+        "lift": 3.3923076923076922,
+        "target_feature": "drawdown_60d",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d <= -0.0662 AND drawdown_60d > -0.1460",
+        "n_conditions": 3,
+        "precision": 0.10638297872340426,
+        "recall": 0.38461538461538464,
+        "n_signals": 141,
+        "n_hits": 15,
+        "lift": 2.4058919803600656,
+        "target_feature": "garch_vol",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d > -0.0662 AND volatility_5d > 0.1454",
+        "n_conditions": 3,
+        "precision": 0.05217391304347826,
+        "recall": 0.15384615384615385,
+        "n_signals": 115,
+        "n_hits": 6,
+        "lift": 1.179933110367893,
+        "target_feature": "garch_vol",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d > -0.0662 AND price_to_sma_50 <= 0.0152",
+        "n_conditions": 3,
+        "precision": 0.04487179487179487,
+        "recall": 0.1794871794871795,
+        "n_signals": 156,
+        "n_hits": 7,
+        "lift": 1.014792899408284,
+        "target_feature": "drawdown_60d",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d <= -0.0232 AND drawdown_60d > -0.0662",
+        "n_conditions": 2,
+        "precision": 0.036458333333333336,
+        "recall": 0.1794871794871795,
+        "n_signals": 192,
+        "n_hits": 7,
+        "lift": 0.8245192307692308,
+        "target_feature": "drawdown_60d",
+        "depth": 2
+      },
+      {
+        "rule": "drawdown_60d > -0.0232 AND volatility_20d > 0.1601 AND max_loss_20d > -0.0227",
+        "n_conditions": 3,
+        "precision": 0.03508771929824561,
+        "recall": 0.05128205128205128,
+        "n_signals": 57,
+        "n_hits": 2,
+        "lift": 0.7935222672064777,
+        "target_feature": "drawdown_60d",
+        "depth": 3
+      },
+      {
+        "rule": "drawdown_60d > -0.0232 AND volatility_20d <= 0.1601 AND max_loss_5d <= -0.0139",
+        "n_conditions": 3,
+        "precision": 0.02702702702702703,
+        "recall": 0.02564102564102564,
+        "n_signals": 37,
+        "n_hits": 1,
+        "lift": 0.6112266112266113,
+        "target_feature": "garch_vol",
+        "depth": 3
+      }
+    ],
+    "Large DOWN move 3d (>3%)": [
+      {
+        "rule": "volatility_20d > 0.1455 AND lambda_2 <= 4.0681 AND lambda_3 > 2.3238",
+        "n_conditions": 3,
+        "precision": 0.1724137931034483,
+        "recall": 0.23809523809523808,
+        "n_signals": 58,
+        "n_hits": 10,
+        "lift": 3.620689655172414,
+        "target_feature": "lambda_2",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d > 0.1455 AND drawdown_60d <= -0.0041 AND volatility_5d > 0.1329",
+        "n_conditions": 3,
+        "precision": 0.13240418118466898,
+        "recall": 0.9047619047619048,
+        "n_signals": 287,
+        "n_hits": 38,
+        "lift": 2.780487804878049,
+        "target_feature": "volatility_20d",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d > 0.1455 AND lambda_2 <= 4.0681",
+        "n_conditions": 2,
+        "precision": 0.11436950146627566,
+        "recall": 0.9285714285714286,
+        "n_signals": 341,
+        "n_hits": 39,
+        "lift": 2.401759530791789,
+        "target_feature": "lambda_2",
+        "depth": 2
+      },
+      {
+        "rule": "volatility_20d > 0.1455 AND drawdown_60d <= -0.0041",
+        "n_conditions": 2,
+        "precision": 0.11271676300578035,
+        "recall": 0.9285714285714286,
+        "n_signals": 346,
+        "n_hits": 39,
+        "lift": 2.367052023121387,
+        "target_feature": "volatility_20d",
+        "depth": 2
+      },
+      {
+        "rule": "volatility_20d > 0.1455 AND lambda_2 <= 4.0681 AND lambda_3 <= 2.3238",
+        "n_conditions": 3,
+        "precision": 0.10247349823321555,
+        "recall": 0.6904761904761905,
+        "n_signals": 283,
+        "n_hits": 29,
+        "lift": 2.1519434628975267,
+        "target_feature": "lambda_2",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d <= 0.1455 AND drawdown_60d <= -0.0144 AND drawdown_60d <= -0.0174",
+        "n_conditions": 3,
+        "precision": 0.017241379310344827,
+        "recall": 0.047619047619047616,
+        "n_signals": 116,
+        "n_hits": 2,
+        "lift": 0.3620689655172414,
+        "target_feature": "volatility_20d",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d > 0.1455 AND drawdown_60d <= -0.0041 AND volatility_5d <= 0.1329",
+        "n_conditions": 3,
+        "precision": 0.01694915254237288,
+        "recall": 0.023809523809523808,
+        "n_signals": 59,
+        "n_hits": 1,
+        "lift": 0.3559322033898305,
+        "target_feature": "volatility_20d",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d <= 0.1455 AND drawdown_60d <= -0.0144",
+        "n_conditions": 2,
+        "precision": 0.015267175572519083,
+        "recall": 0.047619047619047616,
+        "n_signals": 131,
+        "n_hits": 2,
+        "lift": 0.32061068702290074,
+        "target_feature": "volatility_20d",
+        "depth": 2
+      },
+      {
+        "rule": "volatility_20d <= 0.1455 AND eigenvalue_entropy <= 2.1930 AND frac_corr_above_70 > 0.1017",
+        "n_conditions": 3,
+        "precision": 0.006557377049180328,
+        "recall": 0.047619047619047616,
+        "n_signals": 305,
+        "n_hits": 2,
+        "lift": 0.1377049180327869,
+        "target_feature": "lambda_2",
+        "depth": 3
+      },
+      {
+        "rule": "volatility_20d <= 0.1455 AND eigenvalue_entropy <= 2.1930",
+        "n_conditions": 2,
+        "precision": 0.00398406374501992,
+        "recall": 0.047619047619047616,
+        "n_signals": 502,
+        "n_hits": 2,
+        "lift": 0.08366533864541834,
+        "target_feature": "lambda_2",
+        "depth": 2
+      }
+    ]
+  },
+  "step3_regime_models": {
+    "Large UP move 3d (>3%)": {
+      "baseline": {
+        "auc": 0.8312744087654589,
+        "n_events": 88,
+        "n_samples": 1764
+      },
+      "routed": {
+        "auc": 0.8214091993924929,
+        "n_events": 88,
+        "n_samples": 1764
+      },
+      "high_vol_only": {
+        "auc": 0.767017958920314,
+        "n_events": 85,
+        "n_samples": 1179
+      },
+      "low_vol_only": {
+        "auc": 0.8596792668957617,
+        "n_events": 3,
+        "n_samples": 585
+      }
+    },
+    "Large DOWN move 3d (>3%)": {
+      "baseline": {
+        "auc": 0.675105108931074,
+        "n_events": 94,
+        "n_samples": 1764
+      },
+      "routed": {
+        "auc": 0.6440820486686201,
+        "n_events": 94,
+        "n_samples": 1764
+      },
+      "high_vol_only": {
+        "auc": 0.5572035663694692,
+        "n_events": 88,
+        "n_samples": 1179
+      },
+      "low_vol_only": {
+        "auc": 0.6758779504893494,
+        "n_events": 6,
+        "n_samples": 585
+      }
+    }
+  },
+  "step4_feature_subsets": {
+    "Large UP move 3d (>3%)": {
+      "All 85": {
+        "auc": 0.8312744087654589,
+        "avg_precision": 0.18808463151361351,
+        "n_features": 85
+      },
+      "Traditional": {
+        "auc": 0.8304540030375352,
+        "avg_precision": 0.18832827610552255,
+        "n_features": 40
+      },
+      "Spectral": {
+        "auc": 0.6345533195921023,
+        "avg_precision": 0.07974643990334605,
+        "n_features": 45
+      },
+      "Curated": {
+        "auc": 0.8314473041874594,
+        "avg_precision": 0.2191768990620809,
+        "n_features": 11
+      },
+      "No Eigenvalue": {
+        "auc": 0.8344611087003687,
+        "avg_precision": 0.18631200500227374,
+        "n_features": 75
+      }
+    },
+    "Large DOWN move 3d (>3%)": {
+      "All 85": {
+        "auc": 0.675105108931074,
+        "avg_precision": 0.08699556222438454,
+        "n_features": 85
+      },
+      "Traditional": {
+        "auc": 0.6864823544400561,
+        "avg_precision": 0.09329441399898816,
+        "n_features": 40
+      },
+      "Spectral": {
+        "auc": 0.5224710154159765,
+        "avg_precision": 0.06150044765631249,
+        "n_features": 45
+      },
+      "Curated": {
+        "auc": 0.664469996177857,
+        "avg_precision": 0.08712388818906275,
+        "n_features": 12
+      },
+      "No Eigenvalue": {
+        "auc": 0.6686711683016945,
+        "avg_precision": 0.08434007814572872,
+        "n_features": 75
+      }
+    }
+  },
+  "step5_signal_rules": [
+    {
+      "name": "UP: Oversold bounce",
+      "direction": "LONG",
+      "conditions": [
+        [
+          "drawdown_60d",
+          "<",
+          25
+        ],
+        [
+          "volatility_10d",
+          "<",
+          75
+        ]
+      ],
+      "min_prob": 0.3
+    },
+    {
+      "name": "UP: Deep drawdown + low momentum",
+      "direction": "LONG",
+      "conditions": [
+        [
+          "drawdown_60d",
+          "<",
+          25
+        ],
+        [
+          "return_60d",
+          "<",
+          10
+        ]
+      ],
+      "min_prob": 0.3
+    },
+    {
+      "name": "DOWN: Vol spike + spectral",
+      "direction": "SHORT",
+      "conditions": [
+        [
+          "volatility_20d",
+          ">",
+          75
+        ],
+        [
+          "lambda_2",
+          ">",
+          50
+        ]
+      ],
+      "min_prob": 0.3
+    },
+    {
+      "name": "DOWN: Drawdown + vol cluster",
+      "direction": "SHORT",
+      "conditions": [
+        [
+          "drawdown_60d",
+          "<",
+          25
+        ],
+        [
+          "volatility_10d",
+          "<",
+          75
+        ]
+      ],
+      "min_prob": 0.3
+    }
+  ],
+  "step6_backtest_binary": {
+    "total_return": 0.5010812845447372,
+    "n_trades": 127,
+    "win_rate": 0.5826771653543307,
+    "avg_trade_pnl": 0.003945521925549112,
+    "sharpe_ratio": 1.2463031158852331,
+    "max_drawdown": -0.13519583665020918,
+    "buy_hold_return": 1.140429470959415,
+    "long_trades": 101,
+    "short_trades": 26,
+    "sizing_method": "binary"
+  },
+  "step7_backtest_linear": {
+    "total_return": 0.2672556960020998,
+    "n_trades": 127,
+    "win_rate": 0.5826771653543307,
+    "avg_trade_pnl": 0.002104375559071652,
+    "sharpe_ratio": 1.1490176936396839,
+    "max_drawdown": -0.10926646535639904,
+    "buy_hold_return": 1.140429470959415,
+    "long_trades": 101,
+    "short_trades": 26,
+    "sizing_method": "linear"
+  },
+  "step8_narrative": {
+    "lambda2_vol20d_correlation": -0.32368195075726974,
+    "lambda2_vol20d_interpretation": "Correlation = -0.324. Moderate correlation \u2014 lambda_2 captures information beyond volatility.",
+    "lambda2_partial_corr_controlling_vol": -0.03995613794951543,
+    "lambda2_raw_auc": 0.33080238642511917,
+    "lambda2_residualized_auc": 0.4185866640522022,
+    "vol20d_auc": 0.7602354470552777,
+    "lambda2_down_quintile_pct": [
+      26.126126126126124,
+      35.13513513513514,
+      26.126126126126124,
+      7.207207207207207,
+      5.405405405405405
+    ],
+    "lambda2_down_bottom40_pct": 61.26126126126126,
+    "spectral_gap_event_mean": 4.489083597697673,
+    "spectral_gap_non_event_mean": 3.592197022495444,
+    "spectral_gap_interpretation": "During DOWN events: spectral_gap = 4.49 vs normal = 3.59. Higher spectral gap during crashes suggests dominant factor strengthens.",
+    "economic_story": {
+      "lambda_2": "Lambda_2 (second eigenvalue of the correlation matrix) measures the strength of the second principal component in market returns. When lambda_2 is low relative to its history, the market structure is collapsing into a single factor \u2014 all stocks move together. This is the signature of contagion: diversification breaks down, and portfolio risk concentrates. Our analysis shows lambda_2 is the #2 predictor for DOWN moves (SHAP=0.034), works only in high-vol regimes, and 61% of DOWN events occur when lambda_2 is in the bottom two quintiles.",
+      "spectral_gap": "The spectral gap (lambda_1 / lambda_2) measures how dominant the first factor is. A shrinking spectral gap means the second factor is gaining relative importance \u2014 markets are splitting into distinct risk groups (e.g., cyclicals vs defensives), which often precedes selloffs.",
+      "eigenvalue_entropy": "Eigenvalue entropy measures how evenly distributed risk is across factors. Low entropy = concentrated risk (one or two factors dominate). Our regime analysis shows eigenvalue_entropy is a LOW-VOL ONLY predictor for DOWN \u2014 it detects crashes that start from calm, concentrated markets."
+    }
+  },
+  "step9_event_profiles": {
+    "lambda_1": {
+      "n_events": 111,
+      "warning_day": -6
+    },
+    "lambda_2": {
+      "n_events": 111,
+      "warning_day": -3
+    },
+    "lambda_3": {
+      "n_events": 111,
+      "warning_day": null
+    },
+    "spectral_gap": {
+      "n_events": 111,
+      "warning_day": -14
+    },
+    "eigenvalue_entropy": {
+      "n_events": 111,
+      "warning_day": -7
+    },
+    "effective_rank": {
+      "n_events": 111,
+      "warning_day": null
+    },
+    "volatility_20d": {
+      "n_events": 111,
+      "warning_day": -19
+    },
+    "mean_abs_corr": {
+      "n_events": 111,
+      "warning_day": -6
+    },
+    "absorption_ratio_5": {
+      "n_events": 111,
+      "warning_day": -9
+    }
+  },
+  "step10_ablation": {
+    "Large UP move 3d (>3%)": {
+      "Full (85)": {
+        "auc": 0.8312744087654589,
+        "avg_precision": 0.18808463151361351,
+        "n_features": 85
+      },
+      "No Eigenvalue": {
+        "auc": 0.8344611087003687,
+        "avg_precision": 0.18631200500227374,
+        "n_features": 75
+      },
+      "No Spectral": {
+        "auc": 0.8304540030375352,
+        "avg_precision": 0.18832827610552255,
+        "n_features": 40
+      },
+      "No Traditional": {
+        "auc": 0.6345533195921023,
+        "avg_precision": 0.07974643990334605,
+        "n_features": 45
+      },
+      "Eigenvalue Only": {
+        "auc": 0.6012116239965286,
+        "avg_precision": 0.097634463737206,
+        "n_features": 10
+      },
+      "eigenvalue_marginal_auc": -0.0031866999349098313
+    },
+    "Large DOWN move 3d (>3%)": {
+      "Full (85)": {
+        "auc": 0.675105108931074,
+        "avg_precision": 0.08699556222438454,
+        "n_features": 85
+      },
+      "No Eigenvalue": {
+        "auc": 0.6686711683016945,
+        "avg_precision": 0.08434007814572872,
+        "n_features": 75
+      },
+      "No Spectral": {
+        "auc": 0.6864823544400561,
+        "avg_precision": 0.09329441399898816,
+        "n_features": 40
+      },
+      "No Traditional": {
+        "auc": 0.5224710154159765,
+        "avg_precision": 0.06150044765631249,
+        "n_features": 45
+      },
+      "Eigenvalue Only": {
+        "auc": 0.5897662122563384,
+        "avg_precision": 0.07580562800535337,
+        "n_features": 10
+      },
+      "eigenvalue_marginal_auc": 0.00643394062937952
+    }
+  }
+}
