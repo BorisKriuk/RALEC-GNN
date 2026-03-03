@@ -7,8 +7,9 @@ Benchmarks:
 2. Turbulence Index (Kritzman & Li, 2010)
 3. GARCH(1,1) Volatility
 4. HAR-RV (Corsi, 2009)
-5. Random Forest with Traditional Features
-6. Logistic Regression
+5. SMA Volatility (simple rolling vol baseline)
+6. Random Forest with Traditional Features
+7. Logistic Regression baseline
 """
 
 from typing import Dict
@@ -26,17 +27,17 @@ from config import Config
 
 class BaseModel(ABC):
     """Base class for all models"""
-    
+
     name: str = "BaseModel"
-    
+
     @abstractmethod
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         pass
-    
+
     @abstractmethod
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         pass
-    
+
     def predict(self, X: np.ndarray) -> np.ndarray:
         return (self.predict_proba(X) >= 0.5).astype(int)
 
@@ -45,18 +46,20 @@ class BaseModel(ABC):
 # BENCHMARK FEATURE COMPUTATION
 # =============================================================================
 
-def compute_absorption_ratio(returns: pd.DataFrame, window: int = 60, n_top: int = 5) -> pd.Series:
+def compute_absorption_ratio(
+    returns: pd.DataFrame, window: int = 60, n_top: int = 5
+) -> pd.Series:
     """Absorption Ratio - Kritzman et al. (2011)"""
     ar_series = pd.Series(index=returns.index, dtype=float)
     n_assets = len(returns.columns)
     n_top = min(n_top, max(1, n_assets // 5))
-    
+
     for i in range(window, len(returns)):
-        window_returns = returns.iloc[i-window:i]
+        window_returns = returns.iloc[i - window:i]
         corr = window_returns.corr().values
         corr = np.nan_to_num(corr, nan=0)
         np.fill_diagonal(corr, 1.0)
-        
+
         try:
             eigenvalues = np.linalg.eigvalsh(corr)
             eigenvalues = np.sort(eigenvalues)[::-1]
@@ -66,21 +69,21 @@ def compute_absorption_ratio(returns: pd.DataFrame, window: int = 60, n_top: int
                 ar_series.iloc[i] = np.sum(eigenvalues[:n_top]) / total
         except Exception:
             pass
-    
+
     return ar_series
 
 
 def compute_turbulence(returns: pd.DataFrame, lookback: int = 252) -> pd.Series:
     """Turbulence Index - Kritzman & Li (2010)"""
     turb_series = pd.Series(index=returns.index, dtype=float)
-    
+
     for i in range(lookback, len(returns)):
-        historical = returns.iloc[i-lookback:i]
+        historical = returns.iloc[i - lookback:i]
         current = returns.iloc[i].values
-        
+
         mu = historical.mean().values
         cov = historical.cov().values
-        
+
         try:
             cov_reg = cov + np.eye(len(cov)) * 1e-6
             cov_inv = np.linalg.inv(cov_reg)
@@ -88,21 +91,24 @@ def compute_turbulence(returns: pd.DataFrame, lookback: int = 252) -> pd.Series:
             turb_series.iloc[i] = diff @ cov_inv @ diff
         except Exception:
             pass
-    
+
     return turb_series
 
 
-def compute_garch_volatility(returns: pd.Series, alpha: float = 0.1, beta: float = 0.85) -> pd.Series:
+def compute_garch_volatility(
+    returns: pd.Series, alpha: float = 0.1, beta: float = 0.85
+) -> pd.Series:
     """GARCH(1,1) Volatility"""
     omega = (1 - alpha - beta) * returns.var()
     garch_vol = pd.Series(index=returns.index, dtype=float)
     var_t = returns.var()
-    
+
     for i in range(1, len(returns)):
-        r_prev = returns.iloc[i-1]
-        var_t = omega + alpha * r_prev**2 + beta * var_t
-        garch_vol.iloc[i] = np.sqrt(var_t) * np.sqrt(252)
-    
+        r_prev = returns.iloc[i - 1]
+        if np.isfinite(r_prev):
+            var_t = omega + alpha * r_prev ** 2 + beta * var_t
+        garch_vol.iloc[i] = np.sqrt(max(var_t, 1e-10)) * np.sqrt(252)
+
     return garch_vol
 
 
@@ -111,12 +117,42 @@ def compute_har_features(returns: pd.Series) -> pd.DataFrame:
     rv_d = returns.rolling(1).std() * np.sqrt(252)
     rv_w = returns.rolling(5).std() * np.sqrt(252)
     rv_m = returns.rolling(22).std() * np.sqrt(252)
-    
+
     return pd.DataFrame({
         'rv_d': rv_d,
         'rv_w': rv_w,
-        'rv_m': rv_m
+        'rv_m': rv_m,
     }, index=returns.index)
+
+
+def compute_sma_vol_features(market_returns: pd.Series) -> pd.DataFrame:
+    """
+    Simple moving average volatility features.
+
+    A straightforward baseline: rolling standard deviations at multiple windows,
+    plus ratios and z-scores. Often surprisingly competitive.
+    """
+    features = pd.DataFrame(index=market_returns.index)
+
+    for w in [5, 10, 20, 60]:
+        features[f'sma_vol_{w}d'] = market_returns.rolling(w).std() * np.sqrt(252)
+
+    features['sma_vol_ratio_5_20'] = (
+        features['sma_vol_5d'] / (features['sma_vol_20d'] + 1e-10)
+    )
+    features['sma_vol_ratio_5_60'] = (
+        features['sma_vol_5d'] / (features['sma_vol_60d'] + 1e-10)
+    )
+    features['sma_vol_ratio_20_60'] = (
+        features['sma_vol_20d'] / (features['sma_vol_60d'] + 1e-10)
+    )
+    features['sma_vol_zscore_20'] = (
+        (features['sma_vol_20d'] - features['sma_vol_20d'].rolling(60).mean())
+        / (features['sma_vol_20d'].rolling(60).std() + 1e-10)
+    )
+    features['sma_vol_roc_20'] = features['sma_vol_20d'].pct_change(5)
+
+    return features
 
 
 # =============================================================================
@@ -126,20 +162,21 @@ def compute_har_features(returns: pd.Series) -> pd.DataFrame:
 class AbsorptionRatioModel(BaseModel):
     """Absorption Ratio based prediction"""
     name = "Absorption Ratio"
-    
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
-        self.model = LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)
+        self.model = LogisticRegression(
+            C=0.1, class_weight='balanced', max_iter=1000, random_state=42
+        )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -147,22 +184,23 @@ class AbsorptionRatioModel(BaseModel):
 
 
 class TurbulenceModel(BaseModel):
-    """Turbulence Index based prediction"""
-    name = "Turbulence Index"
-    
+    """Turbulence Index — Logistic Regression"""
+    name = "Turbulence LR"
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
-        self.model = LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)
+        self.model = LogisticRegression(
+            C=0.1, class_weight='balanced', max_iter=1000, random_state=42
+        )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -172,20 +210,21 @@ class TurbulenceModel(BaseModel):
 class GARCHModel(BaseModel):
     """GARCH based prediction"""
     name = "GARCH(1,1)"
-    
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
-        self.model = LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)
+        self.model = LogisticRegression(
+            C=0.1, class_weight='balanced', max_iter=1000, random_state=42
+        )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -195,20 +234,21 @@ class GARCHModel(BaseModel):
 class HARRVModel(BaseModel):
     """HAR-RV based prediction"""
     name = "HAR-RV"
-    
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
-        self.model = LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)
+        self.model = LogisticRegression(
+            C=0.1, class_weight='balanced', max_iter=1000, random_state=42
+        )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -216,19 +256,19 @@ class HARRVModel(BaseModel):
 
 
 class RandomForestModel(BaseModel):
-    """Random Forest with traditional features"""
+    """Random Forest — generic, works with any feature set"""
     name = "Random Forest"
-    
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
+
         self.model = RandomForestClassifier(
             n_estimators=self.config.rf_n_estimators,
             max_depth=self.config.rf_max_depth,
@@ -239,7 +279,7 @@ class RandomForestModel(BaseModel):
             n_jobs=-1
         )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -247,22 +287,23 @@ class RandomForestModel(BaseModel):
 
 
 class LogisticRegressionModel(BaseModel):
-    """Logistic Regression baseline"""
+    """Logistic Regression — generic, works with any feature set"""
     name = "Logistic Regression"
-    
+
     def __init__(self, config: Config):
         self.config = config
         self.model = None
         self.scaler = None
-    
+
     def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         self.scaler = RobustScaler()
         X_scaled = self.scaler.fit_transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
-        
-        self.model = LogisticRegression(C=0.1, class_weight='balanced', max_iter=1000, random_state=42)
+        self.model = LogisticRegression(
+            C=0.1, class_weight='balanced', max_iter=1000, random_state=42
+        )
         self.model.fit(X_scaled, y)
-    
+
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         X_scaled = self.scaler.transform(X)
         X_scaled = np.nan_to_num(X_scaled, nan=0, posinf=0, neginf=0)
@@ -278,14 +319,14 @@ def prepare_benchmark_features(
     returns: pd.DataFrame
 ) -> Dict[str, pd.DataFrame]:
     """Prepare feature sets for each benchmark"""
-    
+
     market = prices['SP500'] if 'SP500' in prices.columns else prices.iloc[:, 0]
     market_returns = market.pct_change()
-    
+
     print("Computing benchmark features...")
-    
+
     features = {}
-    
+
     # Absorption Ratio
     ar = compute_absorption_ratio(returns, window=60, n_top=5)
     features['absorption_ratio'] = pd.DataFrame({
@@ -296,7 +337,7 @@ def prepare_benchmark_features(
         'ar_roc_5d': ar.pct_change(5),
     })
     print(f"  Absorption Ratio: {len(features['absorption_ratio'].columns)} features")
-    
+
     # Turbulence
     turb = compute_turbulence(returns, lookback=252)
     features['turbulence'] = pd.DataFrame({
@@ -307,7 +348,7 @@ def prepare_benchmark_features(
         'turb_roc_5d': turb.pct_change(5),
     })
     print(f"  Turbulence: {len(features['turbulence'].columns)} features")
-    
+
     # GARCH
     garch = compute_garch_volatility(market_returns)
     features['garch'] = pd.DataFrame({
@@ -317,11 +358,16 @@ def prepare_benchmark_features(
         'garch_roc_5d': garch.pct_change(5),
     })
     print(f"  GARCH: {len(features['garch'].columns)} features")
-    
+
     # HAR-RV
     har = compute_har_features(market_returns)
     har['rv_ratio'] = har['rv_d'] / (har['rv_m'] + 1e-10)
     features['har_rv'] = har
     print(f"  HAR-RV: {len(features['har_rv'].columns)} features")
-    
+
+    # SMA Volatility
+    sma_vol = compute_sma_vol_features(market_returns)
+    features['sma_vol'] = sma_vol
+    print(f"  SMA Vol: {len(features['sma_vol'].columns)} features")
+
     return features
