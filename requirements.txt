@@ -12,3 +12,6 @@ scipy==1.10.1
 statsmodels==0.14.0
 networkx==3.1
 xgboost==2.0.0
+shap>=0.42.0
+flask>=3.0.0
+flask-cors>=4.0.0

@@ -8,3 +8,5 @@ output/
 *.pkl
 .idea/
 *.egg-info/
+.claude/
+node_modules/

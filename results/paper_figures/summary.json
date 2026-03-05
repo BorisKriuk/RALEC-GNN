@@ -1,0 +1,24 @@
+{
+  "generated_at": "2026-03-06 00:26:22.269124",
+  "figures": [
+    "ablation_heatmap.pdf",
+    "ablation_heatmap.png",
+    "equity_curve.pdf",
+    "equity_curve.png",
+    "event_profiles.pdf",
+    "event_profiles.png",
+    "model_comparison.pdf",
+    "model_comparison.png",
+    "pr_curves.pdf",
+    "pr_curves.png",
+    "roc_curves.pdf",
+    "roc_curves.png",
+    "shap_beeswarm_DOWN.pdf",
+    "shap_beeswarm_DOWN.png",
+    "shap_beeswarm_UP.pdf",
+    "shap_beeswarm_UP.png",
+    "shap_group_importance.pdf",
+    "shap_group_importance.png"
+  ],
+  "n_figures": 18
+}
