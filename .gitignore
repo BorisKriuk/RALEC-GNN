@@ -5,3 +5,7 @@ cache/
 *.pkl
 venv/
 .DS_Store
+.claude/
+node_modules/
+results/backtest/
+results/paper_figures/
